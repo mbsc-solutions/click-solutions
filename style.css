@@ -1,0 +1,30 @@
+*{box-sizing:border-box}
+:root{--black:#050608;--black2:#0b0d11;--card:#11151c;--card2:#151a22;--blue:#4da3ff;--blue2:#1677e8;--gold:#e4bd62;--gold2:#ffe39a;--white:#f8fafc;--muted:#a5afbf;--line:#273140}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--black);color:var(--white)}
+a{text-decoration:none;color:inherit}
+.topbar{height:78px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;border-bottom:1px solid var(--line);background:rgba(5,6,8,.97);position:sticky;top:0;z-index:5}
+.brand{display:flex;align-items:center;gap:12px}.brand span,.brand strong{display:block}.brand span{font-size:11px;color:#8f9aaa;letter-spacing:.08em;margin-top:3px}
+.logo{width:45px;height:45px;border:2px solid var(--blue);border-radius:12px;display:grid;place-items:center;font-size:12px;font-weight:900;color:var(--blue);background:#090c11}
+.wa,.primary,.secondary,button{display:inline-flex;align-items:center;justify-content:center;border-radius:10px;padding:12px 18px;font-weight:800;border:0;cursor:pointer}
+.wa,.primary{background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;box-shadow:0 8px 25px rgba(22,119,232,.2)}
+.secondary{border:1px solid #394554;background:#10141a;color:#edf3fa}
+.hero{min-height:580px;padding:90px 7%;display:flex;align-items:center;justify-content:space-between;gap:50px;background:radial-gradient(circle at 82% 25%,rgba(22,119,232,.18) 0,transparent 35%),radial-gradient(circle at 12% 80%,rgba(228,189,98,.08) 0,transparent 25%)}
+.eyebrow{font-size:11px;letter-spacing:.2em;color:var(--gold2);font-weight:900}
+.hero h1{font-size:clamp(42px,7vw,78px);line-height:.95;margin:15px 0;color:#fff}
+.hero p{max-width:620px;color:#b1bbc9;font-size:18px;line-height:1.7}
+.actions,.contact-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.hero-card{width:330px;height:390px;border:1px solid #34404f;border-radius:28px;padding:30px;display:flex;flex-direction:column;justify-content:flex-end;background:linear-gradient(145deg,#161b23,#080a0d);position:relative;overflow:hidden;box-shadow:0 25px 60px rgba(0,0,0,.5)}
+.card-glow{position:absolute;width:240px;height:240px;border-radius:50%;background:#1677e8;filter:blur(80px);opacity:.24;top:-40px;right:-50px}
+.hero-card span{font-size:11px;color:var(--gold2);letter-spacing:.15em}.hero-card b{font-size:25px;line-height:1.2;margin-top:10px}
+.section{padding:80px 7%}.section-head{margin-bottom:30px}.section h2,.contact h2{font-size:36px;margin:8px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.service{border:1px solid #29323e;background:linear-gradient(145deg,#151a22,#0c0f14);padding:24px;border-radius:18px;transition:.2s;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+.service:hover{transform:translateY(-4px);border-color:var(--blue);box-shadow:0 16px 35px rgba(0,0,0,.45)}
+.service h3{margin:0 0 12px;color:#fff}.service p{color:#9da8b7;font-size:13px;line-height:1.6}.service button{margin-top:14px;width:100%}
+.documents{display:grid;grid-template-columns:1fr 1.2fr;gap:25px}.info-panel,.doc-box,.admin-card,.notice{border:1px solid #29323e;background:#10141a;border-radius:20px;padding:28px;box-shadow:0 12px 35px rgba(0,0,0,.35)}
+.info-panel p,.doc-box p,.notice{color:#a5afbf;line-height:1.7}.doc-box ul{line-height:2;color:#e5eaf1}
+.contact{padding:70px 7%;border-top:1px solid #1f2731;border-bottom:1px solid #1f2731;display:flex;justify-content:space-between;gap:30px;align-items:center;background:#080a0d}.contact-actions{margin-top:0}
+footer{text-align:center;padding:28px;color:#727d8d;font-size:12px;background:#050608}
+.admin-wrap{max-width:950px;margin:auto;padding:55px 6%;display:grid;gap:20px}.admin-card label{display:block;font-size:13px;color:#b9c2ce;margin:15px 0}.admin-card input,.admin-card textarea{display:block;width:100%;margin-top:7px;background:#080b0f;border:1px solid #394554;color:#fff;border-radius:9px;padding:12px;font:inherit}.edit-service{border-top:1px solid #29323e;padding:18px 0;display:grid;grid-template-columns:1fr 2fr auto;gap:10px;align-items:start}.edit-service textarea{min-height:100px;resize:vertical}.danger{background:#3a151b;color:#ffc2c9}.notice{font-size:13px}
+@media(max-width:760px){.hero{padding:60px 6%;display:block}.hero-card{display:none}.section,.contact{padding:55px 6%}.documents{grid-template-columns:1fr}.contact{display:block}.contact-actions{margin-top:20px}.topbar{padding:0 4%}.topbar .wa{padding:9px 12px;font-size:12px}.edit-service{grid-template-columns:1fr}.hero h1{font-size:48px}}

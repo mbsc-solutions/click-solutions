@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin · MBSC Solutions</title><link rel="stylesheet" href="style.css">
+</head>
+<body class="admin">
+<header class="topbar"><div class="brand"><div class="logo">MBSC</div><div><strong>Website Admin</strong><span>Edit your website content</span></div></div><a class="secondary" href="index.html">View Website</a></header>
+<main class="admin-wrap">
+  <div class="admin-card">
+    <p class="eyebrow">BUSINESS PROFILE</p>
+    <label>Business Name<input id="name"></label>
+    <label>WhatsApp Number<input id="wa"></label>
+    <label>Phone 1<input id="phone1"></label>
+    <label>Phone 2<input id="phone2"></label>
+    <button class="primary" onclick="saveProfile()">Save Profile</button>
+  </div>
+  <div class="admin-card">
+    <p class="eyebrow">SERVICES</p>
+    <div id="serviceEditor"></div>
+    <button class="primary" onclick="addService()">+ Add Service</button>
+    <button class="secondary" onclick="saveServices()">Save Services</button>
+  </div>
+  <div class="notice"><b>Important:</b> This V1 admin saves changes in this browser only. For a real online admin panel that syncs across devices, connect this site to a free database/hosting setup in V2.</div>
+</main>
+<script>
+const KEY="mbsc_v1";
+const defaults={
+ profile:{name:"MBSC SOLUTIONS",wa:"7093334820",phone1:"7093334820",phone2:"9491874820"},
+ services:[
+ {name:"Tractor Loans",docs:["Aadhaar Card","PAN Card","Address Proof","Bank Statement","Land / income related documents"]},
+ {name:"Agri SME Loans",docs:["Aadhaar Card","PAN Card","Business / income proof","Bank Statement","Address Proof"]},
+ {name:"Construction Equipment Loans",docs:["Aadhaar Card","PAN Card","Quotation / equipment details","Bank Statement","Income / business proof"]},
+ {name:"Business Loans",docs:["Aadhaar Card","PAN Card","Business proof","Bank Statement","Income / financial documents"]},
+ {name:"Gold Loans",docs:["Aadhaar Card","PAN Card","Gold ornaments","Address / KYC documents"]},
+ {name:"Commercial Vehicle Loans",docs:["Aadhaar Card","PAN Card","Vehicle quotation","Address Proof","Income / business proof"]},
+ {name:"Home Loans",docs:["Aadhaar Card","PAN Card","Income proof","Bank Statement","Property documents"]},
+ {name:"Auto & Car Loans",docs:["Aadhaar Card","PAN Card","Vehicle quotation","Address Proof","Income proof"]},
+ {name:"Bike Loans",docs:["Aadhaar Card","PAN Card","Vehicle quotation","Address Proof"]},
+ {name:"Credit Cards",docs:["Aadhaar Card","PAN Card","Income proof","Bank Statement / salary proof"]},
+ {name:"PF Services",docs:["Aadhaar Card","PAN Card","UAN / PF details","Bank account details"]},
+ {name:"ITR Filing",docs:["PAN Card","Aadhaar Card","Bank details","Form 16 / income details","Investment / capital-gain statements, if applicable"]},
+ {name:"AEPS & Banking Services",docs:["Aadhaar Card","Registered mobile number","Bank account details, where required"]},
+ {name:"Bill Payments & Recharge",docs:["Customer / bill details","Registered mobile number"]},
+ {name:"Other Services",docs:["Please contact us for the service-specific checklist"]}
+]};
+let data=JSON.parse(localStorage.getItem(KEY)||"null")||defaults;
+function render(){
+ name.value=data.profile.name; wa.value=data.profile.wa; phone1.value=data.profile.phone1; phone2.value=data.profile.phone2;
+ serviceEditor.innerHTML=data.services.map((s,i)=>`<div class="edit-service"><input data-n="${i}" value="${esc(s.name)}"><textarea data-d="${i}">${s.docs.join("\\n")}</textarea><button class="danger" onclick="removeService(${i})">Delete</button></div>`).join("");
+}
+function esc(s){return s.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll('"',"&quot;")}
+function saveProfile(){data.profile={name:name.value.trim()||"MBSC SOLUTIONS",wa:wa.value.replace(/\D/g,""),phone1:phone1.value.replace(/\D/g,""),phone2:phone2.value.replace(/\D/g,"")};localStorage.setItem(KEY,JSON.stringify(data));alert("Profile saved.");}
+function saveServices(){document.querySelectorAll("[data-n]").forEach(x=>{let i=x.dataset.n;data.services[i].name=x.value.trim()||"Service"});document.querySelectorAll("[data-d]").forEach(x=>{let i=x.dataset.d;data.services[i].docs=x.value.split(/\n/).map(v=>v.trim()).filter(Boolean)});localStorage.setItem(KEY,JSON.stringify(data));render();alert("Services saved.");}
+function addService(){data.services.push({name:"New Service",docs:["Aadhaar Card","PAN Card","Contact us for more details"]});render();}
+function removeService(i){if(confirm("Delete this service?")){data.services.splice(i,1);localStorage.setItem(KEY,JSON.stringify(data));render();}}
+render();
+</script>
+</body></html>
