@@ -3,11 +3,12 @@ function showDocs(service, docs) {
 
     const number = "917093334820";
 
-    const message = `MBSC SOLUTIONS
-I need this – ${service}`;
+    const message = `*MBSC SOLUTIONS*
+*I need this – ${service}*`;
 
     box.innerHTML = `
         <p class="eyebrow">REQUIREMENTS</p>
+
         <h3>${service}</h3>
 
         <ul>
