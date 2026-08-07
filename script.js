@@ -3,8 +3,13 @@ function showDocs(service, docs) {
 
     const number = "917093334820";
 
+    const documentText = docs.map(d => `• ${d}`).join("\n");
+
     const message = `*MBSC SOLUTIONS*
-*I need this – ${service}*`;
+*I need this – ${service}*
+
+*Required Documents:*
+${documentText}`;
 
     box.innerHTML = `
         <p class="eyebrow">REQUIREMENTS</p>
