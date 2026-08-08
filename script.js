@@ -318,11 +318,11 @@ function showSubService(
 
 
     showDocs(
-        `${serviceName} – ${subName}`,
-        docs
-    );
-
-}
+    `${serviceName} – ${subName} – ${selectedItem.item_name}`,
+    getDocuments(
+        selectedItem.documents
+    )
+);
 
 
 // ==========================================
