@@ -21,7 +21,7 @@ const LOAN_NAMES = [
 
 
 // ==========================================
-// DOCUMENT NAMES
+// KNOWN DOCUMENT NAMES
 // Used when Supabase documents have no commas
 // ==========================================
 
@@ -36,6 +36,7 @@ const DOCUMENT_NAMES = [
     "Tractor Quotation",
     "Gold Loan Documents",
     "Property Documents",
+    "ITR Documents",
     "ITR",
     "GST Certificate",
     "Business Proof",
@@ -49,7 +50,6 @@ const DOCUMENT_NAMES = [
     "Employment Proof",
     "Salary Certificate",
     "Form 16",
-    "ITR Documents",
     "Loan Statement",
     "Vehicle Quotation",
     "Home Documents",
@@ -76,11 +76,9 @@ async function supabaseGet(table, query = "") {
         }
     );
 
-
     if (!response.ok) {
 
-        const error =
-            await response.text();
+        const error = await response.text();
 
         console.error(
             `Supabase ${table} Error:`,
@@ -89,7 +87,6 @@ async function supabaseGet(table, query = "") {
 
         throw new Error(error);
     }
-
 
     return await response.json();
 }
@@ -104,9 +101,7 @@ async function loadWebsiteServices() {
     const grid =
         document.querySelector(".grid");
 
-
     if (!grid) return;
-
 
     try {
 
@@ -168,7 +163,9 @@ async function loadWebsiteServices() {
                 service =>
                     String(
                         service.service_name || ""
-                    ).trim().toLowerCase() === "loans"
+                    )
+                    .trim()
+                    .toLowerCase() === "loans"
             );
 
 
@@ -190,7 +187,6 @@ async function loadWebsiteServices() {
                     if (
                         LOAN_NAMES.includes(name)
                     ) {
-
                         return false;
                     }
 
@@ -288,7 +284,6 @@ async function loadWebsiteServices() {
                         "article"
                     );
 
-
                 article.className =
                     "service";
 
@@ -326,10 +321,6 @@ async function loadWebsiteServices() {
 
                 `;
 
-
-                // ==================================
-                // ADD CARD
-                // ==================================
 
                 grid.appendChild(
                     article
@@ -384,14 +375,11 @@ async function loadWebsiteServices() {
                                     "show"
                                 );
 
-
                                 button.textContent =
                                     "View Services";
 
-
                                 subList.innerHTML =
                                     "";
-
 
                                 return;
                             }
@@ -404,7 +392,6 @@ async function loadWebsiteServices() {
                             subList.classList.add(
                                 "show"
                             );
-
 
                             button.textContent =
                                 "Hide Services";
@@ -512,7 +499,6 @@ async function loadWebsiteServices() {
                                             if (
                                                 !selectedSub
                                             ) {
-
                                                 return;
                                             }
 
@@ -797,7 +783,6 @@ function showItems(
                     if (
                         !selectedItem
                     ) {
-
                         return;
                     }
 
@@ -860,17 +845,18 @@ function getDocuments(
     // ==================================
 
     if (
-        Array.isArray(
-            documents
-        )
+        Array.isArray(documents)
     ) {
 
         return documents
-            .map(
+            .flatMap(
                 item =>
-                    String(
-                        item
-                    ).trim()
+                    String(item)
+                        .split(/[,\n]+/)
+                        .map(
+                            x =>
+                                x.trim()
+                        )
             )
             .filter(
                 Boolean
@@ -891,15 +877,16 @@ function getDocuments(
 
 
         // ==================================
-        // HAS COMMA
+        // COMMA / NEW LINE
         // ==================================
 
         if (
-            text.includes(",")
+            text.includes(",") ||
+            text.includes("\n")
         ) {
 
             return text
-                .split(",")
+                .split(/[,\n]+/)
                 .map(
                     item =>
                         item.trim()
@@ -915,12 +902,6 @@ function getDocuments(
         // Detect known document names
         // ==================================
 
-        let result =
-            text;
-
-
-        // Sort longest first
-        // Prevent partial matching
         const sortedNames =
             [...DOCUMENT_NAMES]
                 .sort(
@@ -930,54 +911,152 @@ function getDocuments(
                 );
 
 
-        sortedNames.forEach(
-            name => {
-
-                const escapedName =
-                    name.replace(
-                        /[.*+?^${}()|[\]\\]/g,
-                        "\\$&"
-                    );
+        let result = [];
 
 
-                const regex =
-                    new RegExp(
-                        `\\s*${escapedName}`,
-                        "gi"
-                    );
+        let remainingText =
+            text;
 
 
-                result =
-                    result.replace(
-                        regex,
-                        `|||${name}`
-                    );
+        // ==================================
+        // FIND DOCUMENTS IN ORIGINAL ORDER
+        // ==================================
 
+        while (
+            remainingText.length > 0
+        ) {
+
+            remainingText =
+                remainingText.trim();
+
+
+            if (
+                !remainingText
+            ) {
+                break;
             }
-        );
 
 
-        // ==================================
-        // MAKE ARRAY
-        // ==================================
+            let foundName =
+                null;
 
-        const finalList =
-            result
-                .split("|||")
-                .map(
-                    item =>
-                        item.trim()
-                )
-                .filter(
-                    Boolean
+
+            let foundIndex =
+                Infinity;
+
+
+            sortedNames.forEach(
+                name => {
+
+                    const index =
+                        remainingText
+                            .toLowerCase()
+                            .indexOf(
+                                name.toLowerCase()
+                            );
+
+
+                    if (
+                        index !== -1 &&
+                        index < foundIndex
+                    ) {
+
+                        foundIndex =
+                            index;
+
+                        foundName =
+                            name;
+                    }
+
+                }
+            );
+
+
+            // ==================================
+            // FOUND DOCUMENT
+            // ==================================
+
+            if (
+                foundName !== null
+            ) {
+
+                // Text before known document
+                if (
+                    foundIndex > 0
+                ) {
+
+                    const beforeText =
+                        remainingText
+                            .substring(
+                                0,
+                                foundIndex
+                            )
+                            .trim();
+
+
+                    if (
+                        beforeText
+                    ) {
+
+                        result.push(
+                            beforeText
+                        );
+                    }
+                }
+
+
+                // Add known document
+                result.push(
+                    foundName
                 );
 
 
+                // Remove processed part
+                remainingText =
+                    remainingText.substring(
+                        foundIndex +
+                        foundName.length
+                    );
+
+            }
+
+
+            // ==================================
+            // NO DOCUMENT FOUND
+            // ==================================
+
+            else {
+
+                result.push(
+                    remainingText.trim()
+                );
+
+                break;
+            }
+        }
+
+
+        // ==================================
+        // REMOVE DUPLICATES
+        // ==================================
+
+        result =
+            result.filter(
+                (item, index, array) =>
+                    item &&
+                    array.findIndex(
+                        x =>
+                            x.toLowerCase() ===
+                            item.toLowerCase()
+                    ) === index
+            );
+
+
         if (
-            finalList.length > 0
+            result.length > 0
         ) {
 
-            return finalList;
+            return result;
         }
     }
 
@@ -1061,6 +1140,10 @@ ${documentList
 
         <div
             class="requirements-list"
+            style="
+                margin: 20px 0;
+                width: 100%;
+            "
         >
 
             ${documentList.map(
@@ -1068,18 +1151,37 @@ ${documentList
 
                     <div
                         class="requirement-item"
+                        style="
+                            display: flex;
+                            align-items: flex-start;
+                            gap: 12px;
+                            margin-bottom: 10px;
+                            line-height: 1.5;
+                        "
                     >
 
                         <span
                             class="bullet"
+                            style="
+                                display: block;
+                                min-width: 10px;
+                                font-size: 20px;
+                                line-height: 1.4;
+                            "
                         >
                             •
                         </span>
 
                         <span
                             class="requirement-text"
+                            style="
+                                display: block;
+                                flex: 1;
+                            "
                         >
-                            ${escapeHTML(d)}
+                            ${escapeHTML(
+                                d
+                            )}
                         </span>
 
                     </div>
@@ -1169,7 +1271,6 @@ document.addEventListener(
         console.log(
             "MBSC NEW SCRIPT LOADED"
         );
-
 
         loadWebsiteServices();
 
