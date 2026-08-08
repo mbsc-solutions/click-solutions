@@ -2,33 +2,6 @@ const SUPABASE_URL = "https://whxlatxnqjpccwrmtmph.supabase.co";
 const SUPABASE_KEY = "sb_publishable_wlqTaOkM3fML9cuUES54fw_8TlbSi-H";
 const WHATSAPP_NUMBER = "917093334820";
 
-// ==========================================
-// SUPABASE GET
-// ==========================================
-
-async function supabaseGet(table, query = "") {
-
-    const response = await fetch(
-        `${SUPABASE_URL}/rest/v1/${table}${query}`,
-        {
-            method: "GET",
-            headers: {
-                "apikey": SUPABASE_KEY,
-                "Authorization": `Bearer ${SUPABASE_KEY}`,
-                "Content-Type": "application/json"
-            }
-        }
-    );
-
-    if (!response.ok) {
-        const error = await response.text();
-        console.error(`Supabase ${table} Error:`, error);
-        throw new Error(error);
-    }
-
-    return await response.json();
-}
-
 
 // ==========================================
 // LOAN SERVICE NAMES
@@ -48,280 +21,516 @@ const LOAN_NAMES = [
 
 
 // ==========================================
+// SUPABASE GET
+// ==========================================
+
+async function supabaseGet(table, query = "") {
+
+    const response = await fetch(
+        `${SUPABASE_URL}/rest/v1/${table}${query}`,
+        {
+            method: "GET",
+
+            headers: {
+                "apikey": SUPABASE_KEY,
+                "Authorization": `Bearer ${SUPABASE_KEY}`,
+                "Content-Type": "application/json"
+            }
+        }
+    );
+
+
+    if (!response.ok) {
+
+        const error =
+            await response.text();
+
+        console.error(
+            `Supabase ${table} Error:`,
+            error
+        );
+
+        throw new Error(error);
+    }
+
+
+    return await response.json();
+}
+
+
+// ==========================================
 // LOAD WEBSITE SERVICES
 // ==========================================
 
 async function loadWebsiteServices() {
 
-    const grid = document.querySelector(".grid");
+    const grid =
+        document.querySelector(".grid");
+
 
     if (!grid) return;
 
+
     try {
 
-        const services = await supabaseGet(
-            "services",
-            "?select=*&order=sort_order.asc"
+        // ==================================
+        // GET SERVICES
+        // ==================================
+
+        const services =
+            await supabaseGet(
+                "services",
+                "?select=*&order=sort_order.asc"
+            );
+
+
+        // ==================================
+        // GET SUB SERVICES
+        // ==================================
+
+        const subServices =
+            await supabaseGet(
+                "sub_services",
+                "?select=*&order=sort_order.asc"
+            );
+
+
+        // ==================================
+        // GET SUB SERVICE ITEMS
+        // ==================================
+
+        const subServiceItems =
+            await supabaseGet(
+                "sub_service_items",
+                "?select=*&order=sort_order.asc"
+            );
+
+
+        console.log(
+            "SERVICES:",
+            services
         );
 
-        const subServices = await supabaseGet(
-            "sub_services",
-            "?select=*&order=sort_order.asc"
+        console.log(
+            "SUB SERVICES:",
+            subServices
         );
 
-        const subServiceItems = await supabaseGet(
-            "sub_service_items",
-            "?select=*&order=sort_order.asc"
-        );
-
-        console.log("SERVICES:", services);
-        console.log("SUB SERVICES:", subServices);
-        console.log("SUB SERVICE ITEMS:", subServiceItems);
-
-
-        // ======================================
-        // FIND LOANS MAIN SERVICE
-        // ======================================
-
-        const loansService = services.find(
-            service =>
-                service.service_name === "Loans"
+        console.log(
+            "SUB SERVICE ITEMS:",
+            subServiceItems
         );
 
 
-        // ======================================
-        // MAIN SERVICES TO DISPLAY
-        // ======================================
+        // ==================================
+        // FIND LOANS SERVICE
+        // ==================================
 
-        const displayServices = services.filter(
-            service => {
+        const loansService =
+            services.find(
+                service =>
+                    service.service_name === "Loans"
+            );
 
-                // Hide old individual loan services
-                if (
-                    LOAN_NAMES.includes(
-                        service.service_name
-                    )
-                ) {
-                    return false;
+
+        // ==================================
+        // FILTER MAIN SERVICES
+        // ==================================
+
+        const displayServices =
+            services.filter(
+                service => {
+
+                    // Hide old individual
+                    // loan services
+
+                    if (
+                        LOAN_NAMES.includes(
+                            service.service_name
+                        )
+                    ) {
+
+                        return false;
+                    }
+
+
+                    return true;
                 }
-
-                return true;
-            }
-        );
+            );
 
 
-        // ======================================
-        // ADD LOANS IF EXISTS
-        // ======================================
+        // ==================================
+        // MAKE SURE LOANS EXISTS
+        // ==================================
 
         if (
             loansService &&
             !displayServices.some(
                 service =>
-                    service.id === loansService.id
+                    Number(service.id) ===
+                    Number(loansService.id)
             )
         ) {
 
             displayServices.push(
                 loansService
             );
-
         }
 
+
+        // ==================================
+        // SORT MAIN SERVICES
+        // ==================================
+
+        displayServices.sort(
+            (a, b) =>
+                Number(a.sort_order || 0) -
+                Number(b.sort_order || 0)
+        );
+
+
+        // ==================================
+        // CLEAR WEBSITE
+        // ==================================
 
         grid.innerHTML = "";
 
 
-        // ======================================
-        // CREATE MAIN SERVICES
-        // ======================================
+        // ==================================
+        // CREATE MAIN SERVICE CARDS
+        // ==================================
 
-        displayServices.forEach(service => {
+        displayServices.forEach(
+            service => {
 
-            const serviceId =
-                service.id;
-
-            const serviceName =
-                service.service_name ||
-                "Service";
+                const serviceId =
+                    service.id;
 
 
-            const description =
-                service.description ||
-                "Click below to view available services.";
+                const serviceName =
+                    service.service_name ||
+                    "Service";
 
 
-            // ==================================
-            // FIND SUB SERVICES
-            // ==================================
+                // ==================================
+                // FIND CHILDREN
+                // ==================================
 
-            let children =
-                subServices.filter(
-                    sub =>
-                        Number(
-                            sub.service_id
-                        ) ===
-                        Number(serviceId)
-                );
-
-
-            // ==================================
-            // CREATE ARTICLE
-            // ==================================
-
-            const article =
-                document.createElement("article");
-
-            article.className =
-                "service";
-
-
-            article.innerHTML = `
-                <h3>
-                    ${escapeHTML(serviceName)}
-                </h3>
-
-                <p>
-                    ${escapeHTML(description)}
-                </p>
-
-                <button class="service-button">
-                    ${
-                        children.length > 0
-                            ? "View Services"
-                            : "View & WhatsApp"
-                    }
-                </button>
-
-                <div class="sub-service-list"></div>
-            `;
-
-
-            grid.appendChild(article);
-
-
-            const button =
-                article.querySelector(
-                    ".service-button"
-                );
-
-
-            const subList =
-                article.querySelector(
-                    ".sub-service-list"
-                );
-
-
-            // ==================================
-            // HAS SUB SERVICES
-            // ==================================
-
-            if (children.length > 0) {
-
-                button.addEventListener(
-                    "click",
-                    () => {
-
-                        subList.classList.toggle(
-                            "show"
+                const children =
+                    subServices
+                        .filter(
+                            sub =>
+                                Number(
+                                    sub.service_id
+                                ) ===
+                                Number(
+                                    serviceId
+                                )
+                        )
+                        .sort(
+                            (a, b) =>
+                                Number(
+                                    a.sort_order || 0
+                                ) -
+                                Number(
+                                    b.sort_order || 0
+                                )
                         );
 
 
-                        if (
-                            subList.classList.contains(
+                // ==================================
+                // CREATE ARTICLE
+                // ==================================
+
+                const article =
+                    document.createElement(
+                        "article"
+                    );
+
+
+                article.className =
+                    "service";
+
+
+                // ==================================
+                // MAIN SERVICE HTML
+                // ==================================
+
+                article.innerHTML = `
+
+                    <h3>
+                        ${escapeHTML(
+                            serviceName
+                        )}
+                    </h3>
+
+                    <p>
+                        Click below to view available services.
+                    </p>
+
+                    <button
+                        type="button"
+                        class="service-button"
+                    >
+                        ${
+                            children.length > 0
+                                ? "View Services"
+                                : "View & WhatsApp"
+                        }
+                    </button>
+
+                    <div
+                        class="sub-service-list"
+                    ></div>
+
+                `;
+
+
+                // ==================================
+                // ADD TO GRID
+                // ==================================
+
+                grid.appendChild(
+                    article
+                );
+
+
+                // ==================================
+                // GET BUTTON
+                // ==================================
+
+                const button =
+                    article.querySelector(
+                        ".service-button"
+                    );
+
+
+                // ==================================
+                // GET SUB LIST
+                // ==================================
+
+                const subList =
+                    article.querySelector(
+                        ".sub-service-list"
+                    );
+
+
+                // ==================================
+                // HAS SUB SERVICES
+                // ==================================
+
+                if (
+                    children.length > 0
+                ) {
+
+                    button.addEventListener(
+                        "click",
+                        () => {
+
+                            const isOpen =
+                                subList.classList.contains(
+                                    "show"
+                                );
+
+
+                            // ==================================
+                            // CLOSE
+                            // ==================================
+
+                            if (isOpen) {
+
+                                subList.classList.remove(
+                                    "show"
+                                );
+
+
+                                button.textContent =
+                                    "View Services";
+
+
+                                subList.innerHTML =
+                                    "";
+
+
+                                return;
+                            }
+
+
+                            // ==================================
+                            // OPEN
+                            // ==================================
+
+                            subList.classList.add(
                                 "show"
-                            )
-                        ) {
+                            );
+
 
                             button.textContent =
                                 "Hide Services";
 
 
-                            subList.innerHTML =
-                                "";
+                            // ==================================
+                            // FORCE VISIBLE
+                            // ==================================
+
+                            subList.style.display =
+                                "block";
+
+                            subList.style.height =
+                                "auto";
+
+                            subList.style.maxHeight =
+                                "none";
+
+                            subList.style.overflow =
+                                "visible";
+
+                            subList.style.visibility =
+                                "visible";
 
 
-                            children.forEach(
-                                sub => {
+                            // ==================================
+                            // CREATE ALL SUB SERVICES
+                            // ==================================
 
-                                    const subButton =
-                                        document.createElement(
-                                            "button"
-                                        );
+                            subList.innerHTML = `
+
+                                <div
+                                    class="loan-sub-services"
+                                >
+
+                                    ${children.map(
+                                        (sub, index) => `
+
+                                            <button
+                                                type="button"
+                                                class="sub-service-button"
+                                                data-sub-id="${sub.id}"
+                                            >
+
+                                                <span
+                                                    class="sub-number"
+                                                >
+                                                    ${index + 1}.
+                                                </span>
+
+                                                <span>
+                                                    ${escapeHTML(
+                                                        sub.sub_service_name ||
+                                                        "Sub Service"
+                                                    )}
+                                                </span>
+
+                                            </button>
+
+                                        `
+                                    ).join("")}
+
+                                </div>
+
+                            `;
 
 
-                                    subButton.className =
-                                        "sub-service-button";
+                            // ==================================
+                            // GET SUB BUTTONS
+                            // ==================================
+
+                            const subButtons =
+                                subList.querySelectorAll(
+                                    ".sub-service-button"
+                                );
 
 
-                                    subButton.textContent =
-                                        sub.sub_service_name ||
-                                        "Sub Service";
+                            // ==================================
+                            // SUB BUTTON CLICK
+                            // ==================================
 
+                            subButtons.forEach(
+                                subButton => {
 
                                     subButton.addEventListener(
                                         "click",
                                         () => {
 
+                                            const subId =
+                                                Number(
+                                                    subButton.dataset.subId
+                                                );
+
+
+                                            const selectedSub =
+                                                children.find(
+                                                    sub =>
+                                                        Number(
+                                                            sub.id
+                                                        ) ===
+                                                        subId
+                                                );
+
+
+                                            if (
+                                                !selectedSub
+                                            ) {
+
+                                                return;
+                                            }
+
+
                                             showSubService(
                                                 service,
-                                                sub,
+                                                selectedSub,
                                                 subServiceItems
                                             );
 
                                         }
                                     );
 
-
-                                    subList.appendChild(
-                                        subButton
-                                    );
-
                                 }
                             );
 
-                        } else {
-
-                            button.textContent =
-                                "View Services";
-
                         }
+                    );
 
-                    }
-                );
-
-            }
+                }
 
 
-            // ==================================
-            // NO SUB SERVICES
-            // ==================================
+                // ==================================
+                // NO SUB SERVICES
+                // ==================================
 
-            else {
+                else {
 
-                button.addEventListener(
-                    "click",
-                    () => {
+                    button.addEventListener(
+                        "click",
+                        () => {
 
-                        const docs =
-                            getDocuments(
-                                service.documents
+                            const docs =
+                                getDocuments(
+                                    service.documents
+                                );
+
+
+                            showDocs(
+                                serviceName,
+                                docs
                             );
 
+                        }
+                    );
 
-                        showDocs(
-                            serviceName,
-                            docs
-                        );
-
-                    }
-                );
+                }
 
             }
+        );
 
-        });
+    }
 
-    } catch (error) {
+
+    // ==================================
+    // ERROR
+    // ==================================
+
+    catch (error) {
 
         console.error(
             "Website loading failed:",
@@ -330,6 +539,7 @@ async function loadWebsiteServices() {
 
 
         grid.innerHTML = `
+
             <div class="service">
 
                 <h3>
@@ -351,8 +561,8 @@ async function loadWebsiteServices() {
                 </a>
 
             </div>
-        `;
 
+        `;
     }
 
 }
@@ -378,27 +588,39 @@ function showSubService(
         "Sub Service";
 
 
-    // ======================================
+    // ==================================
     // FIND ITEMS
-    // ======================================
+    // ==================================
 
     const items =
-        subServiceItems.filter(
-            item =>
-                Number(
-                    item.sub_service_id
-                ) ===
-                Number(
-                    subService.id
-                )
-        );
+        subServiceItems
+            .filter(
+                item =>
+                    Number(
+                        item.sub_service_id
+                    ) ===
+                    Number(
+                        subService.id
+                    )
+            )
+            .sort(
+                (a, b) =>
+                    Number(
+                        a.sort_order || 0
+                    ) -
+                    Number(
+                        b.sort_order || 0
+                    )
+            );
 
 
-    // ======================================
+    // ==================================
     // ITEMS EXIST
-    // ======================================
+    // ==================================
 
-    if (items.length > 0) {
+    if (
+        items.length > 0
+    ) {
 
         showItems(
             serviceName,
@@ -407,13 +629,12 @@ function showSubService(
         );
 
         return;
-
     }
 
 
-    // ======================================
+    // ==================================
     // NO ITEMS
-    // ======================================
+    // ==================================
 
     const docs =
         getDocuments(
@@ -455,44 +676,55 @@ function showItems(
 
 
     box.innerHTML = `
+
         <p class="eyebrow">
-            ${escapeHTML(serviceName)}
+            ${escapeHTML(
+                serviceName
+            )}
         </p>
 
         <h3>
-            ${escapeHTML(subName)}
+            ${escapeHTML(
+                subName
+            )}
         </h3>
 
         <ul class="item-list">
 
-            ${items.map(item => `
-                <li>
+            ${items.map(
+                item => `
 
-                    <button
-                        class="item-button"
-                        data-item-id="${item.id}"
-                    >
+                    <li>
 
-                        ${escapeHTML(
-                            item.item_name
-                        )}
+                        <button
+                            type="button"
+                            class="item-button"
+                            data-item-id="${item.id}"
+                        >
 
-                    </button>
+                            ${escapeHTML(
+                                item.item_name
+                            )}
 
-                </li>
-            `).join("")}
+                        </button>
+
+                    </li>
+
+                `
+            ).join("")}
 
         </ul>
 
         <p>
             Select an item above to view requirements.
         </p>
+
     `;
 
 
-    // ======================================
+    // ==================================
     // ITEM BUTTONS
-    // ======================================
+    // ==================================
 
     const buttons =
         box.querySelectorAll(
@@ -523,7 +755,10 @@ function showItems(
                         );
 
 
-                    if (!selectedItem) {
+                    if (
+                        !selectedItem
+                    ) {
+
                         return;
                     }
 
@@ -546,6 +781,10 @@ function showItems(
     );
 
 
+    // ==================================
+    // SCROLL
+    // ==================================
+
     box.scrollIntoView({
         behavior: "smooth",
         block: "center"
@@ -558,9 +797,14 @@ function showItems(
 // GET DOCUMENTS
 // ==========================================
 
-function getDocuments(documents) {
+function getDocuments(
+    documents
+) {
 
-    // NULL / EMPTY
+    // ==================================
+    // EMPTY
+    // ==================================
+
     if (
         documents === null ||
         documents === undefined ||
@@ -570,25 +814,39 @@ function getDocuments(documents) {
         return [
             "Please contact MBSC SOLUTIONS for requirements"
         ];
-
     }
 
 
+    // ==================================
     // ARRAY
-    if (Array.isArray(documents)) {
+    // ==================================
+
+    if (
+        Array.isArray(
+            documents
+        )
+    ) {
 
         return documents
             .map(
                 item =>
-                    String(item).trim()
+                    String(
+                        item
+                    ).trim()
             )
-            .filter(Boolean);
-
+            .filter(
+                Boolean
+            );
     }
 
 
+    // ==================================
     // STRING
-    if (typeof documents === "string") {
+    // ==================================
+
+    if (
+        typeof documents === "string"
+    ) {
 
         return documents
             .split(",")
@@ -596,10 +854,15 @@ function getDocuments(documents) {
                 item =>
                     item.trim()
             )
-            .filter(Boolean);
-
+            .filter(
+                Boolean
+            );
     }
 
+
+    // ==================================
+    // DEFAULT
+    // ==================================
 
     return [
         "Please contact MBSC SOLUTIONS for requirements"
@@ -626,15 +889,23 @@ function showDocs(
     if (!box) return;
 
 
+    // ==================================
+    // MAKE ARRAY
+    // ==================================
+
     const documentList =
-        Array.isArray(docs)
+        Array.isArray(
+            docs
+        )
             ? docs
-            : getDocuments(docs);
+            : getDocuments(
+                docs
+            );
 
 
-    // ======================================
+    // ==================================
     // WHATSAPP MESSAGE
-    // ======================================
+    // ==================================
 
     const message =
         `*MBSC SOLUTIONS*
@@ -644,37 +915,44 @@ function showDocs(
 *Required Documents:*
 ${documentList
     .map(
-        d => `• ${d}`
+        d =>
+            `• ${d}`
     )
     .join("\n")}`;
 
 
-    // ======================================
+    // ==================================
     // DISPLAY DOCUMENTS
-    // ======================================
+    // ==================================
 
     box.innerHTML = `
+
         <p class="eyebrow">
             REQUIREMENTS
         </p>
 
         <h3>
-            ${escapeHTML(service)}
+            ${escapeHTML(
+                service
+            )}
         </h3>
 
-        <ul class="requirements-list">
+        <ul
+            class="requirements-list"
+        >
 
-            ${documentList
-                .map(
-                    d => `
-                        <li>
-                            ${escapeHTML(d)}
-                        </li>
-                    `
-                )
-                .join("")}
+            ${documentList.map(
+                d => `
+
+                    <li>
+                        ${escapeHTML(d)}
+                    </li>
+
+                `
+            ).join("")}
 
         </ul>
+
 
         <a
             class="primary"
@@ -682,10 +960,17 @@ ${documentList
             rel="noopener noreferrer"
             href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}"
         >
-            WhatsApp for ${escapeHTML(service)}
+            WhatsApp for ${escapeHTML(
+                service
+            )}
         </a>
+
     `;
 
+
+    // ==================================
+    // SCROLL
+    // ==================================
 
     box.scrollIntoView({
         behavior: "smooth",
@@ -699,7 +984,9 @@ ${documentList
 // ESCAPE HTML
 // ==========================================
 
-function escapeHTML(value) {
+function escapeHTML(
+    value
+) {
 
     if (
         value === null ||
@@ -707,11 +994,12 @@ function escapeHTML(value) {
     ) {
 
         return "";
-
     }
 
 
-    return String(value)
+    return String(
+        value
+    )
         .replace(
             /&/g,
             "&amp;"
@@ -743,6 +1031,10 @@ function escapeHTML(value) {
 document.addEventListener(
     "DOMContentLoaded",
     () => {
+
+        console.log(
+            "MBSC NEW SCRIPT LOADED"
+        );
 
         loadWebsiteServices();
 
