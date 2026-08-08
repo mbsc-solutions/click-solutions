@@ -59,12 +59,7 @@ async function loadWebsiteServices() {
         console.log("SUB SERVICES:", subServices);
         console.log("SUB SERVICE ITEMS:", subServiceItems);
 
-        // Remove old HTML cards
         grid.innerHTML = "";
-
-        // ======================================
-        // CREATE MAIN SERVICES
-        // ======================================
 
         services.forEach(service => {
 
@@ -77,13 +72,12 @@ async function loadWebsiteServices() {
                 service.description ||
                 "Click below to view available services.";
 
-            // Find sub-services
             const children = subServices.filter(
                 sub =>
-                    Number(sub.service_id) === Number(serviceId)
+                    Number(sub.service_id) ===
+                    Number(serviceId)
             );
 
-            // Create card
             const article =
                 document.createElement("article");
 
@@ -121,53 +115,61 @@ async function loadWebsiteServices() {
 
             if (children.length > 0) {
 
-                button.addEventListener("click", () => {
+                button.addEventListener(
+                    "click",
+                    () => {
 
-                    subList.classList.toggle("show");
+                        subList.classList.toggle("show");
 
-                    if (subList.classList.contains("show")) {
+                        if (
+                            subList.classList.contains("show")
+                        ) {
 
-                        button.textContent = "Hide Services";
+                            button.textContent =
+                                "Hide Services";
 
-                        subList.innerHTML = "";
+                            subList.innerHTML = "";
 
-                        children.forEach(sub => {
+                            children.forEach(sub => {
 
-                            const subButton =
-                                document.createElement("button");
+                                const subButton =
+                                    document.createElement("button");
 
-                            subButton.className =
-                                "sub-service-button";
+                                subButton.className =
+                                    "sub-service-button";
 
-                            subButton.textContent =
-                                sub.sub_service_name ||
-                                "Sub Service";
+                                subButton.textContent =
+                                    sub.sub_service_name ||
+                                    "Sub Service";
 
-                            subButton.addEventListener(
-                                "click",
-                                () => {
+                                subButton.addEventListener(
+                                    "click",
+                                    () => {
 
-                                    showSubService(
-                                        service,
-                                        sub,
-                                        subServiceItems
-                                    );
+                                        showSubService(
+                                            service,
+                                            sub,
+                                            subServiceItems
+                                        );
 
-                                }
-                            );
+                                    }
+                                );
 
-                            subList.appendChild(subButton);
+                                subList.appendChild(
+                                    subButton
+                                );
 
-                        });
+                            });
 
-                    } else {
+                        } else {
 
-                        button.textContent =
-                            "View Services";
+                            button.textContent =
+                                "View Services";
+
+                        }
 
                     }
-
-                });
+                );
 
             }
 
@@ -220,6 +222,7 @@ async function loadWebsiteServices() {
                 <a
                     class="primary"
                     target="_blank"
+                    rel="noopener noreferrer"
                     href="https://wa.me/${WHATSAPP_NUMBER}"
                 >
                     WhatsApp Us
@@ -248,17 +251,12 @@ function showSubService(
         subService.sub_service_name ||
         "Sub Service";
 
-    // Find items belonging to this sub-service
     const items =
         subServiceItems.filter(
             item =>
                 Number(item.sub_service_id) ===
                 Number(subService.id)
         );
-
-    // ======================================
-    // ITEMS EXIST
-    // ======================================
 
     if (items.length > 0) {
 
@@ -270,10 +268,6 @@ function showSubService(
 
         return;
     }
-
-    // ======================================
-    // NO ITEMS
-    // ======================================
 
     const docs =
         getDocuments(
@@ -335,10 +329,6 @@ function showItems(
         </p>
     `;
 
-    // ======================================
-    // ITEM BUTTONS
-    // ======================================
-
     const buttons =
         box.querySelectorAll(".item-button");
 
@@ -362,8 +352,6 @@ function showItems(
 
                 if (!selectedItem) return;
 
-                // IMPORTANT:
-                // Use selected item's documents
                 const docs =
                     getDocuments(
                         selectedItem.documents
@@ -448,13 +436,11 @@ ${docs.map(d => `• ${d}`).join("\n")}`;
         </h3>
 
         <ul>
-
             ${docs.map(d => `
                 <li>
                     ${escapeHTML(d)}
                 </li>
             `).join("")}
-
         </ul>
 
         <a
