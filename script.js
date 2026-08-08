@@ -311,17 +311,14 @@ function showSubService(
     // ======================================
 
     const docs =
-        getDocuments(
-            subService.documents ||
-            service.documents
-        );
-
-
-    showDocs(
-    `${serviceName} – ${subName} – ${selectedItem.item_name}`,
     getDocuments(
-        selectedItem.documents
-    )
+        subService.documents ||
+        service.documents
+    );
+
+showDocs(
+    `${serviceName} – ${subName}`,
+    docs
 );
 
 
