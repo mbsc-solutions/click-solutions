@@ -4,7 +4,7 @@ const WHATSAPP_NUMBER = "917093334820";
 
 
 // ==========================================
-// LOAN SERVICE NAMES
+// OLD INDIVIDUAL LOAN SERVICE NAMES
 // ==========================================
 
 const LOAN_NAMES = [
@@ -17,6 +17,43 @@ const LOAN_NAMES = [
     "Home Loans",
     "Auto & Car Loans",
     "Bike Loans"
+];
+
+
+// ==========================================
+// DOCUMENT NAMES
+// Used when Supabase documents have no commas
+// ==========================================
+
+const DOCUMENT_NAMES = [
+    "Aadhaar Card",
+    "PAN Card",
+    "Address Proof",
+    "Bank Statement",
+    "Business / Agriculture Proof",
+    "Income Proof",
+    "Land Documents",
+    "Tractor Quotation",
+    "Gold Loan Documents",
+    "Property Documents",
+    "ITR",
+    "GST Certificate",
+    "Business Proof",
+    "Salary Slips",
+    "Bank Passbook",
+    "Vehicle RC",
+    "Driving License",
+    "Insurance Documents",
+    "Passport Size Photo",
+    "Photographs",
+    "Employment Proof",
+    "Salary Certificate",
+    "Form 16",
+    "ITR Documents",
+    "Loan Statement",
+    "Vehicle Quotation",
+    "Home Documents",
+    "Property Proof"
 ];
 
 
@@ -123,31 +160,35 @@ async function loadWebsiteServices() {
 
 
         // ==================================
-        // FIND LOANS SERVICE
+        // FIND LOANS MAIN SERVICE
         // ==================================
 
         const loansService =
             services.find(
                 service =>
-                    service.service_name === "Loans"
+                    String(
+                        service.service_name || ""
+                    ).trim().toLowerCase() === "loans"
             );
 
 
         // ==================================
         // FILTER MAIN SERVICES
+        // Hide old individual loan cards
         // ==================================
 
         const displayServices =
             services.filter(
                 service => {
 
-                    // Hide old individual
-                    // loan services
+                    const name =
+                        String(
+                            service.service_name || ""
+                        ).trim();
+
 
                     if (
-                        LOAN_NAMES.includes(
-                            service.service_name
-                        )
+                        LOAN_NAMES.includes(name)
                     ) {
 
                         return false;
@@ -160,7 +201,7 @@ async function loadWebsiteServices() {
 
 
         // ==================================
-        // MAKE SURE LOANS EXISTS
+        // ADD LOANS MAIN SERVICE
         // ==================================
 
         if (
@@ -213,7 +254,7 @@ async function loadWebsiteServices() {
 
 
                 // ==================================
-                // FIND CHILDREN
+                // FIND SUB SERVICES
                 // ==================================
 
                 const children =
@@ -287,7 +328,7 @@ async function loadWebsiteServices() {
 
 
                 // ==================================
-                // ADD TO GRID
+                // ADD CARD
                 // ==================================
 
                 grid.appendChild(
@@ -370,7 +411,7 @@ async function loadWebsiteServices() {
 
 
                             // ==================================
-                            // FORCE VISIBLE
+                            // FORCE DISPLAY
                             // ==================================
 
                             subList.style.display =
@@ -390,7 +431,7 @@ async function loadWebsiteServices() {
 
 
                             // ==================================
-                            // CREATE ALL SUB SERVICES
+                            // CREATE SUB SERVICES
                             // ==================================
 
                             subList.innerHTML = `
@@ -442,7 +483,7 @@ async function loadWebsiteServices() {
 
 
                             // ==================================
-                            // SUB BUTTON CLICK
+                            // SUB SERVICE CLICK
                             // ==================================
 
                             subButtons.forEach(
@@ -564,7 +605,6 @@ async function loadWebsiteServices() {
 
         `;
     }
-
 }
 
 
@@ -647,7 +687,6 @@ function showSubService(
         `${serviceName} – ${subName}`,
         docs
     );
-
 }
 
 
@@ -789,7 +828,6 @@ function showItems(
         behavior: "smooth",
         block: "center"
     });
-
 }
 
 
@@ -848,15 +886,99 @@ function getDocuments(
         typeof documents === "string"
     ) {
 
-        return documents
-            .split(",")
-            .map(
-                item =>
-                    item.trim()
-            )
-            .filter(
-                Boolean
-            );
+        const text =
+            documents.trim();
+
+
+        // ==================================
+        // HAS COMMA
+        // ==================================
+
+        if (
+            text.includes(",")
+        ) {
+
+            return text
+                .split(",")
+                .map(
+                    item =>
+                        item.trim()
+                )
+                .filter(
+                    Boolean
+                );
+        }
+
+
+        // ==================================
+        // NO COMMA
+        // Detect known document names
+        // ==================================
+
+        let result =
+            text;
+
+
+        // Sort longest first
+        // Prevent partial matching
+        const sortedNames =
+            [...DOCUMENT_NAMES]
+                .sort(
+                    (a, b) =>
+                        b.length -
+                        a.length
+                );
+
+
+        sortedNames.forEach(
+            name => {
+
+                const escapedName =
+                    name.replace(
+                        /[.*+?^${}()|[\]\\]/g,
+                        "\\$&"
+                    );
+
+
+                const regex =
+                    new RegExp(
+                        `\\s*${escapedName}`,
+                        "gi"
+                    );
+
+
+                result =
+                    result.replace(
+                        regex,
+                        `|||${name}`
+                    );
+
+            }
+        );
+
+
+        // ==================================
+        // MAKE ARRAY
+        // ==================================
+
+        const finalList =
+            result
+                .split("|||")
+                .map(
+                    item =>
+                        item.trim()
+                )
+                .filter(
+                    Boolean
+                );
+
+
+        if (
+            finalList.length > 0
+        ) {
+
+            return finalList;
+        }
     }
 
 
@@ -867,7 +989,6 @@ function getDocuments(
     return [
         "Please contact MBSC SOLUTIONS for requirements"
     ];
-
 }
 
 
@@ -937,21 +1058,36 @@ ${documentList
             )}
         </h3>
 
-        <ul
+
+        <div
             class="requirements-list"
         >
 
             ${documentList.map(
                 d => `
 
-                    <li>
-                        ${escapeHTML(d)}
-                    </li>
+                    <div
+                        class="requirement-item"
+                    >
+
+                        <span
+                            class="bullet"
+                        >
+                            •
+                        </span>
+
+                        <span
+                            class="requirement-text"
+                        >
+                            ${escapeHTML(d)}
+                        </span>
+
+                    </div>
 
                 `
             ).join("")}
 
-        </ul>
+        </div>
 
 
         <a
@@ -976,7 +1112,6 @@ ${documentList
         behavior: "smooth",
         block: "center"
     });
-
 }
 
 
@@ -1020,7 +1155,6 @@ function escapeHTML(
             /'/g,
             "&#039;"
         );
-
 }
 
 
@@ -1035,6 +1169,7 @@ document.addEventListener(
         console.log(
             "MBSC NEW SCRIPT LOADED"
         );
+
 
         loadWebsiteServices();
 
