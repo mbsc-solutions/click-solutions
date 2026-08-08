@@ -65,3 +65,153 @@ a{text-decoration:none;color:inherit}.topbar{height:78px;display:flex;align-item
 .item-button:hover {
     background: #162235;
 }
+/* ==========================================
+   MBSC SUB SERVICES FIX
+   ========================================== */
+
+.sub-service-list {
+    display: block !important;
+    width: 100%;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+}
+
+
+/* ==========================================
+   LOAN SUB SERVICES CONTAINER
+   ========================================== */
+
+.loan-sub-services {
+    display: flex !important;
+    flex-direction: column !important;
+
+    width: 100% !important;
+
+    margin-top: 15px !important;
+    padding: 0 !important;
+
+    gap: 10px !important;
+
+    height: auto !important;
+    max-height: none !important;
+
+    overflow: visible !important;
+}
+
+
+/* ==========================================
+   EACH SUB SERVICE
+   ========================================== */
+
+.loan-sub-services .sub-service-button {
+
+    display: flex !important;
+
+    align-items: center !important;
+
+    width: 100% !important;
+
+    min-height: 48px !important;
+
+    height: auto !important;
+
+    box-sizing: border-box !important;
+
+    margin: 0 !important;
+
+    padding: 12px 16px !important;
+
+    line-height: 1.4 !important;
+
+    text-align: left !important;
+
+    white-space: normal !important;
+
+    overflow: visible !important;
+
+    cursor: pointer;
+
+}
+
+
+/* ==========================================
+   NUMBER
+   ========================================== */
+
+.loan-sub-services .sub-number {
+
+    display: inline-block !important;
+
+    min-width: 30px !important;
+
+    margin-right: 6px !important;
+
+    font-weight: 700;
+
+}
+
+
+/* ==========================================
+   SHOW STATE
+   ========================================== */
+
+.sub-service-list.show {
+
+    display: block !important;
+
+    width: 100% !important;
+
+    height: auto !important;
+
+    max-height: none !important;
+
+    overflow: visible !important;
+
+    visibility: visible !important;
+
+}
+
+
+/* ==========================================
+   REQUIREMENTS LIST
+   ========================================== */
+
+.requirements-list {
+
+    margin: 15px 0;
+
+    padding-left: 28px;
+
+}
+
+
+.requirements-list li {
+
+    margin-bottom: 10px;
+
+    line-height: 1.6;
+
+}
+
+
+/* ==========================================
+   ITEM LIST
+   ========================================== */
+
+.item-list {
+
+    margin: 15px 0;
+
+    padding-left: 0;
+
+    list-style: none;
+
+}
+
+
+.item-list li {
+
+    margin-bottom: 10px;
+
+}
