@@ -7,6 +7,7 @@ const WHATSAPP_NUMBER = "917093334820";
 // ==========================================
 
 async function supabaseGet(table, query = "") {
+
     const response = await fetch(
         `${SUPABASE_URL}/rest/v1/${table}${query}`,
         {
@@ -27,6 +28,7 @@ async function supabaseGet(table, query = "") {
 
     return await response.json();
 }
+
 
 // ==========================================
 // LOAD WEBSITE SERVICES
@@ -93,9 +95,11 @@ async function loadWebsiteServices() {
                 </p>
 
                 <button class="service-button">
-                    ${children.length > 0
-                        ? "View Services"
-                        : "View & WhatsApp"}
+                    ${
+                        children.length > 0
+                            ? "View Services"
+                            : "View & WhatsApp"
+                    }
                 </button>
 
                 <div class="sub-service-list"></div>
@@ -108,6 +112,7 @@ async function loadWebsiteServices() {
 
             const subList =
                 article.querySelector(".sub-service-list");
+
 
             // ======================================
             // HAS SUB SERVICES
@@ -173,6 +178,7 @@ async function loadWebsiteServices() {
 
             }
 
+
             // ======================================
             // NO SUB SERVICES
             // ======================================
@@ -232,7 +238,9 @@ async function loadWebsiteServices() {
         `;
 
     }
+
 }
+
 
 // ==========================================
 // SHOW SUB SERVICE
@@ -258,6 +266,11 @@ function showSubService(
                 Number(subService.id)
         );
 
+
+    // ======================================
+    // ITEMS EXIST
+    // ======================================
+
     if (items.length > 0) {
 
         showItems(
@@ -269,6 +282,11 @@ function showSubService(
         return;
     }
 
+
+    // ======================================
+    // NO ITEMS
+    // ======================================
+
     const docs =
         getDocuments(
             subService.documents ||
@@ -279,7 +297,9 @@ function showSubService(
         `${serviceName} – ${subName}`,
         docs
     );
+
 }
+
 
 // ==========================================
 // SHOW SUB SERVICE ITEMS
@@ -329,6 +349,11 @@ function showItems(
         </p>
     `;
 
+
+    // ======================================
+    // ITEM BUTTONS
+    // ======================================
+
     const buttons =
         box.querySelectorAll(".item-button");
 
@@ -367,11 +392,14 @@ function showItems(
 
     });
 
+
     box.scrollIntoView({
         behavior: "smooth",
         block: "center"
     });
+
 }
+
 
 // ==========================================
 // DOCUMENTS
@@ -379,7 +407,12 @@ function showItems(
 
 function getDocuments(documents) {
 
-    if (!documents) {
+    // Empty / NULL
+    if (
+        documents === null ||
+        documents === undefined ||
+        documents === ""
+    ) {
 
         return [
             "Please contact MBSC SOLUTIONS for requirements"
@@ -387,25 +420,34 @@ function getDocuments(documents) {
 
     }
 
+
+    // Array
+    if (Array.isArray(documents)) {
+
+        return documents
+            .map(item => String(item).trim())
+            .filter(Boolean);
+
+    }
+
+
+    // String
     if (typeof documents === "string") {
 
         return documents
-            .split(",")
+            .split(/\s*,\s*/)
             .map(item => item.trim())
             .filter(Boolean);
 
     }
 
-    if (Array.isArray(documents)) {
-
-        return documents;
-
-    }
 
     return [
         "Please contact MBSC SOLUTIONS for requirements"
     ];
+
 }
+
 
 // ==========================================
 // SHOW DOCUMENTS + WHATSAPP
@@ -418,13 +460,32 @@ function showDocs(service, docs) {
 
     if (!box) return;
 
+
+    // Make sure docs is always an array
+    const documentList =
+        Array.isArray(docs)
+            ? docs
+            : getDocuments(docs);
+
+
+    // ======================================
+    // WHATSAPP MESSAGE
+    // ======================================
+
     const message =
-`*MBSC SOLUTIONS*
+        `*MBSC SOLUTIONS*
 
 *I need this – ${service}*
 
 *Required Documents:*
-${docs.map(d => `• ${d}`).join("\n")}`;
+${documentList
+    .map(d => `• ${d}`)
+    .join("\n")}`;
+
+
+    // ======================================
+    // DISPLAY REQUIREMENTS
+    // ======================================
 
     box.innerHTML = `
         <p class="eyebrow">
@@ -435,12 +496,14 @@ ${docs.map(d => `• ${d}`).join("\n")}`;
             ${escapeHTML(service)}
         </h3>
 
-        <ul>
-            ${docs.map(d => `
+        <ul class="requirements-list">
+
+            ${documentList.map(d => `
                 <li>
                     ${escapeHTML(d)}
                 </li>
             `).join("")}
+
         </ul>
 
         <a
@@ -453,11 +516,14 @@ ${docs.map(d => `• ${d}`).join("\n")}`;
         </a>
     `;
 
+
     box.scrollIntoView({
         behavior: "smooth",
         block: "center"
     });
+
 }
+
 
 // ==========================================
 // ESCAPE HTML
@@ -469,7 +535,9 @@ function escapeHTML(value) {
         value === null ||
         value === undefined
     ) {
+
         return "";
+
     }
 
     return String(value)
@@ -478,7 +546,9 @@ function escapeHTML(value) {
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
+
 }
+
 
 // ==========================================
 // START WEBSITE
