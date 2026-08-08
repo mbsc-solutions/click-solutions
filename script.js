@@ -7,7 +7,6 @@ const WHATSAPP_NUMBER = "917093334820";
 // ==========================================
 
 async function supabaseGet(table, query = "") {
-
     const response = await fetch(
         `${SUPABASE_URL}/rest/v1/${table}${query}`,
         {
@@ -21,20 +20,16 @@ async function supabaseGet(table, query = "") {
     );
 
     if (!response.ok) {
-
         const error = await response.text();
-
         console.error(`Supabase ${table} Error:`, error);
-
         throw new Error(error);
     }
 
     return await response.json();
 }
 
-
 // ==========================================
-// LOAD WEBSITE
+// LOAD WEBSITE SERVICES
 // ==========================================
 
 async function loadWebsiteServices() {
@@ -64,11 +59,11 @@ async function loadWebsiteServices() {
         console.log("SUB SERVICES:", subServices);
         console.log("SUB SERVICE ITEMS:", subServiceItems);
 
+        // Remove old HTML cards
         grid.innerHTML = "";
 
-
         // ======================================
-        // MAIN SERVICES
+        // CREATE MAIN SERVICES
         // ======================================
 
         services.forEach(service => {
@@ -82,22 +77,19 @@ async function loadWebsiteServices() {
                 service.description ||
                 "Click below to view available services.";
 
+            // Find sub-services
+            const children = subServices.filter(
+                sub =>
+                    Number(sub.service_id) === Number(serviceId)
+            );
 
-            const children =
-                subServices.filter(sub =>
-                    Number(sub.service_id) ===
-                    Number(serviceId)
-                );
-
-
+            // Create card
             const article =
                 document.createElement("article");
 
             article.className = "service";
 
-
             article.innerHTML = `
-
                 <h3>
                     ${escapeHTML(serviceName)}
                 </h3>
@@ -113,12 +105,9 @@ async function loadWebsiteServices() {
                 </button>
 
                 <div class="sub-service-list"></div>
-
             `;
 
-
             grid.appendChild(article);
-
 
             const button =
                 article.querySelector(".service-button");
@@ -126,79 +115,64 @@ async function loadWebsiteServices() {
             const subList =
                 article.querySelector(".sub-service-list");
 
-
             // ======================================
-            // SUB SERVICES
+            // HAS SUB SERVICES
             // ======================================
 
             if (children.length > 0) {
 
-                button.addEventListener(
-                    "click",
-                    () => {
+                button.addEventListener("click", () => {
 
-                        subList.classList.toggle("show");
+                    subList.classList.toggle("show");
 
+                    if (subList.classList.contains("show")) {
 
-                        if (
-                            subList.classList.contains("show")
-                        ) {
+                        button.textContent = "Hide Services";
 
-                            button.textContent =
-                                "Hide Services";
+                        subList.innerHTML = "";
 
-                            subList.innerHTML = "";
+                        children.forEach(sub => {
 
+                            const subButton =
+                                document.createElement("button");
 
-                            children.forEach(sub => {
+                            subButton.className =
+                                "sub-service-button";
 
-                                const subButton =
-                                    document.createElement("button");
+                            subButton.textContent =
+                                sub.sub_service_name ||
+                                "Sub Service";
 
-                                subButton.className =
-                                    "sub-service-button";
+                            subButton.addEventListener(
+                                "click",
+                                () => {
 
+                                    showSubService(
+                                        service,
+                                        sub,
+                                        subServiceItems
+                                    );
 
-                                subButton.textContent =
-                                    sub.sub_service_name ||
-                                    "Sub Service";
+                                }
+                            );
 
+                            subList.appendChild(subButton);
 
-                                subButton.addEventListener(
-                                    "click",
-                                    () => {
+                        });
 
-                                        showSubService(
-                                            service,
-                                            sub,
-                                            subServiceItems
-                                        );
+                    } else {
 
-                                    }
-                                );
-
-
-                                subList.appendChild(
-                                    subButton
-                                );
-
-                            });
-
-                        } else {
-
-                            button.textContent =
-                                "View Services";
-
-                        }
+                        button.textContent =
+                            "View Services";
 
                     }
-                );
+
+                });
 
             }
 
-
             // ======================================
-            // SERVICE WITHOUT SUB SERVICES
+            // NO SUB SERVICES
             // ======================================
 
             else {
@@ -224,7 +198,6 @@ async function loadWebsiteServices() {
 
         });
 
-
     } catch (error) {
 
         console.error(
@@ -232,9 +205,7 @@ async function loadWebsiteServices() {
             error
         );
 
-
         grid.innerHTML = `
-
             <div class="service">
 
                 <h3>
@@ -255,13 +226,10 @@ async function loadWebsiteServices() {
                 </a>
 
             </div>
-
         `;
 
     }
-
 }
-
 
 // ==========================================
 // SHOW SUB SERVICE
@@ -280,18 +248,16 @@ function showSubService(
         subService.sub_service_name ||
         "Sub Service";
 
-
-    // Find items belonging to this sub service
-
+    // Find items belonging to this sub-service
     const items =
-        subServiceItems.filter(item =>
-            Number(item.sub_service_id) ===
-            Number(subService.id)
+        subServiceItems.filter(
+            item =>
+                Number(item.sub_service_id) ===
+                Number(subService.id)
         );
 
-
     // ======================================
-    // IF ITEMS EXIST
+    // ITEMS EXIST
     // ======================================
 
     if (items.length > 0) {
@@ -305,22 +271,21 @@ function showSubService(
         return;
     }
 
-
     // ======================================
-    // IF NO ITEMS
+    // NO ITEMS
     // ======================================
 
     const docs =
-    getDocuments(
-        subService.documents ||
-        service.documents
+        getDocuments(
+            subService.documents ||
+            service.documents
+        );
+
+    showDocs(
+        `${serviceName} – ${subName}`,
+        docs
     );
-
-showDocs(
-    `${serviceName} – ${subName}`,
-    docs
-);
-
+}
 
 // ==========================================
 // SHOW SUB SERVICE ITEMS
@@ -337,13 +302,11 @@ function showItems(
 
     if (!box) return;
 
-
     const subName =
-        subService.sub_service_name;
-
+        subService.sub_service_name ||
+        "Sub Service";
 
     box.innerHTML = `
-
         <p class="eyebrow">
             ${escapeHTML(serviceName)}
         </p>
@@ -355,18 +318,14 @@ function showItems(
         <ul class="item-list">
 
             ${items.map(item => `
-
                 <li>
-
                     <button
                         class="item-button"
                         data-item-id="${item.id}"
                     >
                         ${escapeHTML(item.item_name)}
                     </button>
-
                 </li>
-
             `).join("")}
 
         </ul>
@@ -374,9 +333,7 @@ function showItems(
         <p>
             Select an item above to view requirements.
         </p>
-
     `;
-
 
     // ======================================
     // ITEM BUTTONS
@@ -384,7 +341,6 @@ function showItems(
 
     const buttons =
         box.querySelectorAll(".item-button");
-
 
     buttons.forEach(button => {
 
@@ -397,7 +353,6 @@ function showItems(
                         button.dataset.itemId
                     );
 
-
                 const selectedItem =
                     items.find(
                         item =>
@@ -405,15 +360,18 @@ function showItems(
                             itemId
                     );
 
-
                 if (!selectedItem) return;
 
+                // IMPORTANT:
+                // Use selected item's documents
+                const docs =
+                    getDocuments(
+                        selectedItem.documents
+                    );
 
                 showDocs(
                     `${serviceName} – ${subName} – ${selectedItem.item_name}`,
-                    getDocuments(
-                        subService.documents
-                    )
+                    docs
                 );
 
             }
@@ -421,14 +379,11 @@ function showItems(
 
     });
 
-
     box.scrollIntoView({
         behavior: "smooth",
         block: "center"
     });
-
 }
-
 
 // ==========================================
 // DOCUMENTS
@@ -444,7 +399,6 @@ function getDocuments(documents) {
 
     }
 
-
     if (typeof documents === "string") {
 
         return documents
@@ -454,20 +408,16 @@ function getDocuments(documents) {
 
     }
 
-
     if (Array.isArray(documents)) {
 
         return documents;
 
     }
 
-
     return [
         "Please contact MBSC SOLUTIONS for requirements"
     ];
-
 }
-
 
 // ==========================================
 // SHOW DOCUMENTS + WHATSAPP
@@ -480,7 +430,6 @@ function showDocs(service, docs) {
 
     if (!box) return;
 
-
     const message =
 `*MBSC SOLUTIONS*
 
@@ -489,9 +438,7 @@ function showDocs(service, docs) {
 *Required Documents:*
 ${docs.map(d => `• ${d}`).join("\n")}`;
 
-
     box.innerHTML = `
-
         <p class="eyebrow">
             REQUIREMENTS
         </p>
@@ -518,17 +465,13 @@ ${docs.map(d => `• ${d}`).join("\n")}`;
         >
             WhatsApp for ${escapeHTML(service)}
         </a>
-
     `;
-
 
     box.scrollIntoView({
         behavior: "smooth",
         block: "center"
     });
-
 }
-
 
 // ==========================================
 // ESCAPE HTML
@@ -549,19 +492,15 @@ function escapeHTML(value) {
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
-
 }
 
-
 // ==========================================
-// START
+// START WEBSITE
 // ==========================================
 
 document.addEventListener(
     "DOMContentLoaded",
     () => {
-
         loadWebsiteServices();
-
     }
 );
