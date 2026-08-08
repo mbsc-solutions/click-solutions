@@ -44,3 +44,24 @@ a{text-decoration:none;color:inherit}.topbar{height:78px;display:flex;align-item
 .service-button {
     cursor: pointer;
 }
+.item-list {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0;
+}
+
+.item-button {
+    width: 100%;
+    padding: 11px 14px;
+    margin-bottom: 8px;
+    border: 1px solid #2d3a4d;
+    border-radius: 8px;
+    background: #0d141e;
+    color: #ffffff;
+    cursor: pointer;
+    text-align: left;
+}
+
+.item-button:hover {
+    background: #162235;
+}
