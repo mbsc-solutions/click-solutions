@@ -1,8 +1,9 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>MBSC SOLUTIONS</title>
 
@@ -25,7 +26,7 @@
 
       <div>
         <strong>MBSC SOLUTIONS</strong>
-        <span>Financial & Digital Services</span>
+        <span>Financial &amp; Digital Services</span>
       </div>
 
     </div>
@@ -34,6 +35,7 @@
       class="wa"
       href="https://wa.me/917093334820"
       target="_blank"
+      rel="noopener"
     >
       WhatsApp
     </a>
@@ -54,7 +56,7 @@
 
     <section class="hero">
 
-      <!-- LEFT CONTENT -->
+      <!-- LEFT SIDE -->
 
       <div class="hero-content">
 
@@ -78,6 +80,7 @@
             class="primary"
             href="https://wa.me/917093334820?text=Hello%20MBSC%20SOLUTIONS%2C%20I%20need%20service%20details"
             target="_blank"
+            rel="noopener"
           >
             Chat on WhatsApp
           </a>
@@ -94,7 +97,9 @@
       </div>
 
 
-      <!-- RIGHT HERO CARD -->
+      <!-- =================================================
+           RIGHT SIDE VIDEO
+      ================================================== -->
 
       <div class="hero-card">
 
@@ -102,24 +107,25 @@
 
         <div class="hero-animation">
 
-          <img
-            src="ChatGPT%20Image%20Aug%209,%202026,%2010_06_19%20AM.png"
-            alt="MBSC Solutions"
-            class="hero-person-image"
+          <video
+            class="hero-person-video"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="auto"
           >
 
+            <source
+              src="loans.mp4"
+              type="video/mp4"
+            >
+
+            Your browser does not support the video tag.
+
+          </video>
+
         </div>
-
-        <!-- Old text intentionally kept hidden by CSS -->
-
-        <span>
-          QUICK ASSISTANCE
-        </span>
-
-        <b>
-          Choose a service<br>
-          and message us.
-        </b>
 
       </div>
 
@@ -149,21 +155,21 @@
       </div>
 
 
-      <!--
-        IMPORTANT:
+      <!-- =================================================
+           IMPORTANT SERVICES GRID
 
-        DO NOT REMOVE THIS GRID.
-
-        script.js automatically loads
-        all services from Supabase here.
-      -->
+           script.js will load services here
+      ================================================== -->
 
       <div
         class="grid"
         id="servicesGrid"
       >
 
-        <!-- Services will be loaded automatically from Supabase -->
+        <!--
+          Services are loaded automatically
+          by script.js
+        -->
 
       </div>
 
@@ -176,6 +182,8 @@
     ==================================================== -->
 
     <section class="section documents">
+
+      <!-- LEFT -->
 
       <div class="info-panel">
 
@@ -195,6 +203,8 @@
 
       </div>
 
+
+      <!-- RIGHT -->
 
       <div
         id="documentBox"
@@ -221,6 +231,8 @@
 
     <section class="contact">
 
+      <!-- CONTACT TEXT -->
+
       <div>
 
         <p class="eyebrow">
@@ -238,16 +250,18 @@
       </div>
 
 
+      <!-- CONTACT BUTTONS -->
+
       <div class="contact-actions">
 
         <a
           class="primary"
           href="https://wa.me/917093334820"
           target="_blank"
+          rel="noopener"
         >
           WhatsApp Us
         </a>
-
 
         <a
           class="secondary"
@@ -255,7 +269,6 @@
         >
           7093334820
         </a>
-
 
         <a
           class="secondary"
@@ -277,7 +290,9 @@
   ====================================================== -->
 
   <footer>
+
     MBSC SOLUTIONS · All rights reserved.
+
   </footer>
 
 
@@ -286,7 +301,8 @@
        JAVASCRIPT
   ====================================================== -->
 
-  <script src="script.js?v=4"></script>
+  <script src="script.js?v=5"></script>
 
 </body>
+
 </html>
