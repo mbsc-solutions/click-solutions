@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
   <meta charset="UTF-8">
@@ -11,430 +12,443 @@
 
   <meta
     name="description"
-    content="MBSC Solutions - Loans, Credit Cards, PF, ITR, Banking and Digital Services"
+    content="MBSC Solutions - Financial & Digital Services"
   >
 
   <title>MBSC SOLUTIONS</title>
 
+
+  <!-- MAIN CSS -->
   <link rel="stylesheet" href="style.css">
 
 </head>
 
+
 <body>
 
 
-<!-- =====================================================
-     TOP BAR
-===================================================== -->
+  <!-- =====================================================
+       TOP BAR
+  ====================================================== -->
 
-<header class="topbar">
+  <header class="topbar">
 
-  <div class="brand">
+    <div class="brand">
 
-    <div class="logo">
-      MBSC
+      <div class="logo">
+        MBSC
+      </div>
+
+      <div>
+
+        <strong>
+          MBSC SOLUTIONS
+        </strong>
+
+        <span>
+          Financial & Digital Services
+        </span>
+
+      </div>
+
     </div>
+
+
+    <a
+      class="wa"
+      href="https://wa.me/917093334820"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      WhatsApp
+    </a>
+
+  </header>
+
+
+
+  <!-- =====================================================
+       HERO
+  ====================================================== -->
+
+  <section class="hero">
+
+
+    <!-- LEFT CONTENT -->
+
+    <div class="hero-content">
+
+      <p class="eyebrow">
+        WELCOME TO
+      </p>
+
+
+      <h1>
+        MBSC<br>
+        SOLUTIONS
+      </h1>
+
+
+      <p>
+        Loans, credit cards, PF, ITR, banking and digital
+        services — all in one place.
+      </p>
+
+
+      <div class="actions">
+
+        <a
+          class="primary"
+          href="https://wa.me/917093334820?text=Hello%20MBSC%20SOLUTIONS%2C%20I%20need%20service%20details"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Chat on WhatsApp
+        </a>
+
+
+        <a
+          class="secondary"
+          href="#services"
+        >
+          View Services
+        </a>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         HERO VIDEO
+    ================================================== -->
+
+    <div class="hero-card">
+
+      <div class="card-glow"></div>
+
+
+      <div class="hero-animation">
+
+
+        <!-- VIDEO ONLY -->
+        <video
+          class="hero-video"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="auto"
+        >
+
+          <source
+            src="hero-video.mp4"
+            type="video/mp4"
+          >
+
+          Your browser does not support video.
+
+        </video>
+
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =====================================================
+       SERVICES
+  ====================================================== -->
+
+  <section
+    id="services"
+    class="section"
+  >
+
+
+    <div class="section-head">
+
+      <p class="eyebrow">
+        OUR SERVICES
+      </p>
+
+
+      <h2>
+        What can we help you with?
+      </h2>
+
+    </div>
+
+
+
+    <!--
+      IMPORTANT:
+
+      script.js loads services from Supabase
+      into this div.
+    -->
+
+    <div
+      id="servicesGrid"
+      class="grid"
+    >
+
+      <div class="service loading-service">
+
+        <h3>
+          Loading Services...
+        </h3>
+
+        <p>
+          Please wait while our services are loading.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =====================================================
+       DOCUMENTS
+  ====================================================== -->
+
+  <section class="section documents">
+
+
+    <!-- LEFT -->
+
+    <div class="info-panel">
+
+      <p class="eyebrow">
+        DOCUMENTS
+      </p>
+
+
+      <h2>
+        Service-wise requirements
+      </h2>
+
+
+      <p>
+        Select a service above to see the usual
+        document checklist. Final requirements may
+        vary by product/provider.
+      </p>
+
+    </div>
+
+
+
+    <!-- RIGHT -->
+
+    <div
+      id="documentBox"
+      class="doc-box"
+    >
+
+      <h3>
+        Select a service
+      </h3>
+
+
+      <p>
+        Tap any service to view its document list.
+      </p>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =====================================================
+       CONTACT
+  ====================================================== -->
+
+  <section class="contact">
+
 
     <div>
 
-      <strong>
-        MBSC SOLUTIONS
-      </strong>
+      <p class="eyebrow">
+        CONTACT
+      </p>
 
-      <span>
-        Financial & Digital Services
-      </span>
+
+      <h2>
+        Need assistance?
+      </h2>
+
+
+      <p>
+        Message us on WhatsApp or call us directly.
+      </p>
 
     </div>
 
-  </div>
 
 
-  <a
-    class="wa"
-    href="https://wa.me/917093334820"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    WhatsApp
-  </a>
+    <div class="contact-actions">
 
-</header>
-
-
-
-<!-- =====================================================
-     HERO
-===================================================== -->
-
-<section class="hero">
-
-
-  <!-- LEFT CONTENT -->
-
-  <div class="hero-content">
-
-    <p class="eyebrow">
-      WELCOME TO
-    </p>
-
-
-    <h1>
-      MBSC<br>
-      SOLUTIONS
-    </h1>
-
-
-    <p>
-      Loans, credit cards, PF, ITR, banking and digital
-      services — all in one place.
-    </p>
-
-
-    <div class="actions">
 
       <a
         class="primary"
-        href="https://wa.me/917093334820?text=Hello%20MBSC%20SOLUTIONS%2C%20I%20need%20service%20details"
+        href="https://wa.me/917093334820"
         target="_blank"
         rel="noopener noreferrer"
       >
-        Chat on WhatsApp
+        WhatsApp Us
       </a>
 
 
       <a
         class="secondary"
-        href="#services"
+        href="tel:+917093334820"
       >
-        View Services
+        7093334820
       </a>
 
-    </div>
 
-  </div>
-
-
-
-  <!-- =================================================
-       HERO VIDEO
-  ================================================== -->
-
-  <div class="hero-card">
-
-    <div class="card-glow"></div>
-
-
-    <div class="hero-animation">
-
-      <video
-        class="hero-video"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="auto"
-        controlslist="nodownload"
+      <a
+        class="secondary"
+        href="tel:+919491874820"
       >
+        9491874820
+      </a>
 
-        <source
-          src="Untitled design.mp4"
-          type="video/mp4"
-        >
-
-        Your browser does not support HTML5 video.
-
-      </video>
 
     </div>
 
-  </div>
+  </section>
 
-</section>
 
 
+  <!-- =====================================================
+       FOOTER
+  ====================================================== -->
 
-<!-- =====================================================
-     SERVICES
-===================================================== -->
+  <footer>
 
-<section
-  id="services"
-  class="section"
->
+    © 2026 MBSC SOLUTIONS. All Rights Reserved.
 
+  </footer>
 
-  <div class="section-head">
 
-    <p class="eyebrow">
-      OUR SERVICES
-    </p>
 
+  <!-- =====================================================
+       SUPABASE
+  ====================================================== -->
 
-    <h2>
-      What can we help you with?
-    </h2>
+  <script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+  ></script>
 
-  </div>
 
 
+  <!-- =====================================================
+       MAIN JAVASCRIPT
+  ====================================================== -->
 
-  <!--
-    IMPORTANT
+  <script src="script.js"></script>
 
-    DO NOT DELETE THIS.
 
-    script.js automatically loads
-    services from Supabase.
-  -->
 
-  <div
-    id="servicesGrid"
-    class="grid"
-  >
+  <!-- =====================================================
+       HERO VIDEO
+  ====================================================== -->
 
-    <div class="service loading-service">
+  <script>
 
-      <h3>
-        Loading Services...
-      </h3>
+    document.addEventListener(
+      "DOMContentLoaded",
+      function () {
 
-      <p>
-        Please wait while our services are loading.
-      </p>
+        const video =
+          document.querySelector(".hero-video");
 
-    </div>
 
-  </div>
+        if (!video) {
+          return;
+        }
 
-</section>
 
+        video.muted = true;
 
 
-<!-- =====================================================
-     DOCUMENTS
-===================================================== -->
+        video.setAttribute(
+          "autoplay",
+          ""
+        );
 
-<section class="section documents">
 
+        video.setAttribute(
+          "loop",
+          ""
+        );
 
-  <!-- LEFT -->
 
-  <div class="info-panel">
+        video.setAttribute(
+          "playsinline",
+          ""
+        );
 
-    <p class="eyebrow">
-      DOCUMENTS
-    </p>
 
+        function startVideo() {
 
-    <h2>
-      Service-wise requirements
-    </h2>
+          video.play().catch(
+            function () {
+              console.log(
+                "Video autoplay blocked."
+              );
+            }
+          );
 
+        }
 
-    <p>
-      Select a service above to see the usual
-      document checklist. Final requirements may
-      vary by product/provider.
-    </p>
 
-  </div>
+        startVideo();
 
 
+        video.addEventListener(
+          "loadeddata",
+          startVideo
+        );
 
-  <!-- RIGHT -->
 
-  <div
-    id="documentBox"
-    class="doc-box"
-  >
+        video.addEventListener(
+          "canplay",
+          startVideo
+        );
 
-    <h3>
-      Select a service
-    </h3>
 
+        document.addEventListener(
+          "visibilitychange",
+          function () {
 
-    <p>
-      Tap any service to view its document list.
-    </p>
+            if (
+              document.visibilityState === "visible"
+            ) {
 
-  </div>
+              startVideo();
 
-</section>
+            }
 
-
-
-<!-- =====================================================
-     CONTACT
-===================================================== -->
-
-<section class="contact">
-
-
-  <div>
-
-    <p class="eyebrow">
-      CONTACT
-    </p>
-
-
-    <h2>
-      Need assistance?
-    </h2>
-
-
-    <p>
-      Message us on WhatsApp or call us directly.
-    </p>
-
-  </div>
-
-
-
-  <div class="contact-actions">
-
-
-    <a
-      class="primary"
-      href="https://wa.me/917093334820"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      WhatsApp Us
-    </a>
-
-
-    <a
-      class="secondary"
-      href="tel:+917093334820"
-    >
-      7093334820
-    </a>
-
-
-    <a
-      class="secondary"
-      href="tel:+919491874820"
-    >
-      9491874820
-    </a>
-
-
-  </div>
-
-</section>
-
-
-
-<!-- =====================================================
-     FOOTER
-===================================================== -->
-
-<footer>
-
-  © 2026 MBSC SOLUTIONS. All Rights Reserved.
-
-</footer>
-
-
-
-<!-- =====================================================
-     SUPABASE
-===================================================== -->
-
-<script
-  src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
-></script>
-
-
-<!-- =====================================================
-     MAIN SCRIPT
-===================================================== -->
-
-<script src="script.js"></script>
-
-
-
-<!-- =====================================================
-     HERO VIDEO SAFETY
-     Makes sure video starts automatically
-===================================================== -->
-
-<script>
-
-document.addEventListener("DOMContentLoaded", function () {
-
-  const video =
-    document.querySelector(".hero-video");
-
-  if (!video) return;
-
-
-  video.muted = true;
-
-  video.setAttribute(
-    "playsinline",
-    ""
-  );
-
-  video.setAttribute(
-    "autoplay",
-    ""
-  );
-
-  video.setAttribute(
-    "loop",
-    ""
-  );
-
-
-  const playVideo = () => {
-
-    video.play().catch(() => {
-
-      console.log(
-        "Video autoplay waiting for browser."
-      );
-
-    });
-
-  };
-
-
-  playVideo();
-
-
-  document.addEventListener(
-    "visibilitychange",
-    function () {
-
-      if (
-        document.visibilityState === "visible"
-      ) {
-
-        playVideo();
+          }
+        );
 
       }
+    );
 
-    }
-  );
-
-
-  video.addEventListener(
-    "loadeddata",
-    playVideo
-  );
-
-
-  video.addEventListener(
-    "canplay",
-    playVideo
-  );
-
-});
-
-</script>
+  </script>
 
 
 </body>
+
 </html>
