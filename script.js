@@ -9,8 +9,8 @@
 // IMPORTANT:
 // IKKADA nee actual Supabase URL and Anon Key pettali.
 
-const SUPABASE_URL = "PASTE_YOUR_SUPABASE_URL_HERE";
-const SUPABASE_ANON_KEY = "PASTE_YOUR_SUPABASE_ANON_KEY_HERE";
+const SUPABASE_URL = "sb_publishable_wlqTaOkM3fML9cuUES54fw_8TlbSi-H";
+const SUPABASE_ANON_KEY = "sb_publishable_...";
 
 
 // ==========================================================
