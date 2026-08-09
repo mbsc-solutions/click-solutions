@@ -1,36 +1,68 @@
 // ==========================================================
-// MBSC SOLUTIONS - COMPLETE SCRIPT
+// MBSC SOLUTIONS - SERVICES SCRIPT
 // ==========================================================
 
 // ==========================================================
 // SUPABASE CONFIG
 // ==========================================================
 
+// IMPORTANT:
+// Replace these two values with your real Supabase values.
+
 const SUPABASE_URL = "YOUR_SUPABASE_URL";
 const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
 
-const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
-);
+
+// ==========================================================
+// CHECK SUPABASE
+// ==========================================================
+
+if (!window.supabase) {
+
+    console.error("Supabase library is not loaded.");
+
+}
+
+
+// ==========================================================
+// CREATE SUPABASE CLIENT
+// ==========================================================
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
 
 
 // ==========================================================
 // GLOBAL
 // ==========================================================
 
-const grid = document.querySelector(".grid");
-const documentBox = document.getElementById("documentBox");
+const grid =
+    document.getElementById("servicesGrid");
+
+const documentBox =
+    document.getElementById("documentBox");
 
 
 // ==========================================================
 // WHATSAPP
 // ==========================================================
 
-const WHATSAPP_NUMBER = "917093334820";
+const WHATSAPP_NUMBER =
+    "917093334820";
+
 
 function whatsappLink(message) {
-    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
+    return (
+        "https://wa.me/" +
+        WHATSAPP_NUMBER +
+        "?text=" +
+        encodeURIComponent(message)
+    );
+
 }
 
 
@@ -40,64 +72,141 @@ function whatsappLink(message) {
 
 async function loadServices() {
 
-    if (!grid) return;
+    if (!grid) {
+
+        console.error(
+            "servicesGrid not found in index.html"
+        );
+
+        return;
+
+    }
+
 
     grid.innerHTML = `
         <div class="service">
             <h3>Loading Services...</h3>
-            <p>Please wait...</p>
+            <p>Please wait while services are loading.</p>
         </div>
     `;
 
+
     try {
 
-        const { data, error } = await supabaseClient
+        const {
+            data,
+            error
+        } = await supabaseClient
+
             .from("services")
+
             .select("*")
-            .order("id", { ascending: true });
+
+            .order("id", {
+                ascending: true
+            });
+
+
+        // ==================================================
+        // SUPABASE ERROR
+        // ==================================================
 
         if (error) {
-            console.error("Supabase Error:", error);
+
+            console.error(
+                "SUPABASE ERROR:",
+                error
+            );
+
 
             grid.innerHTML = `
                 <div class="service">
-                    <h3>Unable to load services</h3>
-                    <p>Please refresh the page.</p>
+                    <h3>Services could not be loaded</h3>
+
+                    <p>
+                        Please check your Supabase
+                        connection and services table.
+                    </p>
                 </div>
             `;
 
             return;
+
         }
 
-        if (!data || data.length === 0) {
+
+        // ==================================================
+        // NO DATA
+        // ==================================================
+
+        if (
+            !data ||
+            data.length === 0
+        ) {
 
             grid.innerHTML = `
                 <div class="service">
                     <h3>No Services Found</h3>
-                    <p>Please add services in Supabase.</p>
+
+                    <p>
+                        Your Supabase services table
+                        is currently empty.
+                    </p>
                 </div>
             `;
 
             return;
+
         }
+
+
+        // ==================================================
+        // CLEAR LOADING
+        // ==================================================
 
         grid.innerHTML = "";
 
-        data.forEach(service => {
-            createServiceCard(service);
-        });
 
-    } catch (err) {
+        // ==================================================
+        // CREATE SERVICES
+        // ==================================================
 
-        console.error(err);
+        data.forEach(
+            service => {
+
+                createServiceCard(
+                    service
+                );
+
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "SERVICE LOAD ERROR:",
+            error
+        );
+
 
         grid.innerHTML = `
             <div class="service">
-                <h3>Error</h3>
-                <p>Something went wrong while loading services.</p>
+
+                <h3>
+                    Connection Error
+                </h3>
+
+                <p>
+                    Unable to connect to Supabase.
+                    Please check the configuration.
+                </p>
+
             </div>
         `;
+
     }
+
 }
 
 
@@ -107,9 +216,22 @@ async function loadServices() {
 
 function createServiceCard(service) {
 
-    const article = document.createElement("article");
+    if (!grid) return;
 
-    article.className = "service";
+
+    const article =
+        document.createElement(
+            "article"
+        );
+
+
+    article.className =
+        "service";
+
+
+    // ======================================================
+    // SERVICE NAME
+    // ======================================================
 
     const serviceName =
         service.name ||
@@ -117,10 +239,21 @@ function createServiceCard(service) {
         service.title ||
         "Service";
 
+
+    // ======================================================
+    // DESCRIPTION
+    // ======================================================
+
     const description =
         service.description ||
         service.details ||
+        service.content ||
         "Click below for more details.";
+
+
+    // ======================================================
+    // DOCUMENTS
+    // ======================================================
 
     const docs =
         service.documents ||
@@ -128,62 +261,88 @@ function createServiceCard(service) {
         service.docs ||
         "";
 
-    const serviceId = service.id;
-
 
     // ======================================================
-    // SERVICE TITLE
+    // TITLE
     // ======================================================
 
-    const title = document.createElement("h3");
+    const title =
+        document.createElement(
+            "h3"
+        );
 
-    title.textContent = serviceName;
+
+    title.textContent =
+        serviceName;
 
 
     // ======================================================
     // DESCRIPTION
     // ======================================================
 
-    const desc = document.createElement("p");
-
-    desc.textContent = description;
-
-
-    // ======================================================
-    // VIEW BUTTON
-    // ======================================================
-
-    const button = document.createElement("button");
-
-    button.className = "service-button";
-
-    button.textContent = "View & WhatsApp";
-
-
-    // ======================================================
-    // BUTTON ACTION
-    // ======================================================
-
-    button.addEventListener("click", function () {
-
-        showServiceDocuments(
-            serviceName,
-            docs,
-            service
+    const desc =
+        document.createElement(
+            "p"
         );
 
-    });
+
+    desc.textContent =
+        description;
+
+
+    // ======================================================
+    // BUTTON
+    // ======================================================
+
+    const button =
+        document.createElement(
+            "button"
+        );
+
+
+    button.className =
+        "service-button";
+
+
+    button.textContent =
+        "View & WhatsApp";
+
+
+    // ======================================================
+    // BUTTON CLICK
+    // ======================================================
+
+    button.addEventListener(
+        "click",
+        function () {
+
+            showServiceDocuments(
+                serviceName,
+                docs,
+                service
+            );
+
+        }
+    );
 
 
     // ======================================================
     // ADD ELEMENTS
     // ======================================================
 
-    article.appendChild(title);
+    article.appendChild(
+        title
+    );
 
-    article.appendChild(desc);
 
-    article.appendChild(button);
+    article.appendChild(
+        desc
+    );
+
+
+    article.appendChild(
+        button
+    );
 
 
     // ======================================================
@@ -193,68 +352,120 @@ function createServiceCard(service) {
     if (
         String(serviceName)
             .trim()
-            .toLowerCase() === "loans"
+            .toLowerCase() ===
+        "loans"
     ) {
 
-        addLoansVideo(article);
+        addLoansVideo(
+            article
+        );
 
     }
 
 
     // ======================================================
-    // ADD CARD
+    // APPEND CARD
     // ======================================================
 
-    grid.appendChild(article);
+    grid.appendChild(
+        article
+    );
+
 }
 
 
 // ==========================================================
-// LOANS BACKGROUND VIDEO
+// LOANS VIDEO
 // ==========================================================
 
 function addLoansVideo(article) {
 
-    // Video
-    const video = document.createElement("video");
+    const video =
+        document.createElement(
+            "video"
+        );
 
-    video.className = "loans-video";
+
+    video.className =
+        "loans-video";
+
 
     // IMPORTANT:
-    // Upload your video with this exact filename
-    video.src = "audio_vadhu.mp4";
+    // Put your video in the same folder as index.html
 
-    video.autoplay = true;
-    video.loop = true;
-    video.muted = true;
-    video.playsInline = true;
+    video.src =
+        "loans.mp4";
 
-    video.setAttribute("aria-hidden", "true");
 
-    // Overlay
-    const overlay = document.createElement("div");
+    video.autoplay =
+        true;
 
-    overlay.className = "loans-video-overlay";
 
-    // Put video behind everything
-    article.prepend(video);
+    video.loop =
+        true;
 
-    article.prepend(overlay);
 
-    // Try playing video
-    const playPromise = video.play();
+    video.muted =
+        true;
 
-    if (playPromise !== undefined) {
 
-        playPromise.catch(() => {
+    video.playsInline =
+        true;
 
-            console.log(
-                "Loans video waiting for browser autoplay permission."
-            );
 
-        });
+    video.preload =
+        "auto";
 
-    }
+
+    video.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+
+    // ======================================================
+    // VIDEO OVERLAY
+    // ======================================================
+
+    const overlay =
+        document.createElement(
+            "div"
+        );
+
+
+    overlay.className =
+        "loans-video-overlay";
+
+
+    // ======================================================
+    // INSERT VIDEO
+    // ======================================================
+
+    article.prepend(
+        video
+    );
+
+
+    article.prepend(
+        overlay
+    );
+
+
+    // ======================================================
+    // PLAY
+    // ======================================================
+
+    video.play()
+        .catch(
+            function () {
+
+                console.log(
+                    "Loans video autoplay waiting."
+                );
+
+            }
+        );
+
 }
 
 
@@ -268,51 +479,100 @@ function showServiceDocuments(
     service
 ) {
 
-    if (!documentBox) return;
+    if (!documentBox) {
+
+        console.error(
+            "documentBox not found."
+        );
+
+        return;
+
+    }
 
 
     // ======================================================
-    // DOCUMENT SECTION
+    // CLEAR
     // ======================================================
 
-    documentBox.innerHTML = "";
+    documentBox.innerHTML =
+        "";
 
 
-    const heading = document.createElement("h3");
+    // ======================================================
+    // HEADING
+    // ======================================================
+
+    const heading =
+        document.createElement(
+            "h3"
+        );
+
 
     heading.textContent =
         serviceName;
 
 
-    documentBox.appendChild(heading);
+    documentBox.appendChild(
+        heading
+    );
 
 
     // ======================================================
     // DOCUMENT LIST
     // ======================================================
 
-    const list = document.createElement("ul");
-
-    list.className = "requirements-list";
-
-
-    let documentItems = [];
+    const list =
+        document.createElement(
+            "ul"
+        );
 
 
-    // Array
-    if (Array.isArray(docs)) {
+    list.className =
+        "requirements-list";
 
-        documentItems = docs;
+
+    let documentItems =
+        [];
+
+
+    // ======================================================
+    // ARRAY
+    // ======================================================
+
+    if (
+        Array.isArray(docs)
+    ) {
+
+        documentItems =
+            docs;
 
     }
 
-    // String
-    else if (typeof docs === "string") {
 
-        documentItems = docs
-            .split(/\r?\n|,|;/)
-            .map(item => item.trim())
-            .filter(Boolean);
+    // ======================================================
+    // STRING
+    // ======================================================
+
+    else if (
+        typeof docs ===
+        "string"
+    ) {
+
+        documentItems =
+            docs
+
+                .split(
+                    /\r?\n|,|;/
+                )
+
+                .map(
+                    item =>
+                        item.trim()
+                )
+
+                .filter(
+                    Boolean
+                );
 
     }
 
@@ -321,22 +581,34 @@ function showServiceDocuments(
     // NO DOCUMENTS
     // ======================================================
 
-    if (documentItems.length === 0) {
+    if (
+        documentItems.length === 0
+    ) {
 
         const item =
-            document.createElement("li");
+            document.createElement(
+                "li"
+            );
+
 
         item.className =
             "requirement-item";
 
+
         item.innerHTML = `
-            <span class="bullet">•</span>
+            <span class="bullet">
+                •
+            </span>
+
             <span class="requirement-text">
                 Contact us for document requirements.
             </span>
         `;
 
-        list.appendChild(item);
+
+        list.appendChild(
+            item
+        );
 
     }
 
@@ -347,50 +619,105 @@ function showServiceDocuments(
 
     else {
 
-        documentItems.forEach(itemText => {
+        documentItems.forEach(
+            function (itemText) {
 
-            const item =
-                document.createElement("li");
+                const item =
+                    document.createElement(
+                        "li"
+                    );
 
-            item.className =
-                "requirement-item";
 
-            item.innerHTML = `
-                <span class="bullet">•</span>
-                <span class="requirement-text">
-                    ${escapeHTML(itemText)}
-                </span>
-            `;
+                item.className =
+                    "requirement-item";
 
-            list.appendChild(item);
 
-        });
+                const bullet =
+                    document.createElement(
+                        "span"
+                    );
+
+
+                bullet.className =
+                    "bullet";
+
+
+                bullet.textContent =
+                    "•";
+
+
+                const text =
+                    document.createElement(
+                        "span"
+                    );
+
+
+                text.className =
+                    "requirement-text";
+
+
+                text.textContent =
+                    itemText;
+
+
+                item.appendChild(
+                    bullet
+                );
+
+
+                item.appendChild(
+                    text
+                );
+
+
+                list.appendChild(
+                    item
+                );
+
+            }
+        );
 
     }
 
 
-    documentBox.appendChild(list);
+    // ======================================================
+    // ADD LIST
+    // ======================================================
+
+    documentBox.appendChild(
+        list
+    );
 
 
     // ======================================================
-    // WHATSAPP BUTTON
+    // WHATSAPP
     // ======================================================
 
     const whatsappButton =
-        document.createElement("a");
+        document.createElement(
+            "a"
+        );
+
 
     whatsappButton.className =
         "primary";
 
+
     whatsappButton.href =
         whatsappLink(
-            `Hello MBSC SOLUTIONS, I need details about ${serviceName}.`
+            "Hello MBSC SOLUTIONS, I need details about " +
+            serviceName +
+            "."
         );
 
-    whatsappButton.target = "_blank";
+
+    whatsappButton.target =
+        "_blank";
+
 
     whatsappButton.rel =
         "noopener noreferrer";
+
 
     whatsappButton.textContent =
         "Message on WhatsApp";
@@ -402,40 +729,31 @@ function showServiceDocuments(
 
 
     // ======================================================
-    // SCROLL TO DOCUMENTS
+    // SCROLL
     // ======================================================
 
     const documentsSection =
-        document.querySelector(".documents");
+        document.querySelector(
+            ".documents"
+        );
+
 
     if (documentsSection) {
 
-        documentsSection.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-        });
+        documentsSection.scrollIntoView(
+            {
+                behavior: "smooth",
+                block: "start"
+            }
+        );
 
     }
+
 }
 
 
 // ==========================================================
-// ESCAPE HTML
-// ==========================================================
-
-function escapeHTML(value) {
-
-    return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}
-
-
-// ==========================================================
-// MOBILE MENU / SERVICE HELPERS
+// SUB SERVICE BUTTON
 // ==========================================================
 
 document.addEventListener(
@@ -447,15 +765,23 @@ document.addEventListener(
                 ".sub-service-button"
             );
 
+
         if (!button) return;
+
 
         const serviceName =
             button.dataset.service ||
             button.textContent.trim();
 
+
+        const documents =
+            button.dataset.documents ||
+            "";
+
+
         showServiceDocuments(
             serviceName,
-            button.dataset.documents || "",
+            documents,
             {}
         );
 
@@ -464,22 +790,7 @@ document.addEventListener(
 
 
 // ==========================================================
-// LOAD EVERYTHING
-// ==========================================================
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
-
-        loadServices();
-
-    }
-);
-
-
-// ==========================================================
 // PAGE VISIBILITY
-// Keep Loans video playing when page becomes visible
 // ==========================================================
 
 document.addEventListener(
@@ -487,21 +798,45 @@ document.addEventListener(
     function () {
 
         if (
-            document.visibilityState !== "visible"
+            document.visibilityState !==
+            "visible"
         ) {
+
             return;
+
         }
+
 
         const videos =
             document.querySelectorAll(
                 ".loans-video"
             );
 
-        videos.forEach(video => {
 
-            video.play().catch(() => {});
+        videos.forEach(
+            function (video) {
 
-        });
+                video.play()
+                    .catch(
+                        () => {}
+                    );
+
+            }
+        );
+
+    }
+);
+
+
+// ==========================================================
+// START
+// ==========================================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        loadServices();
 
     }
 );
