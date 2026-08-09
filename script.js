@@ -15,7 +15,7 @@ const SUPABASE_URL =
 // nundi Publishable / Anon key pettali.
 
 const SUPABASE_ANON_KEY =
-    "PASTE_YOUR_PUBLISHABLE_OR_ANON_KEY_HERE";
+    "sb_publishable_wlqTaOkM3fML9cuUES54fw_8TlbSi-H";
 
 
 // ==========================================================
