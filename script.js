@@ -1,1278 +1,1290 @@
-const SUPABASE_URL = "https://whxlatxnqjpccwrmtmph.supabase.co";
-const SUPABASE_KEY = "sb_publishable_wlqTaOkM3fML9cuUES54fw_8TlbSi-H";
-const WHATSAPP_NUMBER = "917093334820";
+/* =========================================================
+   MBSC SOLUTIONS - COMPLETE STYLE
+   ========================================================= */
 
+* {
+    box-sizing: border-box;
+}
 
-// ==========================================
-// OLD INDIVIDUAL LOAN SERVICE NAMES
-// ==========================================
+:root {
+    --black: #050608;
+    --black2: #0b0d11;
+    --card: #11151c;
 
-const LOAN_NAMES = [
-    "Tractor Loans",
-    "Business Loans",
-    "Agri SME Loans",
-    "Construction Equipment Loans",
-    "Gold Loans",
-    "Commercial Vehicle Loans",
-    "Home Loans",
-    "Auto & Car Loans",
-    "Bike Loans"
-];
+    --blue: #4da3ff;
+    --blue2: #1677e8;
 
+    --gold: #e4bd62;
+    --gold2: #ffe39a;
 
-// ==========================================
-// KNOWN DOCUMENT NAMES
-// Used when Supabase documents have no commas
-// ==========================================
+    --white: #f8fafc;
+    --muted: #a5afbf;
 
-const DOCUMENT_NAMES = [
-    "Aadhaar Card",
-    "PAN Card",
-    "Address Proof",
-    "Bank Statement",
-    "Business / Agriculture Proof",
-    "Income Proof",
-    "Land Documents",
-    "Tractor Quotation",
-    "Gold Loan Documents",
-    "Property Documents",
-    "ITR Documents",
-    "ITR",
-    "GST Certificate",
-    "Business Proof",
-    "Salary Slips",
-    "Bank Passbook",
-    "Vehicle RC",
-    "Driving License",
-    "Insurance Documents",
-    "Passport Size Photo",
-    "Photographs",
-    "Employment Proof",
-    "Salary Certificate",
-    "Form 16",
-    "Loan Statement",
-    "Vehicle Quotation",
-    "Home Documents",
-    "Property Proof"
-];
+    --line: #273140;
+}
 
+html {
+    scroll-behavior: smooth;
+}
 
-// ==========================================
-// SUPABASE GET
-// ==========================================
+body {
+    margin: 0;
+    font-family: Inter, Arial, sans-serif;
+    background: var(--black);
+    color: var(--white);
+}
 
-async function supabaseGet(table, query = "") {
+a {
+    text-decoration: none;
+    color: inherit;
+}
 
-    const response = await fetch(
-        `${SUPABASE_URL}/rest/v1/${table}${query}`,
-        {
-            method: "GET",
+/* =========================================================
+   TOP BAR
+   ========================================================= */
 
-            headers: {
-                "apikey": SUPABASE_KEY,
-                "Authorization": `Bearer ${SUPABASE_KEY}`,
-                "Content-Type": "application/json"
-            }
-        }
+.topbar {
+    height: 78px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 6%;
+
+    border-bottom: 1px solid var(--line);
+
+    background: #050608;
+
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand span,
+.brand strong {
+    display: block;
+}
+
+.brand span {
+    font-size: 11px;
+    color: #8f9aaa;
+    letter-spacing: 0.08em;
+    margin-top: 3px;
+}
+
+.logo {
+    width: 45px;
+    height: 45px;
+
+    border: 2px solid var(--blue);
+    border-radius: 12px;
+
+    display: grid;
+    place-items: center;
+
+    font-size: 12px;
+    font-weight: 900;
+
+    color: var(--blue);
+
+    background: #090c11;
+}
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.wa,
+.primary,
+button {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    padding: 12px 18px;
+
+    font-weight: 800;
+
+    border: 0;
+
+    cursor: pointer;
+
+    background: linear-gradient(
+        135deg,
+        var(--blue),
+        var(--blue2)
     );
 
-    if (!response.ok) {
+    color: #fff;
 
-        const error = await response.text();
+    box-shadow:
+        0 8px 25px rgba(22, 119, 232, 0.2);
 
-        console.error(
-            `Supabase ${table} Error:`,
-            error
-        );
-
-        throw new Error(error);
-    }
-
-    return await response.json();
+    transition: 0.2s ease;
 }
 
+.wa:hover,
+.primary:hover,
+button:hover {
+    transform: translateY(-2px);
 
-// ==========================================
-// LOAD WEBSITE SERVICES
-// ==========================================
+    box-shadow:
+        0 12px 30px rgba(22, 119, 232, 0.35);
+}
 
-async function loadWebsiteServices() {
+.secondary {
+    display: inline-flex;
 
-    const grid =
-        document.querySelector(".grid");
+    align-items: center;
+    justify-content: center;
 
-    if (!grid) return;
+    border: 1px solid #394554;
 
-    try {
+    background: #10141a;
 
-        // ==================================
-        // GET SERVICES
-        // ==================================
+    color: #edf3fa;
 
-        const services =
-            await supabaseGet(
-                "services",
-                "?select=*&order=sort_order.asc"
-            );
+    border-radius: 10px;
 
+    padding: 12px 18px;
 
-        // ==================================
-        // GET SUB SERVICES
-        // ==================================
+    font-weight: 800;
 
-        const subServices =
-            await supabaseGet(
-                "sub_services",
-                "?select=*&order=sort_order.asc"
-            );
+    transition: 0.2s ease;
+}
 
+.secondary:hover {
+    border-color: var(--blue);
+    background: #121b27;
+}
 
-        // ==================================
-        // GET SUB SERVICE ITEMS
-        // ==================================
+/* =========================================================
+   HERO
+   ========================================================= */
 
-        const subServiceItems =
-            await supabaseGet(
-                "sub_service_items",
-                "?select=*&order=sort_order.asc"
-            );
+.hero {
+    min-height: 580px;
 
+    padding: 75px 7%;
 
-        console.log(
-            "SERVICES:",
-            services
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 60px;
+
+    background:
+        radial-gradient(
+            circle at 82% 25%,
+            rgba(22, 119, 232, 0.18) 0,
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 12% 80%,
+            rgba(228, 189, 98, 0.08) 0,
+            transparent 25%
+        );
+}
+
+/* =========================================================
+   HERO LEFT
+   ========================================================= */
+
+.eyebrow {
+    font-size: 11px;
+
+    letter-spacing: 0.2em;
+
+    color: var(--gold2);
+
+    font-weight: 900;
+}
+
+.hero h1 {
+    font-size: clamp(42px, 7vw, 78px);
+
+    line-height: 0.95;
+
+    margin: 15px 0;
+}
+
+.hero p {
+    max-width: 620px;
+
+    color: #b1bbc9;
+
+    font-size: 18px;
+
+    line-height: 1.7;
+}
+
+/* =========================================================
+   ACTION BUTTONS
+   ========================================================= */
+
+.actions,
+.contact-actions {
+    display: flex;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+
+    margin-top: 28px;
+}
+
+/* =========================================================
+   HERO CARD
+   ========================================================= */
+
+.hero-card {
+    width: 470px;
+
+    min-width: 470px;
+
+    height: 520px;
+
+    border: 1px solid #34404f;
+
+    border-radius: 30px;
+
+    padding: 18px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            #16283d,
+            #0b1017 55%,
+            #07090c
         );
 
-        console.log(
-            "SUB SERVICES:",
-            subServices
+    position: relative;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 25px 60px #000;
+
+    isolation: isolate;
+}
+
+/* =========================================================
+   HERO GLOW
+   ========================================================= */
+
+.card-glow {
+    position: absolute;
+
+    width: 300px;
+    height: 300px;
+
+    border-radius: 50%;
+
+    background: #1677e8;
+
+    filter: blur(90px);
+
+    opacity: 0.24;
+
+    top: -70px;
+    right: -70px;
+
+    z-index: -1;
+
+    animation:
+        glowPulse 4s ease-in-out infinite;
+}
+
+/* =========================================================
+   HERO IMAGE CONTAINER
+   ========================================================= */
+
+.hero-animation {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+
+    z-index: 2;
+
+    overflow: hidden;
+
+    border-radius: 24px;
+
+    background: transparent;
+}
+
+/* =========================================================
+   HERO IMAGE
+   NO ZOOM
+   NO SCALE
+   ========================================================= */
+
+.hero-person-image {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    max-width: 100%;
+    max-height: 100%;
+
+    object-fit: contain;
+
+    object-position: center;
+
+    border: none;
+
+    outline: none;
+
+    border-radius: 0;
+
+    background: transparent;
+
+    filter:
+        drop-shadow(
+            0 18px 35px rgba(0, 0, 0, 0.55)
         );
 
-        console.log(
-            "SUB SERVICE ITEMS:",
-            subServiceItems
+    /* ONLY FLOAT - NO ZOOM */
+    animation:
+        heroFloat 4s ease-in-out infinite;
+
+    transform-origin: center center;
+
+    will-change: transform;
+}
+
+/* =========================================================
+   HERO FLOAT
+   ONLY UP/DOWN
+   NO SCALE
+   ========================================================= */
+
+@keyframes heroFloat {
+
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/* =========================================================
+   GLOW ANIMATION
+   ========================================================= */
+
+@keyframes glowPulse {
+
+    0% {
+        opacity: 0.18;
+        transform: scale(0.95);
+    }
+
+    50% {
+        opacity: 0.32;
+        transform: scale(1.08);
+    }
+
+    100% {
+        opacity: 0.18;
+        transform: scale(0.95);
+    }
+}
+
+/* =========================================================
+   HIDE OLD HERO TEXT
+   ========================================================= */
+
+.hero-card > span,
+.hero-card > b,
+.hero-card-text {
+    display: none !important;
+}
+
+/* =========================================================
+   SERVICES
+   ========================================================= */
+
+.section {
+    padding: 80px 7%;
+}
+
+.section-head {
+    margin-bottom: 30px;
+}
+
+.section h2,
+.contact h2 {
+    font-size: 36px;
+
+    margin: 8px 0;
+}
+
+/* =========================================================
+   SERVICE GRID
+   ========================================================= */
+
+.grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(0, 1fr)
         );
 
+    gap: 18px;
 
-        // ==================================
-        // FIND LOANS MAIN SERVICE
-        // ==================================
+    align-items: start;
+}
 
-        const loansService =
-            services.find(
-                service =>
-                    String(
-                        service.service_name || ""
-                    )
-                    .trim()
-                    .toLowerCase() === "loans"
+/* =========================================================
+   SERVICE CARD
+   ========================================================= */
+
+.service {
+    border: 1px solid #29323e;
+
+    background:
+        linear-gradient(
+            145deg,
+            #151a22,
+            #0c0f14
+        );
+
+    padding: 24px;
+
+    border-radius: 18px;
+
+    transition: 0.2s;
+
+    box-shadow:
+        0 10px 30px #000;
+
+    overflow: hidden;
+
+    position: relative;
+
+    isolation: isolate;
+}
+
+.service:hover {
+    transform:
+        translateY(-4px);
+
+    border-color:
+        var(--blue);
+
+    box-shadow:
+        0 16px 35px #000;
+}
+
+.service h3 {
+    margin:
+        0 0 12px;
+
+    color: #fff;
+
+    font-size: 20px;
+}
+
+.service p {
+    color: #9da8b7;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+    min-height: 42px;
+}
+
+.service button {
+    margin-top: 14px;
+
+    width: 100%;
+}
+
+/* =========================================================
+   LOANS VIDEO BACKGROUND
+   ========================================================= */
+
+.loans-service {
+    position: relative !important;
+
+    overflow: hidden !important;
+
+    isolation: isolate !important;
+
+    min-height: 280px;
+}
+
+/* VIDEO */
+
+.loans-service .loans-video {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    object-position: center;
+
+    z-index: -2;
+
+    pointer-events: none;
+}
+
+/* DARK OVERLAY */
+
+.loans-service .loans-video-overlay {
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(5, 6, 8, 0.88),
+            rgba(5, 12, 22, 0.72)
+        );
+
+    z-index: -1;
+
+    pointer-events: none;
+}
+
+/* KEEP LOANS CONTENT ABOVE VIDEO */
+
+.loans-service > * {
+    position: relative;
+
+    z-index: 2;
+}
+
+/* =========================================================
+   SERVICE BUTTON
+   ========================================================= */
+
+.service-button {
+    cursor: pointer;
+}
+
+/* =========================================================
+   SUB SERVICES
+   ========================================================= */
+
+.sub-service-list {
+    display: block !important;
+
+    width: 100% !important;
+
+    height: auto !important;
+
+    max-height: none !important;
+
+    overflow: visible !important;
+
+    margin-top: 12px;
+}
+
+.sub-service-list.show {
+    display: block !important;
+
+    width: 100% !important;
+
+    height: auto !important;
+
+    max-height: none !important;
+
+    overflow: visible !important;
+
+    visibility: visible !important;
+}
+
+/* =========================================================
+   LOAN SUB SERVICES
+   ========================================================= */
+
+.loan-sub-services {
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    width: 100% !important;
+
+    margin-top: 15px !important;
+
+    padding: 0 !important;
+
+    gap: 10px !important;
+
+    height: auto !important;
+
+    max-height: none !important;
+
+    overflow: visible !important;
+}
+
+/* =========================================================
+   SUB SERVICE BUTTON
+   ========================================================= */
+
+.sub-service-button {
+    width: 100%;
+
+    min-height: 48px;
+
+    padding:
+        12px 16px;
+
+    border:
+        1px solid #2d3a4d;
+
+    border-radius: 8px;
+
+    background:
+        #0d141e;
+
+    color:
+        #ffffff;
+
+    cursor: pointer;
+
+    text-align: left;
+
+    font-size: 13px;
+
+    line-height: 1.4;
+
+    display: flex;
+
+    align-items: center;
+
+    box-sizing: border-box;
+
+    margin: 0;
+
+    white-space: normal;
+
+    overflow: visible;
+
+    transition: 0.2s ease;
+}
+
+.sub-service-button:hover {
+    background:
+        #162235;
+
+    border-color:
+        #3e91ee;
+}
+
+/* =========================================================
+   SUB NUMBER
+   ========================================================= */
+
+.loan-sub-services
+.sub-number {
+    display: inline-block !important;
+
+    min-width: 30px !important;
+
+    margin-right: 6px !important;
+
+    font-weight: 700;
+}
+
+/* =========================================================
+   ITEM LIST
+   ========================================================= */
+
+.item-list {
+    list-style: none;
+
+    padding: 0;
+
+    margin: 16px 0;
+}
+
+.item-list li {
+    margin-bottom: 10px;
+}
+
+.item-button {
+    width: 100%;
+
+    padding:
+        11px 14px;
+
+    margin-bottom: 8px;
+
+    border:
+        1px solid #2d3a4d;
+
+    border-radius: 8px;
+
+    background:
+        #0d141e;
+
+    color:
+        #ffffff;
+
+    cursor: pointer;
+
+    text-align: left;
+
+    transition: 0.2s;
+}
+
+.item-button:hover {
+    background:
+        #162235;
+}
+
+/* =========================================================
+   DOCUMENTS
+   ========================================================= */
+
+.documents {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1.2fr;
+
+    gap: 25px;
+}
+
+.info-panel,
+.doc-box {
+    border:
+        1px solid #29323e;
+
+    background:
+        #10141a;
+
+    border-radius:
+        20px;
+
+    padding:
+        28px;
+
+    box-shadow:
+        0 12px 35px #000;
+}
+
+.info-panel p,
+.doc-box p {
+    color:
+        #a5afbf;
+
+    line-height:
+        1.7;
+}
+
+.doc-box ul {
+    line-height:
+        2;
+
+    color:
+        #e5eaf1;
+}
+
+/* =========================================================
+   REQUIREMENTS
+   ========================================================= */
+
+.requirements-list {
+    margin:
+        15px 0;
+
+    padding-left:
+        5px;
+}
+
+.requirement-item {
+    display: flex;
+
+    align-items:
+        flex-start;
+
+    gap:
+        10px;
+
+    margin-bottom:
+        10px;
+
+    color:
+        #edf3fa;
+
+    line-height:
+        1.6;
+}
+
+.requirement-text {
+    color:
+        #edf3fa;
+}
+
+.bullet {
+    color:
+        #ffffff;
+
+    font-size:
+        18px;
+
+    line-height:
+        1.3;
+}
+
+/* =========================================================
+   CONTACT
+   ========================================================= */
+
+.contact {
+    padding:
+        70px 7%;
+
+    border-top:
+        1px solid #1f2731;
+
+    border-bottom:
+        1px solid #1f2731;
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    gap:
+        30px;
+
+    align-items:
+        center;
+
+    background:
+        #080a0d;
+}
+
+.contact-actions {
+    margin-top:
+        0;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+    text-align:
+        center;
+
+    padding:
+        28px;
+
+    color:
+        #727d8d;
+
+    font-size:
+        12px;
+
+    background:
+        #050608;
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+    .hero {
+        gap:
+            35px;
+
+        padding:
+            65px 5%;
+    }
+
+    .hero-card {
+        width:
+            400px;
+
+        min-width:
+            400px;
+
+        height:
+            470px;
+    }
+
+    .hero-person-image {
+        width:
+            100%;
+
+        height:
+            100%;
+
+        max-width:
+            100%;
+
+        max-height:
+            100%;
+
+        object-fit:
+            contain;
+    }
+
+    .grid {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
             );
+    }
+}
 
+/* =========================================================
+   MOBILE
+   ========================================================= */
 
-        // ==================================
-        // FILTER MAIN SERVICES
-        // Hide old individual loan cards
-        // ==================================
+@media (max-width: 700px) {
 
-        const displayServices =
-            services.filter(
-                service => {
+    .topbar {
+        height:
+            70px;
 
-                    const name =
-                        String(
-                            service.service_name || ""
-                        ).trim();
+        padding:
+            0 4%;
+    }
 
+    .brand strong {
+        font-size:
+            14px;
+    }
 
-                    if (
-                        LOAN_NAMES.includes(name)
-                    ) {
-                        return false;
-                    }
+    .brand span {
+        font-size:
+            9px;
+    }
 
+    .logo {
+        width:
+            40px;
 
-                    return true;
-                }
-            );
+        height:
+            40px;
+    }
 
+    .topbar .wa {
+        padding:
+            9px 12px;
 
-        // ==================================
-        // ADD LOANS MAIN SERVICE
-        // ==================================
+        font-size:
+            12px;
+    }
 
-        if (
-            loansService &&
-            !displayServices.some(
-                service =>
-                    Number(service.id) ===
-                    Number(loansService.id)
-            )
-        ) {
+    /* HERO */
 
-            displayServices.push(
-                loansService
-            );
+    .hero {
+        min-height:
+            auto;
+
+        padding:
+            45px 6% 60px;
+
+        display:
+            flex;
+
+        flex-direction:
+            column;
+
+        align-items:
+            stretch;
+
+        gap:
+            40px;
+    }
+
+    .hero h1 {
+        font-size:
+            48px;
+    }
+
+    .hero p {
+        font-size:
+            16px;
+    }
+
+    /* HERO CARD */
+
+    .hero-card {
+        width:
+            100%;
+
+        min-width:
+            0;
+
+        height:
+            430px;
+
+        padding:
+            14px;
+
+        border-radius:
+            24px;
+
+        order:
+            2;
+    }
+
+    .hero-animation {
+        width:
+            100%;
+
+        height:
+            100%;
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            center;
+
+        overflow:
+            hidden;
+
+        border-radius:
+            18px;
+    }
+
+    .hero-person-image {
+        width:
+            100%;
+
+        height:
+            100%;
+
+        max-width:
+            100%;
+
+        max-height:
+            100%;
+
+        object-fit:
+            contain;
+
+        object-position:
+            center;
+
+        border-radius:
+            0;
+
+        animation:
+            heroFloatMobile
+            4s
+            ease-in-out
+            infinite;
+    }
+
+    /* LOANS VIDEO MOBILE */
+
+    .loans-service {
+        min-height:
+            300px;
+    }
+
+    .loans-service .loans-video {
+        object-fit:
+            cover;
+    }
+
+    @keyframes heroFloatMobile {
+
+        0% {
+            transform:
+                translateY(0);
         }
 
-
-        // ==================================
-        // SORT MAIN SERVICES
-        // ==================================
-
-        displayServices.sort(
-            (a, b) =>
-                Number(a.sort_order || 0) -
-                Number(b.sort_order || 0)
-        );
-
-
-        // ==================================
-        // CLEAR WEBSITE
-        // ==================================
-
-        grid.innerHTML = "";
-
-
-        // ==================================
-        // CREATE MAIN SERVICE CARDS
-        // ==================================
-
-        displayServices.forEach(
-            service => {
-
-                const serviceId =
-                    service.id;
-
-
-                const serviceName =
-                    service.service_name ||
-                    "Service";
-
-
-                // ==================================
-                // FIND SUB SERVICES
-                // ==================================
-
-                const children =
-                    subServices
-                        .filter(
-                            sub =>
-                                Number(
-                                    sub.service_id
-                                ) ===
-                                Number(
-                                    serviceId
-                                )
-                        )
-                        .sort(
-                            (a, b) =>
-                                Number(
-                                    a.sort_order || 0
-                                ) -
-                                Number(
-                                    b.sort_order || 0
-                                )
-                        );
-
-
-                // ==================================
-                // CREATE ARTICLE
-                // ==================================
-
-                const article =
-                    document.createElement(
-                        "article"
-                    );
-
-                article.className =
-                    "service";
-
-
-                // ==================================
-                // MAIN SERVICE HTML
-                // ==================================
-
-                article.innerHTML = `
-
-                    <h3>
-                        ${escapeHTML(
-                            serviceName
-                        )}
-                    </h3>
-
-                    <p>
-                        Click below to view available services.
-                    </p>
-
-                    <button
-                        type="button"
-                        class="service-button"
-                    >
-                        ${
-                            children.length > 0
-                                ? "View Services"
-                                : "View & WhatsApp"
-                        }
-                    </button>
-
-                    <div
-                        class="sub-service-list"
-                    ></div>
-
-                `;
-
-
-                grid.appendChild(
-                    article
-                );
-
-
-                // ==================================
-                // GET BUTTON
-                // ==================================
-
-                const button =
-                    article.querySelector(
-                        ".service-button"
-                    );
-
-
-                // ==================================
-                // GET SUB LIST
-                // ==================================
-
-                const subList =
-                    article.querySelector(
-                        ".sub-service-list"
-                    );
-
-
-                // ==================================
-                // HAS SUB SERVICES
-                // ==================================
-
-                if (
-                    children.length > 0
-                ) {
-
-                    button.addEventListener(
-                        "click",
-                        () => {
-
-                            const isOpen =
-                                subList.classList.contains(
-                                    "show"
-                                );
-
-
-                            // ==================================
-                            // CLOSE
-                            // ==================================
-
-                            if (isOpen) {
-
-                                subList.classList.remove(
-                                    "show"
-                                );
-
-                                button.textContent =
-                                    "View Services";
-
-                                subList.innerHTML =
-                                    "";
-
-                                return;
-                            }
-
-
-                            // ==================================
-                            // OPEN
-                            // ==================================
-
-                            subList.classList.add(
-                                "show"
-                            );
-
-                            button.textContent =
-                                "Hide Services";
-
-
-                            // ==================================
-                            // FORCE DISPLAY
-                            // ==================================
-
-                            subList.style.display =
-                                "block";
-
-                            subList.style.height =
-                                "auto";
-
-                            subList.style.maxHeight =
-                                "none";
-
-                            subList.style.overflow =
-                                "visible";
-
-                            subList.style.visibility =
-                                "visible";
-
-
-                            // ==================================
-                            // CREATE SUB SERVICES
-                            // ==================================
-
-                            subList.innerHTML = `
-
-                                <div
-                                    class="loan-sub-services"
-                                >
-
-                                    ${children.map(
-                                        (sub, index) => `
-
-                                            <button
-                                                type="button"
-                                                class="sub-service-button"
-                                                data-sub-id="${sub.id}"
-                                            >
-
-                                                <span
-                                                    class="sub-number"
-                                                >
-                                                    ${index + 1}.
-                                                </span>
-
-                                                <span>
-                                                    ${escapeHTML(
-                                                        sub.sub_service_name ||
-                                                        "Sub Service"
-                                                    )}
-                                                </span>
-
-                                            </button>
-
-                                        `
-                                    ).join("")}
-
-                                </div>
-
-                            `;
-
-
-                            // ==================================
-                            // GET SUB BUTTONS
-                            // ==================================
-
-                            const subButtons =
-                                subList.querySelectorAll(
-                                    ".sub-service-button"
-                                );
-
-
-                            // ==================================
-                            // SUB SERVICE CLICK
-                            // ==================================
-
-                            subButtons.forEach(
-                                subButton => {
-
-                                    subButton.addEventListener(
-                                        "click",
-                                        () => {
-
-                                            const subId =
-                                                Number(
-                                                    subButton.dataset.subId
-                                                );
-
-
-                                            const selectedSub =
-                                                children.find(
-                                                    sub =>
-                                                        Number(
-                                                            sub.id
-                                                        ) ===
-                                                        subId
-                                                );
-
-
-                                            if (
-                                                !selectedSub
-                                            ) {
-                                                return;
-                                            }
-
-
-                                            showSubService(
-                                                service,
-                                                selectedSub,
-                                                subServiceItems
-                                            );
-
-                                        }
-                                    );
-
-                                }
-                            );
-
-                        }
-                    );
-
-                }
-
-
-                // ==================================
-                // NO SUB SERVICES
-                // ==================================
-
-                else {
-
-                    button.addEventListener(
-                        "click",
-                        () => {
-
-                            const docs =
-                                getDocuments(
-                                    service.documents
-                                );
-
-
-                            showDocs(
-                                serviceName,
-                                docs
-                            );
-
-                        }
-                    );
-
-                }
-
-            }
-        );
-
-    }
-
-
-    // ==================================
-    // ERROR
-    // ==================================
-
-    catch (error) {
-
-        console.error(
-            "Website loading failed:",
-            error
-        );
-
-
-        grid.innerHTML = `
-
-            <div class="service">
-
-                <h3>
-                    Services temporarily unavailable
-                </h3>
-
-                <p>
-                    Please contact MBSC SOLUTIONS
-                    on WhatsApp.
-                </p>
-
-                <a
-                    class="primary"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://wa.me/${WHATSAPP_NUMBER}"
-                >
-                    WhatsApp Us
-                </a>
-
-            </div>
-
-        `;
-    }
-}
-
-
-// ==========================================
-// SHOW SUB SERVICE
-// ==========================================
-
-function showSubService(
-    service,
-    subService,
-    subServiceItems
-) {
-
-    const serviceName =
-        service.service_name ||
-        "Service";
-
-
-    const subName =
-        subService.sub_service_name ||
-        "Sub Service";
-
-
-    // ==================================
-    // FIND ITEMS
-    // ==================================
-
-    const items =
-        subServiceItems
-            .filter(
-                item =>
-                    Number(
-                        item.sub_service_id
-                    ) ===
-                    Number(
-                        subService.id
-                    )
-            )
-            .sort(
-                (a, b) =>
-                    Number(
-                        a.sort_order || 0
-                    ) -
-                    Number(
-                        b.sort_order || 0
-                    )
-            );
-
-
-    // ==================================
-    // ITEMS EXIST
-    // ==================================
-
-    if (
-        items.length > 0
-    ) {
-
-        showItems(
-            serviceName,
-            subService,
-            items
-        );
-
-        return;
-    }
-
-
-    // ==================================
-    // NO ITEMS
-    // ==================================
-
-    const docs =
-        getDocuments(
-            subService.documents ||
-            service.documents
-        );
-
-
-    showDocs(
-        `${serviceName} – ${subName}`,
-        docs
-    );
-}
-
-
-// ==========================================
-// SHOW SUB SERVICE ITEMS
-// ==========================================
-
-function showItems(
-    serviceName,
-    subService,
-    items
-) {
-
-    const box =
-        document.getElementById(
-            "documentBox"
-        );
-
-
-    if (!box) return;
-
-
-    const subName =
-        subService.sub_service_name ||
-        "Sub Service";
-
-
-    box.innerHTML = `
-
-        <p class="eyebrow">
-            ${escapeHTML(
-                serviceName
-            )}
-        </p>
-
-        <h3>
-            ${escapeHTML(
-                subName
-            )}
-        </h3>
-
-        <ul class="item-list">
-
-            ${items.map(
-                item => `
-
-                    <li>
-
-                        <button
-                            type="button"
-                            class="item-button"
-                            data-item-id="${item.id}"
-                        >
-
-                            ${escapeHTML(
-                                item.item_name
-                            )}
-
-                        </button>
-
-                    </li>
-
-                `
-            ).join("")}
-
-        </ul>
-
-        <p>
-            Select an item above to view requirements.
-        </p>
-
-    `;
-
-
-    // ==================================
-    // ITEM BUTTONS
-    // ==================================
-
-    const buttons =
-        box.querySelectorAll(
-            ".item-button"
-        );
-
-
-    buttons.forEach(
-        button => {
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    const itemId =
-                        Number(
-                            button.dataset.itemId
-                        );
-
-
-                    const selectedItem =
-                        items.find(
-                            item =>
-                                Number(
-                                    item.id
-                                ) ===
-                                itemId
-                        );
-
-
-                    if (
-                        !selectedItem
-                    ) {
-                        return;
-                    }
-
-
-                    const docs =
-                        getDocuments(
-                            selectedItem.documents
-                        );
-
-
-                    showDocs(
-                        `${serviceName} – ${subName} – ${selectedItem.item_name}`,
-                        docs
-                    );
-
-                }
-            );
-
-        }
-    );
-
-
-    // ==================================
-    // SCROLL
-    // ==================================
-
-    box.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-    });
-}
-
-
-// ==========================================
-// GET DOCUMENTS
-// ==========================================
-
-function getDocuments(
-    documents
-) {
-
-    // ==================================
-    // EMPTY
-    // ==================================
-
-    if (
-        documents === null ||
-        documents === undefined ||
-        documents === ""
-    ) {
-
-        return [
-            "Please contact MBSC SOLUTIONS for requirements"
-        ];
-    }
-
-
-    // ==================================
-    // ARRAY
-    // ==================================
-
-    if (
-        Array.isArray(documents)
-    ) {
-
-        return documents
-            .flatMap(
-                item =>
-                    String(item)
-                        .split(/[,\n]+/)
-                        .map(
-                            x =>
-                                x.trim()
-                        )
-            )
-            .filter(
-                Boolean
-            );
-    }
-
-
-    // ==================================
-    // STRING
-    // ==================================
-
-    if (
-        typeof documents === "string"
-    ) {
-
-        const text =
-            documents.trim();
-
-
-        // ==================================
-        // COMMA / NEW LINE
-        // ==================================
-
-        if (
-            text.includes(",") ||
-            text.includes("\n")
-        ) {
-
-            return text
-                .split(/[,\n]+/)
-                .map(
-                    item =>
-                        item.trim()
-                )
-                .filter(
-                    Boolean
-                );
+        50% {
+            transform:
+                translateY(-6px);
         }
 
-
-        // ==================================
-        // NO COMMA
-        // Detect known document names
-        // ==================================
-
-        const sortedNames =
-            [...DOCUMENT_NAMES]
-                .sort(
-                    (a, b) =>
-                        b.length -
-                        a.length
-                );
-
-
-        let result = [];
-
-
-        let remainingText =
-            text;
-
-
-        // ==================================
-        // FIND DOCUMENTS IN ORIGINAL ORDER
-        // ==================================
-
-        while (
-            remainingText.length > 0
-        ) {
-
-            remainingText =
-                remainingText.trim();
-
-
-            if (
-                !remainingText
-            ) {
-                break;
-            }
-
-
-            let foundName =
-                null;
-
-
-            let foundIndex =
-                Infinity;
-
-
-            sortedNames.forEach(
-                name => {
-
-                    const index =
-                        remainingText
-                            .toLowerCase()
-                            .indexOf(
-                                name.toLowerCase()
-                            );
-
-
-                    if (
-                        index !== -1 &&
-                        index < foundIndex
-                    ) {
-
-                        foundIndex =
-                            index;
-
-                        foundName =
-                            name;
-                    }
-
-                }
-            );
-
-
-            // ==================================
-            // FOUND DOCUMENT
-            // ==================================
-
-            if (
-                foundName !== null
-            ) {
-
-                // Text before known document
-                if (
-                    foundIndex > 0
-                ) {
-
-                    const beforeText =
-                        remainingText
-                            .substring(
-                                0,
-                                foundIndex
-                            )
-                            .trim();
-
-
-                    if (
-                        beforeText
-                    ) {
-
-                        result.push(
-                            beforeText
-                        );
-                    }
-                }
-
-
-                // Add known document
-                result.push(
-                    foundName
-                );
-
-
-                // Remove processed part
-                remainingText =
-                    remainingText.substring(
-                        foundIndex +
-                        foundName.length
-                    );
-
-            }
-
-
-            // ==================================
-            // NO DOCUMENT FOUND
-            // ==================================
-
-            else {
-
-                result.push(
-                    remainingText.trim()
-                );
-
-                break;
-            }
-        }
-
-
-        // ==================================
-        // REMOVE DUPLICATES
-        // ==================================
-
-        result =
-            result.filter(
-                (item, index, array) =>
-                    item &&
-                    array.findIndex(
-                        x =>
-                            x.toLowerCase() ===
-                            item.toLowerCase()
-                    ) === index
-            );
-
-
-        if (
-            result.length > 0
-        ) {
-
-            return result;
+        100% {
+            transform:
+                translateY(0);
         }
     }
 
+    /* SECTIONS */
 
-    // ==================================
-    // DEFAULT
-    // ==================================
-
-    return [
-        "Please contact MBSC SOLUTIONS for requirements"
-    ];
-}
-
-
-// ==========================================
-// SHOW DOCUMENTS + WHATSAPP
-// ==========================================
-
-function showDocs(
-    service,
-    docs
-) {
-
-    const box =
-        document.getElementById(
-            "documentBox"
-        );
-
-
-    if (!box) return;
-
-
-    // ==================================
-    // MAKE ARRAY
-    // ==================================
-
-    const documentList =
-        Array.isArray(
-            docs
-        )
-            ? docs
-            : getDocuments(
-                docs
-            );
-
-
-    // ==================================
-    // WHATSAPP MESSAGE
-    // ==================================
-
-    const message =
-        `*MBSC SOLUTIONS*
-
-*I need this – ${service}*
-
-*Required Documents:*
-${documentList
-    .map(
-        d =>
-            `• ${d}`
-    )
-    .join("\n")}`;
-
-
-    // ==================================
-    // DISPLAY DOCUMENTS
-    // ==================================
-
-    box.innerHTML = `
-
-        <p class="eyebrow">
-            REQUIREMENTS
-        </p>
-
-        <h3>
-            ${escapeHTML(
-                service
-            )}
-        </h3>
-
-
-        <div
-            class="requirements-list"
-            style="
-                margin: 20px 0;
-                width: 100%;
-            "
-        >
-
-            ${documentList.map(
-                d => `
-
-                    <div
-                        class="requirement-item"
-                        style="
-                            display: flex;
-                            align-items: flex-start;
-                            gap: 12px;
-                            margin-bottom: 10px;
-                            line-height: 1.5;
-                        "
-                    >
-
-                        <span
-                            class="bullet"
-                            style="
-                                display: block;
-                                min-width: 10px;
-                                font-size: 20px;
-                                line-height: 1.4;
-                            "
-                        >
-                            •
-                        </span>
-
-                        <span
-                            class="requirement-text"
-                            style="
-                                display: block;
-                                flex: 1;
-                            "
-                        >
-                            ${escapeHTML(
-                                d
-                            )}
-                        </span>
-
-                    </div>
-
-                `
-            ).join("")}
-
-        </div>
-
-
-        <a
-            class="primary"
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}"
-        >
-            WhatsApp for ${escapeHTML(
-                service
-            )}
-        </a>
-
-    `;
-
-
-    // ==================================
-    // SCROLL
-    // ==================================
-
-    box.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-    });
-}
-
-
-// ==========================================
-// ESCAPE HTML
-// ==========================================
-
-function escapeHTML(
-    value
-) {
-
-    if (
-        value === null ||
-        value === undefined
-    ) {
-
-        return "";
+    .section,
+    .contact {
+        padding:
+            55px 6%;
     }
 
+    .section h2,
+    .contact h2 {
+        font-size:
+            30px;
+    }
 
-    return String(
-        value
-    )
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-        .replace(
-            /</g,
-            "&lt;"
-        )
-        .replace(
-            />/g,
-            "&gt;"
-        )
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
-        );
+    /* GRID */
+
+    .grid {
+        grid-template-columns:
+            1fr;
+    }
+
+    /* DOCUMENTS */
+
+    .documents {
+        grid-template-columns:
+            1fr;
+    }
+
+    /* CONTACT */
+
+    .contact {
+        display:
+            block;
+    }
+
+    .contact-actions {
+        margin-top:
+            20px;
+    }
 }
 
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
 
-// ==========================================
-// START WEBSITE
-// ==========================================
+@media (max-width: 420px) {
 
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
-
-        console.log(
-            "MBSC NEW SCRIPT LOADED"
-        );
-
-        loadWebsiteServices();
-
+    .hero {
+        padding:
+            35px 5% 50px;
     }
-);
+
+    .hero h1 {
+        font-size:
+            42px;
+    }
+
+    .hero-card {
+        height:
+            390px;
+
+        padding:
+            10px;
+
+        border-radius:
+            22px;
+    }
+
+    .hero-person-image {
+        width:
+            100%;
+
+        height:
+            100%;
+
+        max-width:
+            100%;
+
+        max-height:
+            100%;
+
+        object-fit:
+            contain;
+    }
+
+    .actions a {
+        width:
+            100%;
+    }
+
+    .section h2 {
+        font-size:
+            27px;
+    }
+
+    .service {
+        padding:
+            20px;
+    }
+
+    .sub-service-button {
+        font-size:
+            12px;
+
+        min-height:
+            46px;
+    }
+
+    .loans-service {
+        min-height:
+            290px;
+    }
+}
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+
+        animation-duration:
+            0.01ms !important;
+
+        animation-iteration-count:
+            1 !important;
+
+        scroll-behavior:
+            auto !important;
+
+        transition-duration:
+            0.01ms !important;
+    }
+}
