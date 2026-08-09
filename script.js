@@ -1,1290 +1,507 @@
-/* =========================================================
-   MBSC SOLUTIONS - COMPLETE STYLE
-   ========================================================= */
+// ==========================================================
+// MBSC SOLUTIONS - COMPLETE SCRIPT
+// ==========================================================
 
-* {
-    box-sizing: border-box;
+// ==========================================================
+// SUPABASE CONFIG
+// ==========================================================
+
+const SUPABASE_URL = "YOUR_SUPABASE_URL";
+const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+);
+
+
+// ==========================================================
+// GLOBAL
+// ==========================================================
+
+const grid = document.querySelector(".grid");
+const documentBox = document.getElementById("documentBox");
+
+
+// ==========================================================
+// WHATSAPP
+// ==========================================================
+
+const WHATSAPP_NUMBER = "917093334820";
+
+function whatsappLink(message) {
+    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 }
 
-:root {
-    --black: #050608;
-    --black2: #0b0d11;
-    --card: #11151c;
 
-    --blue: #4da3ff;
-    --blue2: #1677e8;
+// ==========================================================
+// LOAD SERVICES
+// ==========================================================
 
-    --gold: #e4bd62;
-    --gold2: #ffe39a;
+async function loadServices() {
 
-    --white: #f8fafc;
-    --muted: #a5afbf;
+    if (!grid) return;
 
-    --line: #273140;
+    grid.innerHTML = `
+        <div class="service">
+            <h3>Loading Services...</h3>
+            <p>Please wait...</p>
+        </div>
+    `;
+
+    try {
+
+        const { data, error } = await supabaseClient
+            .from("services")
+            .select("*")
+            .order("id", { ascending: true });
+
+        if (error) {
+            console.error("Supabase Error:", error);
+
+            grid.innerHTML = `
+                <div class="service">
+                    <h3>Unable to load services</h3>
+                    <p>Please refresh the page.</p>
+                </div>
+            `;
+
+            return;
+        }
+
+        if (!data || data.length === 0) {
+
+            grid.innerHTML = `
+                <div class="service">
+                    <h3>No Services Found</h3>
+                    <p>Please add services in Supabase.</p>
+                </div>
+            `;
+
+            return;
+        }
+
+        grid.innerHTML = "";
+
+        data.forEach(service => {
+            createServiceCard(service);
+        });
+
+    } catch (err) {
+
+        console.error(err);
+
+        grid.innerHTML = `
+            <div class="service">
+                <h3>Error</h3>
+                <p>Something went wrong while loading services.</p>
+            </div>
+        `;
+    }
 }
 
-html {
-    scroll-behavior: smooth;
+
+// ==========================================================
+// CREATE SERVICE CARD
+// ==========================================================
+
+function createServiceCard(service) {
+
+    const article = document.createElement("article");
+
+    article.className = "service";
+
+    const serviceName =
+        service.name ||
+        service.service_name ||
+        service.title ||
+        "Service";
+
+    const description =
+        service.description ||
+        service.details ||
+        "Click below for more details.";
+
+    const docs =
+        service.documents ||
+        service.requirements ||
+        service.docs ||
+        "";
+
+    const serviceId = service.id;
+
+
+    // ======================================================
+    // SERVICE TITLE
+    // ======================================================
+
+    const title = document.createElement("h3");
+
+    title.textContent = serviceName;
+
+
+    // ======================================================
+    // DESCRIPTION
+    // ======================================================
+
+    const desc = document.createElement("p");
+
+    desc.textContent = description;
+
+
+    // ======================================================
+    // VIEW BUTTON
+    // ======================================================
+
+    const button = document.createElement("button");
+
+    button.className = "service-button";
+
+    button.textContent = "View & WhatsApp";
+
+
+    // ======================================================
+    // BUTTON ACTION
+    // ======================================================
+
+    button.addEventListener("click", function () {
+
+        showServiceDocuments(
+            serviceName,
+            docs,
+            service
+        );
+
+    });
+
+
+    // ======================================================
+    // ADD ELEMENTS
+    // ======================================================
+
+    article.appendChild(title);
+
+    article.appendChild(desc);
+
+    article.appendChild(button);
+
+
+    // ======================================================
+    // LOANS VIDEO
+    // ======================================================
+
+    if (
+        String(serviceName)
+            .trim()
+            .toLowerCase() === "loans"
+    ) {
+
+        addLoansVideo(article);
+
+    }
+
+
+    // ======================================================
+    // ADD CARD
+    // ======================================================
+
+    grid.appendChild(article);
 }
 
-body {
-    margin: 0;
-    font-family: Inter, Arial, sans-serif;
-    background: var(--black);
-    color: var(--white);
+
+// ==========================================================
+// LOANS BACKGROUND VIDEO
+// ==========================================================
+
+function addLoansVideo(article) {
+
+    // Video
+    const video = document.createElement("video");
+
+    video.className = "loans-video";
+
+    // IMPORTANT:
+    // Upload your video with this exact filename
+    video.src = "audio_vadhu.mp4";
+
+    video.autoplay = true;
+    video.loop = true;
+    video.muted = true;
+    video.playsInline = true;
+
+    video.setAttribute("aria-hidden", "true");
+
+    // Overlay
+    const overlay = document.createElement("div");
+
+    overlay.className = "loans-video-overlay";
+
+    // Put video behind everything
+    article.prepend(video);
+
+    article.prepend(overlay);
+
+    // Try playing video
+    const playPromise = video.play();
+
+    if (playPromise !== undefined) {
+
+        playPromise.catch(() => {
+
+            console.log(
+                "Loans video waiting for browser autoplay permission."
+            );
+
+        });
+
+    }
 }
 
-a {
-    text-decoration: none;
-    color: inherit;
-}
 
-/* =========================================================
-   TOP BAR
-   ========================================================= */
+// ==========================================================
+// SHOW DOCUMENTS
+// ==========================================================
 
-.topbar {
-    height: 78px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+function showServiceDocuments(
+    serviceName,
+    docs,
+    service
+) {
 
-    padding: 0 6%;
+    if (!documentBox) return;
 
-    border-bottom: 1px solid var(--line);
 
-    background: #050608;
+    // ======================================================
+    // DOCUMENT SECTION
+    // ======================================================
 
-    position: sticky;
-    top: 0;
-    z-index: 50;
-}
+    documentBox.innerHTML = "";
 
-.brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
 
-.brand span,
-.brand strong {
-    display: block;
-}
+    const heading = document.createElement("h3");
 
-.brand span {
-    font-size: 11px;
-    color: #8f9aaa;
-    letter-spacing: 0.08em;
-    margin-top: 3px;
-}
+    heading.textContent =
+        serviceName;
 
-.logo {
-    width: 45px;
-    height: 45px;
 
-    border: 2px solid var(--blue);
-    border-radius: 12px;
+    documentBox.appendChild(heading);
 
-    display: grid;
-    place-items: center;
 
-    font-size: 12px;
-    font-weight: 900;
+    // ======================================================
+    // DOCUMENT LIST
+    // ======================================================
 
-    color: var(--blue);
+    const list = document.createElement("ul");
 
-    background: #090c11;
-}
+    list.className = "requirements-list";
 
-/* =========================================================
-   BUTTONS
-   ========================================================= */
 
-.wa,
-.primary,
-button {
-    display: inline-flex;
+    let documentItems = [];
 
-    align-items: center;
-    justify-content: center;
 
-    border-radius: 10px;
+    // Array
+    if (Array.isArray(docs)) {
 
-    padding: 12px 18px;
+        documentItems = docs;
 
-    font-weight: 800;
+    }
 
-    border: 0;
+    // String
+    else if (typeof docs === "string") {
 
-    cursor: pointer;
+        documentItems = docs
+            .split(/\r?\n|,|;/)
+            .map(item => item.trim())
+            .filter(Boolean);
 
-    background: linear-gradient(
-        135deg,
-        var(--blue),
-        var(--blue2)
+    }
+
+
+    // ======================================================
+    // NO DOCUMENTS
+    // ======================================================
+
+    if (documentItems.length === 0) {
+
+        const item =
+            document.createElement("li");
+
+        item.className =
+            "requirement-item";
+
+        item.innerHTML = `
+            <span class="bullet">•</span>
+            <span class="requirement-text">
+                Contact us for document requirements.
+            </span>
+        `;
+
+        list.appendChild(item);
+
+    }
+
+
+    // ======================================================
+    // DOCUMENT ITEMS
+    // ======================================================
+
+    else {
+
+        documentItems.forEach(itemText => {
+
+            const item =
+                document.createElement("li");
+
+            item.className =
+                "requirement-item";
+
+            item.innerHTML = `
+                <span class="bullet">•</span>
+                <span class="requirement-text">
+                    ${escapeHTML(itemText)}
+                </span>
+            `;
+
+            list.appendChild(item);
+
+        });
+
+    }
+
+
+    documentBox.appendChild(list);
+
+
+    // ======================================================
+    // WHATSAPP BUTTON
+    // ======================================================
+
+    const whatsappButton =
+        document.createElement("a");
+
+    whatsappButton.className =
+        "primary";
+
+    whatsappButton.href =
+        whatsappLink(
+            `Hello MBSC SOLUTIONS, I need details about ${serviceName}.`
+        );
+
+    whatsappButton.target = "_blank";
+
+    whatsappButton.rel =
+        "noopener noreferrer";
+
+    whatsappButton.textContent =
+        "Message on WhatsApp";
+
+
+    documentBox.appendChild(
+        whatsappButton
     );
 
-    color: #fff;
 
-    box-shadow:
-        0 8px 25px rgba(22, 119, 232, 0.2);
+    // ======================================================
+    // SCROLL TO DOCUMENTS
+    // ======================================================
 
-    transition: 0.2s ease;
-}
+    const documentsSection =
+        document.querySelector(".documents");
 
-.wa:hover,
-.primary:hover,
-button:hover {
-    transform: translateY(-2px);
+    if (documentsSection) {
 
-    box-shadow:
-        0 12px 30px rgba(22, 119, 232, 0.35);
-}
+        documentsSection.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
 
-.secondary {
-    display: inline-flex;
-
-    align-items: center;
-    justify-content: center;
-
-    border: 1px solid #394554;
-
-    background: #10141a;
-
-    color: #edf3fa;
-
-    border-radius: 10px;
-
-    padding: 12px 18px;
-
-    font-weight: 800;
-
-    transition: 0.2s ease;
-}
-
-.secondary:hover {
-    border-color: var(--blue);
-    background: #121b27;
-}
-
-/* =========================================================
-   HERO
-   ========================================================= */
-
-.hero {
-    min-height: 580px;
-
-    padding: 75px 7%;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 60px;
-
-    background:
-        radial-gradient(
-            circle at 82% 25%,
-            rgba(22, 119, 232, 0.18) 0,
-            transparent 35%
-        ),
-        radial-gradient(
-            circle at 12% 80%,
-            rgba(228, 189, 98, 0.08) 0,
-            transparent 25%
-        );
-}
-
-/* =========================================================
-   HERO LEFT
-   ========================================================= */
-
-.eyebrow {
-    font-size: 11px;
-
-    letter-spacing: 0.2em;
-
-    color: var(--gold2);
-
-    font-weight: 900;
-}
-
-.hero h1 {
-    font-size: clamp(42px, 7vw, 78px);
-
-    line-height: 0.95;
-
-    margin: 15px 0;
-}
-
-.hero p {
-    max-width: 620px;
-
-    color: #b1bbc9;
-
-    font-size: 18px;
-
-    line-height: 1.7;
-}
-
-/* =========================================================
-   ACTION BUTTONS
-   ========================================================= */
-
-.actions,
-.contact-actions {
-    display: flex;
-
-    gap: 12px;
-
-    flex-wrap: wrap;
-
-    margin-top: 28px;
-}
-
-/* =========================================================
-   HERO CARD
-   ========================================================= */
-
-.hero-card {
-    width: 470px;
-
-    min-width: 470px;
-
-    height: 520px;
-
-    border: 1px solid #34404f;
-
-    border-radius: 30px;
-
-    padding: 18px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    background:
-        linear-gradient(
-            145deg,
-            #16283d,
-            #0b1017 55%,
-            #07090c
-        );
-
-    position: relative;
-
-    overflow: hidden;
-
-    box-shadow:
-        0 25px 60px #000;
-
-    isolation: isolate;
-}
-
-/* =========================================================
-   HERO GLOW
-   ========================================================= */
-
-.card-glow {
-    position: absolute;
-
-    width: 300px;
-    height: 300px;
-
-    border-radius: 50%;
-
-    background: #1677e8;
-
-    filter: blur(90px);
-
-    opacity: 0.24;
-
-    top: -70px;
-    right: -70px;
-
-    z-index: -1;
-
-    animation:
-        glowPulse 4s ease-in-out infinite;
-}
-
-/* =========================================================
-   HERO IMAGE CONTAINER
-   ========================================================= */
-
-.hero-animation {
-    width: 100%;
-    height: 100%;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    position: relative;
-
-    z-index: 2;
-
-    overflow: hidden;
-
-    border-radius: 24px;
-
-    background: transparent;
-}
-
-/* =========================================================
-   HERO IMAGE
-   NO ZOOM
-   NO SCALE
-   ========================================================= */
-
-.hero-person-image {
-    display: block;
-
-    width: 100%;
-    height: 100%;
-
-    max-width: 100%;
-    max-height: 100%;
-
-    object-fit: contain;
-
-    object-position: center;
-
-    border: none;
-
-    outline: none;
-
-    border-radius: 0;
-
-    background: transparent;
-
-    filter:
-        drop-shadow(
-            0 18px 35px rgba(0, 0, 0, 0.55)
-        );
-
-    /* ONLY FLOAT - NO ZOOM */
-    animation:
-        heroFloat 4s ease-in-out infinite;
-
-    transform-origin: center center;
-
-    will-change: transform;
-}
-
-/* =========================================================
-   HERO FLOAT
-   ONLY UP/DOWN
-   NO SCALE
-   ========================================================= */
-
-@keyframes heroFloat {
-
-    0% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-8px);
-    }
-
-    100% {
-        transform: translateY(0);
     }
 }
 
-/* =========================================================
-   GLOW ANIMATION
-   ========================================================= */
 
-@keyframes glowPulse {
+// ==========================================================
+// ESCAPE HTML
+// ==========================================================
 
-    0% {
-        opacity: 0.18;
-        transform: scale(0.95);
-    }
+function escapeHTML(value) {
 
-    50% {
-        opacity: 0.32;
-        transform: scale(1.08);
-    }
-
-    100% {
-        opacity: 0.18;
-        transform: scale(0.95);
-    }
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
 
-/* =========================================================
-   HIDE OLD HERO TEXT
-   ========================================================= */
 
-.hero-card > span,
-.hero-card > b,
-.hero-card-text {
-    display: none !important;
-}
+// ==========================================================
+// MOBILE MENU / SERVICE HELPERS
+// ==========================================================
 
-/* =========================================================
-   SERVICES
-   ========================================================= */
+document.addEventListener(
+    "click",
+    function (event) {
 
-.section {
-    padding: 80px 7%;
-}
-
-.section-head {
-    margin-bottom: 30px;
-}
-
-.section h2,
-.contact h2 {
-    font-size: 36px;
-
-    margin: 8px 0;
-}
-
-/* =========================================================
-   SERVICE GRID
-   ========================================================= */
-
-.grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(
-            3,
-            minmax(0, 1fr)
-        );
-
-    gap: 18px;
-
-    align-items: start;
-}
-
-/* =========================================================
-   SERVICE CARD
-   ========================================================= */
-
-.service {
-    border: 1px solid #29323e;
-
-    background:
-        linear-gradient(
-            145deg,
-            #151a22,
-            #0c0f14
-        );
-
-    padding: 24px;
-
-    border-radius: 18px;
-
-    transition: 0.2s;
-
-    box-shadow:
-        0 10px 30px #000;
-
-    overflow: hidden;
-
-    position: relative;
-
-    isolation: isolate;
-}
-
-.service:hover {
-    transform:
-        translateY(-4px);
-
-    border-color:
-        var(--blue);
-
-    box-shadow:
-        0 16px 35px #000;
-}
-
-.service h3 {
-    margin:
-        0 0 12px;
-
-    color: #fff;
-
-    font-size: 20px;
-}
-
-.service p {
-    color: #9da8b7;
-
-    font-size: 13px;
-
-    line-height: 1.6;
-
-    min-height: 42px;
-}
-
-.service button {
-    margin-top: 14px;
-
-    width: 100%;
-}
-
-/* =========================================================
-   LOANS VIDEO BACKGROUND
-   ========================================================= */
-
-.loans-service {
-    position: relative !important;
-
-    overflow: hidden !important;
-
-    isolation: isolate !important;
-
-    min-height: 280px;
-}
-
-/* VIDEO */
-
-.loans-service .loans-video {
-    position: absolute;
-
-    inset: 0;
-
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-
-    object-position: center;
-
-    z-index: -2;
-
-    pointer-events: none;
-}
-
-/* DARK OVERLAY */
-
-.loans-service .loans-video-overlay {
-    position: absolute;
-
-    inset: 0;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(5, 6, 8, 0.88),
-            rgba(5, 12, 22, 0.72)
-        );
-
-    z-index: -1;
-
-    pointer-events: none;
-}
-
-/* KEEP LOANS CONTENT ABOVE VIDEO */
-
-.loans-service > * {
-    position: relative;
-
-    z-index: 2;
-}
-
-/* =========================================================
-   SERVICE BUTTON
-   ========================================================= */
-
-.service-button {
-    cursor: pointer;
-}
-
-/* =========================================================
-   SUB SERVICES
-   ========================================================= */
-
-.sub-service-list {
-    display: block !important;
-
-    width: 100% !important;
-
-    height: auto !important;
-
-    max-height: none !important;
-
-    overflow: visible !important;
-
-    margin-top: 12px;
-}
-
-.sub-service-list.show {
-    display: block !important;
-
-    width: 100% !important;
-
-    height: auto !important;
-
-    max-height: none !important;
-
-    overflow: visible !important;
-
-    visibility: visible !important;
-}
-
-/* =========================================================
-   LOAN SUB SERVICES
-   ========================================================= */
-
-.loan-sub-services {
-    display: flex !important;
-
-    flex-direction: column !important;
-
-    width: 100% !important;
-
-    margin-top: 15px !important;
-
-    padding: 0 !important;
-
-    gap: 10px !important;
-
-    height: auto !important;
-
-    max-height: none !important;
-
-    overflow: visible !important;
-}
-
-/* =========================================================
-   SUB SERVICE BUTTON
-   ========================================================= */
-
-.sub-service-button {
-    width: 100%;
-
-    min-height: 48px;
-
-    padding:
-        12px 16px;
-
-    border:
-        1px solid #2d3a4d;
-
-    border-radius: 8px;
-
-    background:
-        #0d141e;
-
-    color:
-        #ffffff;
-
-    cursor: pointer;
-
-    text-align: left;
-
-    font-size: 13px;
-
-    line-height: 1.4;
-
-    display: flex;
-
-    align-items: center;
-
-    box-sizing: border-box;
-
-    margin: 0;
-
-    white-space: normal;
-
-    overflow: visible;
-
-    transition: 0.2s ease;
-}
-
-.sub-service-button:hover {
-    background:
-        #162235;
-
-    border-color:
-        #3e91ee;
-}
-
-/* =========================================================
-   SUB NUMBER
-   ========================================================= */
-
-.loan-sub-services
-.sub-number {
-    display: inline-block !important;
-
-    min-width: 30px !important;
-
-    margin-right: 6px !important;
-
-    font-weight: 700;
-}
-
-/* =========================================================
-   ITEM LIST
-   ========================================================= */
-
-.item-list {
-    list-style: none;
-
-    padding: 0;
-
-    margin: 16px 0;
-}
-
-.item-list li {
-    margin-bottom: 10px;
-}
-
-.item-button {
-    width: 100%;
-
-    padding:
-        11px 14px;
-
-    margin-bottom: 8px;
-
-    border:
-        1px solid #2d3a4d;
-
-    border-radius: 8px;
-
-    background:
-        #0d141e;
-
-    color:
-        #ffffff;
-
-    cursor: pointer;
-
-    text-align: left;
-
-    transition: 0.2s;
-}
-
-.item-button:hover {
-    background:
-        #162235;
-}
-
-/* =========================================================
-   DOCUMENTS
-   ========================================================= */
-
-.documents {
-    display: grid;
-
-    grid-template-columns:
-        1fr 1.2fr;
-
-    gap: 25px;
-}
-
-.info-panel,
-.doc-box {
-    border:
-        1px solid #29323e;
-
-    background:
-        #10141a;
-
-    border-radius:
-        20px;
-
-    padding:
-        28px;
-
-    box-shadow:
-        0 12px 35px #000;
-}
-
-.info-panel p,
-.doc-box p {
-    color:
-        #a5afbf;
-
-    line-height:
-        1.7;
-}
-
-.doc-box ul {
-    line-height:
-        2;
-
-    color:
-        #e5eaf1;
-}
-
-/* =========================================================
-   REQUIREMENTS
-   ========================================================= */
-
-.requirements-list {
-    margin:
-        15px 0;
-
-    padding-left:
-        5px;
-}
-
-.requirement-item {
-    display: flex;
-
-    align-items:
-        flex-start;
-
-    gap:
-        10px;
-
-    margin-bottom:
-        10px;
-
-    color:
-        #edf3fa;
-
-    line-height:
-        1.6;
-}
-
-.requirement-text {
-    color:
-        #edf3fa;
-}
-
-.bullet {
-    color:
-        #ffffff;
-
-    font-size:
-        18px;
-
-    line-height:
-        1.3;
-}
-
-/* =========================================================
-   CONTACT
-   ========================================================= */
-
-.contact {
-    padding:
-        70px 7%;
-
-    border-top:
-        1px solid #1f2731;
-
-    border-bottom:
-        1px solid #1f2731;
-
-    display:
-        flex;
-
-    justify-content:
-        space-between;
-
-    gap:
-        30px;
-
-    align-items:
-        center;
-
-    background:
-        #080a0d;
-}
-
-.contact-actions {
-    margin-top:
-        0;
-}
-
-/* =========================================================
-   FOOTER
-   ========================================================= */
-
-footer {
-    text-align:
-        center;
-
-    padding:
-        28px;
-
-    color:
-        #727d8d;
-
-    font-size:
-        12px;
-
-    background:
-        #050608;
-}
-
-/* =========================================================
-   TABLET
-   ========================================================= */
-
-@media (max-width: 1000px) {
-
-    .hero {
-        gap:
-            35px;
-
-        padding:
-            65px 5%;
-    }
-
-    .hero-card {
-        width:
-            400px;
-
-        min-width:
-            400px;
-
-        height:
-            470px;
-    }
-
-    .hero-person-image {
-        width:
-            100%;
-
-        height:
-            100%;
-
-        max-width:
-            100%;
-
-        max-height:
-            100%;
-
-        object-fit:
-            contain;
-    }
-
-    .grid {
-        grid-template-columns:
-            repeat(
-                2,
-                minmax(0, 1fr)
+        const button =
+            event.target.closest(
+                ".sub-service-button"
             );
+
+        if (!button) return;
+
+        const serviceName =
+            button.dataset.service ||
+            button.textContent.trim();
+
+        showServiceDocuments(
+            serviceName,
+            button.dataset.documents || "",
+            {}
+        );
+
     }
-}
+);
 
-/* =========================================================
-   MOBILE
-   ========================================================= */
 
-@media (max-width: 700px) {
+// ==========================================================
+// LOAD EVERYTHING
+// ==========================================================
 
-    .topbar {
-        height:
-            70px;
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
 
-        padding:
-            0 4%;
+        loadServices();
+
     }
+);
 
-    .brand strong {
-        font-size:
-            14px;
-    }
 
-    .brand span {
-        font-size:
-            9px;
-    }
+// ==========================================================
+// PAGE VISIBILITY
+// Keep Loans video playing when page becomes visible
+// ==========================================================
 
-    .logo {
-        width:
-            40px;
+document.addEventListener(
+    "visibilitychange",
+    function () {
 
-        height:
-            40px;
-    }
-
-    .topbar .wa {
-        padding:
-            9px 12px;
-
-        font-size:
-            12px;
-    }
-
-    /* HERO */
-
-    .hero {
-        min-height:
-            auto;
-
-        padding:
-            45px 6% 60px;
-
-        display:
-            flex;
-
-        flex-direction:
-            column;
-
-        align-items:
-            stretch;
-
-        gap:
-            40px;
-    }
-
-    .hero h1 {
-        font-size:
-            48px;
-    }
-
-    .hero p {
-        font-size:
-            16px;
-    }
-
-    /* HERO CARD */
-
-    .hero-card {
-        width:
-            100%;
-
-        min-width:
-            0;
-
-        height:
-            430px;
-
-        padding:
-            14px;
-
-        border-radius:
-            24px;
-
-        order:
-            2;
-    }
-
-    .hero-animation {
-        width:
-            100%;
-
-        height:
-            100%;
-
-        display:
-            flex;
-
-        align-items:
-            center;
-
-        justify-content:
-            center;
-
-        overflow:
-            hidden;
-
-        border-radius:
-            18px;
-    }
-
-    .hero-person-image {
-        width:
-            100%;
-
-        height:
-            100%;
-
-        max-width:
-            100%;
-
-        max-height:
-            100%;
-
-        object-fit:
-            contain;
-
-        object-position:
-            center;
-
-        border-radius:
-            0;
-
-        animation:
-            heroFloatMobile
-            4s
-            ease-in-out
-            infinite;
-    }
-
-    /* LOANS VIDEO MOBILE */
-
-    .loans-service {
-        min-height:
-            300px;
-    }
-
-    .loans-service .loans-video {
-        object-fit:
-            cover;
-    }
-
-    @keyframes heroFloatMobile {
-
-        0% {
-            transform:
-                translateY(0);
+        if (
+            document.visibilityState !== "visible"
+        ) {
+            return;
         }
 
-        50% {
-            transform:
-                translateY(-6px);
-        }
+        const videos =
+            document.querySelectorAll(
+                ".loans-video"
+            );
 
-        100% {
-            transform:
-                translateY(0);
-        }
+        videos.forEach(video => {
+
+            video.play().catch(() => {});
+
+        });
+
     }
-
-    /* SECTIONS */
-
-    .section,
-    .contact {
-        padding:
-            55px 6%;
-    }
-
-    .section h2,
-    .contact h2 {
-        font-size:
-            30px;
-    }
-
-    /* GRID */
-
-    .grid {
-        grid-template-columns:
-            1fr;
-    }
-
-    /* DOCUMENTS */
-
-    .documents {
-        grid-template-columns:
-            1fr;
-    }
-
-    /* CONTACT */
-
-    .contact {
-        display:
-            block;
-    }
-
-    .contact-actions {
-        margin-top:
-            20px;
-    }
-}
-
-/* =========================================================
-   SMALL MOBILE
-   ========================================================= */
-
-@media (max-width: 420px) {
-
-    .hero {
-        padding:
-            35px 5% 50px;
-    }
-
-    .hero h1 {
-        font-size:
-            42px;
-    }
-
-    .hero-card {
-        height:
-            390px;
-
-        padding:
-            10px;
-
-        border-radius:
-            22px;
-    }
-
-    .hero-person-image {
-        width:
-            100%;
-
-        height:
-            100%;
-
-        max-width:
-            100%;
-
-        max-height:
-            100%;
-
-        object-fit:
-            contain;
-    }
-
-    .actions a {
-        width:
-            100%;
-    }
-
-    .section h2 {
-        font-size:
-            27px;
-    }
-
-    .service {
-        padding:
-            20px;
-    }
-
-    .sub-service-button {
-        font-size:
-            12px;
-
-        min-height:
-            46px;
-    }
-
-    .loans-service {
-        min-height:
-            290px;
-    }
-}
-
-/* =========================================================
-   ACCESSIBILITY
-   ========================================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-    *,
-    *::before,
-    *::after {
-
-        animation-duration:
-            0.01ms !important;
-
-        animation-iteration-count:
-            1 !important;
-
-        scroll-behavior:
-            auto !important;
-
-        transition-duration:
-            0.01ms !important;
-    }
-}
+);
