@@ -12,7 +12,6 @@
 
 <body>
 
-
   <!-- =====================================================
        TOP BAR
   ====================================================== -->
@@ -25,9 +24,9 @@
         MBSC
       </div>
 
-      <div class="brand-text">
+      <div>
         <strong>MBSC SOLUTIONS</strong>
-        <span>Financial &amp; Digital Services</span>
+        <span>Financial & Digital Services</span>
       </div>
 
     </div>
@@ -37,7 +36,7 @@
       class="wa"
       href="https://wa.me/917093334820"
       target="_blank"
-      rel="noopener noreferrer"
+      rel="noopener"
     >
       WhatsApp
     </a>
@@ -59,8 +58,7 @@
 
     <section class="hero">
 
-
-      <!-- LEFT CONTENT -->
+      <!-- LEFT -->
 
       <div class="hero-content">
 
@@ -68,12 +66,10 @@
           WELCOME TO
         </p>
 
-
         <h1>
           MBSC<br>
           SOLUTIONS
         </h1>
-
 
         <p>
           Loans, credit cards, PF, ITR, banking and digital
@@ -87,7 +83,7 @@
             class="primary"
             href="https://wa.me/917093334820?text=Hello%20MBSC%20SOLUTIONS%2C%20I%20need%20service%20details"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noopener"
           >
             Chat on WhatsApp
           </a>
@@ -106,9 +102,7 @@
 
 
 
-      <!-- =================================================
-           HERO VIDEO
-      ================================================== -->
+      <!-- RIGHT HERO -->
 
       <div class="hero-card">
 
@@ -117,27 +111,25 @@
 
         <div class="hero-animation">
 
-
-          <video
-            class="hero-person-video"
-            autoplay
-            muted
-            loop
-            playsinline
-            preload="auto"
+          <img
+            src="ChatGPT%20Image%20Aug%209,%202026,%2010_06_19%20AM.png"
+            alt="MBSC Solutions"
+            class="hero-person-image"
           >
 
-            <source
-              src="./Untitled design.mp4"
-              type="video/mp4"
-            >
-
-            Your browser does not support HTML5 video.
-
-          </video>
-
-
         </div>
+
+
+        <!-- Hidden old text -->
+
+        <span>
+          QUICK ASSISTANCE
+        </span>
+
+        <b>
+          Choose a service<br>
+          and message us.
+        </b>
 
       </div>
 
@@ -154,13 +146,11 @@
       class="section"
     >
 
-
       <div class="section-head">
 
         <p class="eyebrow">
           OUR SERVICES
         </p>
-
 
         <h2>
           What can we help you with?
@@ -169,22 +159,27 @@
       </div>
 
 
-
-      <!-- =================================================
-           SERVICES GRID
-
-           DO NOT DELETE
-      ================================================== -->
+      <!-- VERY IMPORTANT
+           script.js loads Supabase services here -->
 
       <div
-        class="grid"
         id="servicesGrid"
+        class="grid"
       >
 
-        <!--
-          Services will be loaded here
-          by script.js
-        -->
+        <!-- Loading message -->
+
+        <div class="service loading-service">
+
+          <h3>
+            Loading Services...
+          </h3>
+
+          <p>
+            Please wait while our services are loading.
+          </p>
+
+        </div>
 
       </div>
 
@@ -196,12 +191,10 @@
          DOCUMENTS
     ==================================================== -->
 
-    <section
-      class="section documents"
-    >
+    <section class="section documents">
 
 
-      <!-- DOCUMENT INFORMATION -->
+      <!-- LEFT -->
 
       <div class="info-panel">
 
@@ -209,11 +202,9 @@
           DOCUMENTS
         </p>
 
-
         <h2>
           Service-wise requirements
         </h2>
-
 
         <p>
           Select a service above to see the usual
@@ -225,7 +216,7 @@
 
 
 
-      <!-- REQUIREMENTS -->
+      <!-- RIGHT -->
 
       <div
         id="documentBox"
@@ -235,7 +226,6 @@
         <h3>
           Select a service
         </h3>
-
 
         <p>
           Tap any service to view its document list.
@@ -254,17 +244,15 @@
     <section class="contact">
 
 
-      <div class="contact-content">
+      <div>
 
         <p class="eyebrow">
           CONTACT
         </p>
 
-
         <h2>
           Need assistance?
         </h2>
-
 
         <p>
           Message us on WhatsApp or call us directly.
@@ -276,12 +264,11 @@
 
       <div class="contact-actions">
 
-
         <a
           class="primary"
           href="https://wa.me/917093334820"
           target="_blank"
-          rel="noopener noreferrer"
+          rel="noopener"
         >
           WhatsApp Us
         </a>
@@ -315,18 +302,16 @@
   ====================================================== -->
 
   <footer>
-
     MBSC SOLUTIONS · All rights reserved.
-
   </footer>
 
 
 
   <!-- =====================================================
-       JAVASCRIPT
+       SUPABASE / SERVICES SCRIPT
   ====================================================== -->
 
-  <script src="script.js?v=6"></script>
+  <script src="script.js?v=10"></script>
 
 </body>
 
