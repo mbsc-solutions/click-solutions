@@ -1157,18 +1157,26 @@ footer {
 
   .hero-person-image {
 
-    height: 405px;
+  width: 100%;
 
-    max-width: 96%;
+  height: 100%;
 
-    border-radius: 18px;
+  max-width: 100%;
 
-    animation:
-      heroFloatMobile
-      4s
-      ease-in-out
-      infinite;
-  }
+  max-height: 100%;
+
+  object-fit: contain;
+
+  object-position: center;
+
+  border-radius: 18px;
+
+  animation:
+    heroFloatMobile
+    4s
+    ease-in-out
+    infinite;
+}
 
 
   @keyframes heroFloatMobile {
