@@ -10,15 +10,12 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <meta
-    name="description"
-    content="MBSC Solutions - Financial & Digital Services"
-  >
-
   <title>MBSC SOLUTIONS</title>
 
+  <!-- SUPABASE -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <!-- MAIN CSS -->
+  <!-- CSS -->
   <link rel="stylesheet" href="style.css">
 
 </head>
@@ -27,426 +24,329 @@
 <body>
 
 
-  <!-- =====================================================
-       TOP BAR
-  ====================================================== -->
+<!-- =====================================================
+     HEADER
+===================================================== -->
 
-  <header class="topbar">
+<header class="header">
 
-    <div class="brand">
+  <div class="brand">
 
-      <div class="logo">
-        MBSC
-      </div>
+    <div class="logo">
+      MBSC
+    </div>
 
-      <div>
+    <div class="brand-text">
 
-        <strong>
-          MBSC SOLUTIONS
-        </strong>
+      <strong>
+        MBSC SOLUTIONS
+      </strong>
 
-        <span>
-          Financial & Digital Services
-        </span>
-
-      </div>
+      <span>
+        Financial & Digital Services
+      </span>
 
     </div>
 
+  </div>
+
+
+  <a
+    class="wa"
+    href="https://wa.me/917093334820"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    WhatsApp
+  </a>
+
+</header>
+
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero">
+
+
+  <!-- LEFT -->
+
+  <div class="hero-content">
+
+    <p class="eyebrow">
+      WELCOME TO
+    </p>
+
+
+    <h1>
+      MBSC<br>
+      SOLUTIONS
+    </h1>
+
+
+    <p class="hero-description">
+
+      Loans, credit cards, PF, ITR, banking and
+      digital services — all in one place.
+
+    </p>
+
+
+    <div class="actions">
+
+      <a
+        class="primary"
+        href="https://wa.me/917093334820?text=Hello%20MBSC%20SOLUTIONS%2C%20I%20need%20service%20details"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Chat on WhatsApp
+      </a>
+
+
+      <a
+        class="secondary"
+        href="#services"
+      >
+        View Services
+      </a>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- RIGHT HERO VIDEO -->
+
+  <div class="hero-card">
+
+    <video
+      class="hero-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+    >
+
+      <source
+        src="Untitled design.mp4"
+        type="video/mp4"
+      >
+
+      Your browser does not support video.
+
+    </video>
+
+
+    <div class="hero-video-overlay"></div>
+
+
+    <div class="hero-video-text">
+
+      <span>
+        QUICK ASSISTANCE
+      </span>
+
+      <b>
+        Choose a service<br>
+        and message us.
+      </b>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     SERVICES
+===================================================== -->
+
+<section
+  id="services"
+  class="section"
+>
+
+
+  <div class="section-head">
+
+    <p class="eyebrow">
+      OUR SERVICES
+    </p>
+
+
+    <h2>
+      What can we help you with?
+    </h2>
+
+  </div>
+
+
+
+  <!-- ===================================================
+       DEPARTMENT CONTAINER
+  ==================================================== -->
+
+  <div id="departmentsContainer">
+
+    <div class="loading-box">
+
+      <div class="loading-spinner"></div>
+
+      <h3>
+        Loading Services...
+      </h3>
+
+      <p>
+        Please wait while our services are loading.
+      </p>
+
+    </div>
+
+  </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     DOCUMENTS
+===================================================== -->
+
+<section class="section documents">
+
+
+  <div class="info-panel">
+
+    <p class="eyebrow">
+      DOCUMENTS
+    </p>
+
+
+    <h2>
+      Service-wise requirements
+    </h2>
+
+
+    <p>
+
+      Select a service above to see the usual
+      document checklist. Final requirements may
+      vary by product/provider.
+
+    </p>
+
+  </div>
+
+
+
+  <div
+    id="documentBox"
+    class="doc-box"
+  >
+
+    <h3>
+      Select a service
+    </h3>
+
+
+    <p>
+      Tap any service to view its document list.
+    </p>
+
+  </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     CONTACT
+===================================================== -->
+
+<section class="contact">
+
+
+  <div>
+
+    <p class="eyebrow">
+      CONTACT
+    </p>
+
+
+    <h2>
+      Need assistance?
+    </h2>
+
+
+    <p>
+      Message us on WhatsApp or call us directly.
+    </p>
+
+  </div>
+
+
+
+  <div class="contact-actions">
+
 
     <a
-      class="wa"
+      class="primary"
       href="https://wa.me/917093334820"
       target="_blank"
       rel="noopener noreferrer"
     >
-      WhatsApp
+      WhatsApp Us
     </a>
 
-  </header>
 
-
-
-  <!-- =====================================================
-       HERO
-  ====================================================== -->
-
-  <section class="hero">
-
-
-    <!-- LEFT CONTENT -->
-
-    <div class="hero-content">
-
-      <p class="eyebrow">
-        WELCOME TO
-      </p>
-
-
-      <h1>
-        MBSC<br>
-        SOLUTIONS
-      </h1>
-
-
-      <p>
-        Loans, credit cards, PF, ITR, banking and digital
-        services — all in one place.
-      </p>
-
-
-      <div class="actions">
-
-        <a
-          class="primary"
-          href="https://wa.me/917093334820?text=Hello%20MBSC%20SOLUTIONS%2C%20I%20need%20service%20details"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Chat on WhatsApp
-        </a>
-
-
-        <a
-          class="secondary"
-          href="#services"
-        >
-          View Services
-        </a>
-
-      </div>
-
-    </div>
-
-
-
-    <!-- =================================================
-         HERO VIDEO
-    ================================================== -->
-
-    <div class="hero-card">
-
-      <div class="card-glow"></div>
-
-
-      <div class="hero-animation">
-
-
-        <!-- VIDEO ONLY -->
-        <video
-          class="hero-video"
-          autoplay
-          muted
-          loop
-          playsinline
-          preload="auto"
-        >
-
-          <source
-            src="Untitled design.mp4"
-            type="video/mp4"
-          >
-
-          Your browser does not support video.
-
-        </video>
-
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-
-  <!-- =====================================================
-       SERVICES
-  ====================================================== -->
-
-  <section
-    id="services"
-    class="section"
-  >
-
-
-    <div class="section-head">
-
-      <p class="eyebrow">
-        OUR SERVICES
-      </p>
-
-
-      <h2>
-        What can we help you with?
-      </h2>
-
-    </div>
-
-
-
-    <!--
-      IMPORTANT:
-
-      script.js loads services from Supabase
-      into this div.
-    -->
-
-    <div
-      id="servicesGrid"
-      class="grid"
+    <a
+      class="secondary"
+      href="tel:+917093334820"
     >
-
-      <div class="service loading-service">
-
-        <h3>
-          Loading Services...
-        </h3>
-
-        <p>
-          Please wait while our services are loading.
-        </p>
-
-      </div>
-
-    </div>
-
-  </section>
+      7093334820
+    </a>
 
 
-
-  <!-- =====================================================
-       DOCUMENTS
-  ====================================================== -->
-
-  <section class="section documents">
-
-
-    <!-- LEFT -->
-
-    <div class="info-panel">
-
-      <p class="eyebrow">
-        DOCUMENTS
-      </p>
-
-
-      <h2>
-        Service-wise requirements
-      </h2>
-
-
-      <p>
-        Select a service above to see the usual
-        document checklist. Final requirements may
-        vary by product/provider.
-      </p>
-
-    </div>
-
-
-
-    <!-- RIGHT -->
-
-    <div
-      id="documentBox"
-      class="doc-box"
+    <a
+      class="secondary"
+      href="tel:+919491874820"
     >
+      9491874820
+    </a>
 
-      <h3>
-        Select a service
-      </h3>
 
+  </div>
 
-      <p>
-        Tap any service to view its document list.
-      </p>
+</section>
 
-    </div>
 
-  </section>
 
+<!-- =====================================================
+     FOOTER
+===================================================== -->
 
+<footer>
 
-  <!-- =====================================================
-       CONTACT
-  ====================================================== -->
+  © 2026 MBSC SOLUTIONS. All Rights Reserved.
 
-  <section class="contact">
+</footer>
 
 
-    <div>
 
-      <p class="eyebrow">
-        CONTACT
-      </p>
+<!-- =====================================================
+     SCRIPT
+===================================================== -->
 
-
-      <h2>
-        Need assistance?
-      </h2>
-
-
-      <p>
-        Message us on WhatsApp or call us directly.
-      </p>
-
-    </div>
-
-
-
-    <div class="contact-actions">
-
-
-      <a
-        class="primary"
-        href="https://wa.me/917093334820"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        WhatsApp Us
-      </a>
-
-
-      <a
-        class="secondary"
-        href="tel:+917093334820"
-      >
-        7093334820
-      </a>
-
-
-      <a
-        class="secondary"
-        href="tel:+919491874820"
-      >
-        9491874820
-      </a>
-
-
-    </div>
-
-  </section>
-
-
-
-  <!-- =====================================================
-       FOOTER
-  ====================================================== -->
-
-  <footer>
-
-    © 2026 MBSC SOLUTIONS. All Rights Reserved.
-
-  </footer>
-
-
-
-  <!-- =====================================================
-       SUPABASE
-  ====================================================== -->
-
-  <script
-    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
-  ></script>
-
-
-
-  <!-- =====================================================
-       MAIN JAVASCRIPT
-  ====================================================== -->
-
-  <script src="script.js"></script>
-
-
-
-  <!-- =====================================================
-       HERO VIDEO
-  ====================================================== -->
-
-  <script>
-
-    document.addEventListener(
-      "DOMContentLoaded",
-      function () {
-
-        const video =
-          document.querySelector(".hero-video");
-
-
-        if (!video) {
-          return;
-        }
-
-
-        video.muted = true;
-
-
-        video.setAttribute(
-          "autoplay",
-          ""
-        );
-
-
-        video.setAttribute(
-          "loop",
-          ""
-        );
-
-
-        video.setAttribute(
-          "playsinline",
-          ""
-        );
-
-
-        function startVideo() {
-
-          video.play().catch(
-            function () {
-              console.log(
-                "Video autoplay blocked."
-              );
-            }
-          );
-
-        }
-
-
-        startVideo();
-
-
-        video.addEventListener(
-          "loadeddata",
-          startVideo
-        );
-
-
-        video.addEventListener(
-          "canplay",
-          startVideo
-        );
-
-
-        document.addEventListener(
-          "visibilitychange",
-          function () {
-
-            if (
-              document.visibilityState === "visible"
-            ) {
-
-              startVideo();
-
-            }
-
-          }
-        );
-
-      }
-    );
-
-  </script>
+<script src="script.js"></script>
 
 
 </body>
