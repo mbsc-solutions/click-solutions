@@ -1,40 +1,62 @@
 // ==========================================================
-// MBSC SOLUTIONS - COMPLETE SCRIPT.JS
+// MBSC SOLUTIONS - COMPLETE SERVICES SCRIPT
 // ==========================================================
 
-
 // ==========================================================
-// 1. SUPABASE CONFIG
+// SUPABASE CONFIG
 // ==========================================================
 
 const SUPABASE_URL =
     "https://whxlatxnqjpccwrmtmph.supabase.co";
 
-const SUPABASE_PUBLISHABLE_KEY =
-    "sb_publishable_wlqTaOkM3fML9cuUES54fw_8TlbSi-H";
+// IMPORTANT:
+// IKKADA SB_SECRET KEY VADAKU.
+// Supabase Dashboard lo Project Settings -> API
+// nundi Publishable / Anon key pettali.
+
+const SUPABASE_ANON_KEY =
+    "PASTE_YOUR_PUBLISHABLE_OR_ANON_KEY_HERE";
 
 
 // ==========================================================
-// 2. WHATSAPP NUMBER
+// SUPABASE CLIENT
+// ==========================================================
+
+let supabaseClient = null;
+
+if (
+    window.supabase &&
+    SUPABASE_URL &&
+    !SUPABASE_ANON_KEY.includes("PASTE_YOUR")
+) {
+    supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_ANON_KEY
+        );
+}
+
+
+// ==========================================================
+// GLOBAL ELEMENTS
+// ==========================================================
+
+const grid =
+    document.getElementById("servicesGrid");
+
+const documentBox =
+    document.getElementById("documentBox");
+
+
+// ==========================================================
+// WHATSAPP
 // ==========================================================
 
 const WHATSAPP_NUMBER =
     "917093334820";
 
 
-// ==========================================================
-// 3. GLOBAL VARIABLES
-// ==========================================================
-
-let servicesGrid = null;
-let documentBox = null;
-
-
-// ==========================================================
-// 4. WHATSAPP LINK
-// ==========================================================
-
-function createWhatsAppLink(message) {
+function whatsappLink(message) {
 
     return (
         "https://wa.me/" +
@@ -47,311 +69,263 @@ function createWhatsAppLink(message) {
 
 
 // ==========================================================
-// 5. HTML ESCAPE
+// LOAN SUB SERVICES
 // ==========================================================
 
-function escapeHTML(value) {
+const LOAN_SERVICES = [
 
-    return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+    "Tractor Loans",
 
-}
+    "Agri SME Loans",
 
+    "Construction Equipment Loans",
 
-// ==========================================================
-// 6. SHOW MESSAGE IN SERVICES
-// ==========================================================
+    "Business Loans",
 
-function showServiceMessage(title, message) {
+    "Gold Loans",
 
-    if (!servicesGrid) {
-        return;
-    }
+    "Commercial Vehicle Loans",
 
-    servicesGrid.innerHTML = `
-        <div class="service">
+    "Home Loans",
 
-            <h3>
-                ${escapeHTML(title)}
-            </h3>
+    "Auto & Car Loans",
 
-            <p>
-                ${escapeHTML(message)}
-            </p>
+    "Bike Loans"
 
-        </div>
-    `;
-
-}
+];
 
 
 // ==========================================================
-// 7. LOAD SERVICES FROM SUPABASE
+// LOAD SERVICES
 // ==========================================================
 
 async function loadServices() {
 
     console.log(
-        "======================================"
-    );
-
-    console.log(
-        "MBSC SOLUTIONS"
-    );
-
-    console.log(
-        "Loading Services..."
-    );
-
-    console.log(
-        "======================================"
+        "MBSC: Loading services..."
     );
 
 
-    // ------------------------------------------------------
-    // FIND HTML ELEMENTS
-    // ------------------------------------------------------
-
-    servicesGrid =
-        document.getElementById(
-            "servicesGrid"
-        );
-
-    documentBox =
-        document.getElementById(
-            "documentBox"
-        );
-
-
-    // ------------------------------------------------------
-    // CHECK SERVICES GRID
-    // ------------------------------------------------------
-
-    if (!servicesGrid) {
+    if (!grid) {
 
         console.error(
-            "MBSC ERROR: #servicesGrid not found."
+            "MBSC: servicesGrid not found."
         );
 
         return;
+
     }
 
 
     // ------------------------------------------------------
-    // LOADING MESSAGE
+    // Loading
     // ------------------------------------------------------
 
-    servicesGrid.innerHTML = `
-        <div class="service loading-service">
-
-            <h3>
-                Loading Services...
-            </h3>
+    grid.innerHTML = `
+        <div class="service">
+            <h3>Loading Services...</h3>
 
             <p>
                 Please wait while our services are loading.
             </p>
-
         </div>
     `;
 
 
-    // ======================================================
-    // SUPABASE REST API
-    // ======================================================
+    // ------------------------------------------------------
+    // Supabase check
+    // ------------------------------------------------------
 
-    const apiURL =
-        SUPABASE_URL +
-        "/rest/v1/services?select=*";
+    if (!supabaseClient) {
 
+        grid.innerHTML = `
+            <div class="service">
 
-    console.log(
-        "Supabase URL:",
-        SUPABASE_URL
-    );
+                <h3>
+                    Supabase Connection Required
+                </h3>
 
+                <p>
+                    Please add your Supabase Publishable /
+                    Anon Key in script.js.
+                </p>
 
-    console.log(
-        "Services API:",
-        apiURL
-    );
+            </div>
+        `;
+
+        console.error(
+            "MBSC: Supabase client not created."
+        );
+
+        return;
+
+    }
 
 
     try {
 
-        // ==================================================
-        // FETCH SERVICES
-        // ==================================================
+        // --------------------------------------------------
+        // Fetch services
+        // --------------------------------------------------
 
-        const response =
-            await fetch(
-                apiURL,
-                {
-                    method: "GET",
+        const {
+            data,
+            error
+        } = await supabaseClient
 
-                    headers: {
+            .from("services")
 
-                        "apikey":
-                            SUPABASE_PUBLISHABLE_KEY,
+            .select("*");
 
-                        "Authorization":
-                            "Bearer " +
-                            SUPABASE_PUBLISHABLE_KEY,
 
-                        "Content-Type":
-                            "application/json"
+        // --------------------------------------------------
+        // Error
+        // --------------------------------------------------
 
-                    }
-                }
+        if (error) {
+
+            console.error(
+                "MBSC Supabase Error:",
+                error
             );
+
+
+            grid.innerHTML = `
+                <div class="service">
+
+                    <h3>
+                        Unable to Load Services
+                    </h3>
+
+                    <p>
+                        ${escapeHTML(
+                            error.message ||
+                            "Supabase error."
+                        )}
+                    </p>
+
+                </div>
+            `;
+
+            return;
+
+        }
+
+
+        // --------------------------------------------------
+        // Empty table
+        // --------------------------------------------------
+
+        if (
+            !data ||
+            data.length === 0
+        ) {
+
+            grid.innerHTML = `
+                <div class="service">
+
+                    <h3>
+                        No Services Found
+                    </h3>
+
+                    <p>
+                        Services table is empty in Supabase.
+                    </p>
+
+                </div>
+            `;
+
+            return;
+
+        }
 
 
         console.log(
-            "Supabase HTTP Status:",
-            response.status
+            "MBSC: Supabase services:",
+            data
         );
 
 
-        // ==================================================
-        // READ RESPONSE
-        // ==================================================
+        // --------------------------------------------------
+        // Clear loading
+        // --------------------------------------------------
 
-        const responseText =
-            await response.text();
-
-
-        console.log(
-            "Supabase Response:",
-            responseText
-        );
+        grid.innerHTML = "";
 
 
-        // ==================================================
-        // CHECK HTTP ERROR
-        // ==================================================
+        // --------------------------------------------------
+        // Separate Loans
+        // --------------------------------------------------
 
-        if (!response.ok) {
-
-            console.error(
-                "SUPABASE ERROR:",
-                responseText
-            );
+        const normalServices = [];
 
 
-            showServiceMessage(
-                "Unable to Load Services",
-                "Supabase Error " +
-                response.status +
-                ": " +
-                responseText
-            );
+        let loansFound = false;
 
 
-            return;
-        }
-
-
-        // ==================================================
-        // PARSE JSON
-        // ==================================================
-
-        let services;
-
-
-        try {
-
-            services =
-                JSON.parse(
-                    responseText
-                );
-
-        }
-
-        catch (jsonError) {
-
-            console.error(
-                "JSON ERROR:",
-                jsonError
-            );
-
-
-            showServiceMessage(
-                "Services Error",
-                "Supabase returned an invalid response."
-            );
-
-
-            return;
-        }
-
-
-        // ==================================================
-        // CHECK ARRAY
-        // ==================================================
-
-        if (
-            !Array.isArray(services)
-        ) {
-
-            console.error(
-                "Invalid services data:",
-                services
-            );
-
-
-            showServiceMessage(
-                "Services Error",
-                "Invalid data received from Supabase."
-            );
-
-
-            return;
-        }
-
-
-        // ==================================================
-        // CHECK EMPTY
-        // ==================================================
-
-        if (
-            services.length === 0
-        ) {
-
-            console.warn(
-                "services table is empty."
-            );
-
-
-            showServiceMessage(
-                "No Services Found",
-                "The services table is connected but contains no records."
-            );
-
-
-            return;
-        }
-
-
-        // ==================================================
-        // CLEAR LOADING
-        // ==================================================
-
-        servicesGrid.innerHTML =
-            "";
-
-
-        // ==================================================
-        // CREATE ALL SERVICE CARDS
-        // ==================================================
-
-        services.forEach(
+        data.forEach(
             function(service) {
 
-                createServiceCard(
+                const name =
+                    getServiceName(service);
+
+
+                if (
+                    name
+                        .trim()
+                        .toLowerCase() ===
+                    "loans"
+                ) {
+
+                    loansFound = true;
+
+                    createLoansDepartment(
+                        service
+                    );
+
+                }
+
+                else {
+
+                    normalServices.push(
+                        service
+                    );
+
+                }
+
+            }
+        );
+
+
+        // --------------------------------------------------
+        // If Loans department was not in Supabase
+        // create it automatically
+        // --------------------------------------------------
+
+        if (!loansFound) {
+
+            createLoansDepartment({
+
+                name: "Loans",
+
+                description:
+                    "Multiple loan services available through MBSC SOLUTIONS.",
+
+                documents: ""
+
+            });
+
+        }
+
+
+        // --------------------------------------------------
+        // Create normal services
+        // --------------------------------------------------
+
+        normalServices.forEach(
+            function(service) {
+
+                createNormalServiceCard(
                     service
                 );
 
@@ -359,29 +333,8 @@ async function loadServices() {
         );
 
 
-        // ==================================================
-        // SUCCESS
-        // ==================================================
-
         console.log(
-            "======================================"
-        );
-
-        console.log(
-            "MBSC SERVICES LOADED SUCCESSFULLY"
-        );
-
-        console.log(
-            "Total Services:",
-            services.length
-        );
-
-        console.log(
-            services
-        );
-
-        console.log(
-            "======================================"
+            "MBSC: Services displayed successfully."
         );
 
     }
@@ -389,16 +342,25 @@ async function loadServices() {
     catch (error) {
 
         console.error(
-            "MBSC CONNECTION ERROR:",
+            "MBSC: Unexpected error:",
             error
         );
 
 
-        showServiceMessage(
-            "Connection Error",
-            error.message ||
-            "Unable to connect to Supabase."
-        );
+        grid.innerHTML = `
+            <div class="service">
+
+                <h3>
+                    Something Went Wrong
+                </h3>
+
+                <p>
+                    Please refresh the website
+                    and try again.
+                </p>
+
+            </div>
+        `;
 
     }
 
@@ -406,73 +368,287 @@ async function loadServices() {
 
 
 // ==========================================================
-// 8. CREATE SERVICE CARD
+// GET SERVICE NAME
 // ==========================================================
 
-function createServiceCard(service) {
+function getServiceName(service) {
 
-    if (!servicesGrid) {
-        return;
-    }
-
-
-    // ------------------------------------------------------
-    // CARD
-    // ------------------------------------------------------
-
-    const card =
-        document.createElement(
-            "article"
-        );
-
-
-    card.className =
-        "service";
-
-
-    // ------------------------------------------------------
-    // SERVICE NAME
-    // ------------------------------------------------------
-
-    const serviceName =
+    return (
         service.name ||
         service.service_name ||
         service.title ||
-        service.service ||
-        "Service";
+        "Service"
+    );
+
+}
+
+
+// ==========================================================
+// CREATE LOANS DEPARTMENT
+// ==========================================================
+
+function createLoansDepartment(service) {
+
+    const article =
+        document.createElement("article");
+
+
+    article.className =
+        "service loans-department";
 
 
     // ------------------------------------------------------
-    // DESCRIPTION
+    // Title
     // ------------------------------------------------------
+
+    const title =
+        document.createElement("h3");
+
+
+    title.textContent =
+        "Loans";
+
+
+    article.appendChild(
+        title
+    );
+
+
+    // ------------------------------------------------------
+    // Description
+    // ------------------------------------------------------
+
+    const description =
+        document.createElement("p");
+
+
+    description.textContent =
+        "Choose the loan service you need.";
+
+
+    article.appendChild(
+        description
+    );
+
+
+    // ------------------------------------------------------
+    // Main Button
+    // ------------------------------------------------------
+
+    const mainButton =
+        document.createElement("button");
+
+
+    mainButton.className =
+        "service-button";
+
+
+    mainButton.textContent =
+        "View Loan Services";
+
+
+    article.appendChild(
+        mainButton
+    );
+
+
+    // ------------------------------------------------------
+    // Loan List
+    // ------------------------------------------------------
+
+    const loanList =
+        document.createElement("div");
+
+
+    loanList.className =
+        "loan-sub-services";
+
+
+    loanList.style.display =
+        "none";
+
+
+    // ------------------------------------------------------
+    // Create Loan Buttons
+    // ------------------------------------------------------
+
+    LOAN_SERVICES.forEach(
+        function(loanName, index) {
+
+            const button =
+                document.createElement("button");
+
+
+            button.type =
+                "button";
+
+
+            button.className =
+                "sub-service-button";
+
+
+            button.innerHTML = `
+                <span class="sub-number">
+                    ${index + 1}.
+                </span>
+
+                <span>
+                    ${escapeHTML(loanName)}
+                </span>
+            `;
+
+
+            button.addEventListener(
+                "click",
+                function() {
+
+                    showServiceDocuments(
+                        loanName,
+                        "",
+                        {}
+                    );
+
+                }
+            );
+
+
+            loanList.appendChild(
+                button
+            );
+
+        }
+    );
+
+
+    article.appendChild(
+        loanList
+    );
+
+
+    // ------------------------------------------------------
+    // Open / Close
+    // ------------------------------------------------------
+
+    mainButton.addEventListener(
+        "click",
+        function() {
+
+            const isHidden =
+                loanList.style.display ===
+                "none";
+
+
+            if (isHidden) {
+
+                loanList.style.display =
+                    "flex";
+
+                mainButton.textContent =
+                    "Hide Loan Services";
+
+            }
+
+            else {
+
+                loanList.style.display =
+                    "none";
+
+                mainButton.textContent =
+                    "View Loan Services";
+
+            }
+
+        }
+    );
+
+
+    // ------------------------------------------------------
+    // Loans WhatsApp
+    // ------------------------------------------------------
+
+    const whatsappButton =
+        document.createElement("a");
+
+
+    whatsappButton.className =
+        "secondary";
+
+
+    whatsappButton.href =
+        whatsappLink(
+            "Hello MBSC SOLUTIONS, I need details about Loans."
+        );
+
+
+    whatsappButton.target =
+        "_blank";
+
+
+    whatsappButton.rel =
+        "noopener noreferrer";
+
+
+    whatsappButton.textContent =
+        "WhatsApp for Loans";
+
+
+    whatsappButton.style.marginTop =
+        "10px";
+
+
+    article.appendChild(
+        whatsappButton
+    );
+
+
+    // ------------------------------------------------------
+    // Add to grid
+    // ------------------------------------------------------
+
+    grid.appendChild(
+        article
+    );
+
+}
+
+
+// ==========================================================
+// CREATE NORMAL SERVICE CARD
+// ==========================================================
+
+function createNormalServiceCard(service) {
+
+    const article =
+        document.createElement("article");
+
+
+    article.className =
+        "service";
+
+
+    const serviceName =
+        getServiceName(service);
+
 
     const description =
         service.description ||
         service.details ||
-        service.short_description ||
         "Click below to view service details.";
 
 
-    // ------------------------------------------------------
-    // DOCUMENTS
-    // ------------------------------------------------------
-
-    const documents =
+    const docs =
         service.documents ||
         service.requirements ||
         service.docs ||
-        service.document_list ||
         "";
 
 
     // ------------------------------------------------------
-    // TITLE
+    // Title
     // ------------------------------------------------------
 
     const title =
-        document.createElement(
-            "h3"
-        );
+        document.createElement("h3");
 
 
     title.textContent =
@@ -480,35 +656,31 @@ function createServiceCard(service) {
 
 
     // ------------------------------------------------------
-    // DESCRIPTION
+    // Description
     // ------------------------------------------------------
 
-    const descriptionElement =
-        document.createElement(
-            "p"
-        );
+    const desc =
+        document.createElement("p");
 
 
-    descriptionElement.textContent =
+    desc.textContent =
         description;
 
 
     // ------------------------------------------------------
-    // BUTTON
+    // Button
     // ------------------------------------------------------
 
     const button =
-        document.createElement(
-            "button"
-        );
-
-
-    button.type =
-        "button";
+        document.createElement("button");
 
 
     button.className =
         "service-button";
+
+
+    button.type =
+        "button";
 
 
     button.textContent =
@@ -516,7 +688,7 @@ function createServiceCard(service) {
 
 
     // ------------------------------------------------------
-    // BUTTON CLICK
+    // Click
     // ------------------------------------------------------
 
     button.addEventListener(
@@ -525,7 +697,8 @@ function createServiceCard(service) {
 
             showServiceDocuments(
                 serviceName,
-                documents
+                docs,
+                service
             );
 
         }
@@ -533,245 +706,62 @@ function createServiceCard(service) {
 
 
     // ------------------------------------------------------
-    // ADD CARD CONTENT
+    // Add
     // ------------------------------------------------------
 
-    card.appendChild(
+    article.appendChild(
         title
     );
 
 
-    card.appendChild(
-        descriptionElement
+    article.appendChild(
+        desc
     );
 
 
-    card.appendChild(
+    article.appendChild(
         button
     );
 
 
-    // ======================================================
-    // LOANS VIDEO
-    // ======================================================
-
-    const lowerName =
-        String(serviceName)
-            .trim()
-            .toLowerCase();
-
-
-    if (
-        lowerName === "loans" ||
-        lowerName.includes("loan")
-    ) {
-
-        addLoansVideo(
-            card
-        );
-
-    }
-
-
-    // ======================================================
-    // ADD CARD TO GRID
-    // ======================================================
-
-    servicesGrid.appendChild(
-        card
+    grid.appendChild(
+        article
     );
 
 }
 
 
 // ==========================================================
-// 9. ADD LOANS VIDEO
-// ==========================================================
-
-function addLoansVideo(card) {
-
-    console.log(
-        "Adding Loans video..."
-    );
-
-
-    // ------------------------------------------------------
-    // VIDEO
-    // ------------------------------------------------------
-
-    const video =
-        document.createElement(
-            "video"
-        );
-
-
-    video.className =
-        "loans-video";
-
-
-    // IMPORTANT:
-    // loans.mp4 should be in same folder as index.html
-
-    video.src =
-        "loans.mp4";
-
-
-    video.autoplay =
-        true;
-
-
-    video.loop =
-        true;
-
-
-    video.muted =
-        true;
-
-
-    video.playsInline =
-        true;
-
-
-    video.preload =
-        "auto";
-
-
-    video.setAttribute(
-        "muted",
-        ""
-    );
-
-
-    video.setAttribute(
-        "playsinline",
-        ""
-    );
-
-
-    // ------------------------------------------------------
-    // VIDEO ERROR
-    // ------------------------------------------------------
-
-    video.addEventListener(
-        "error",
-        function() {
-
-            console.error(
-                "MBSC ERROR: loans.mp4 not found or cannot be played."
-            );
-
-        }
-    );
-
-
-    // ------------------------------------------------------
-    // VIDEO LOADED
-    // ------------------------------------------------------
-
-    video.addEventListener(
-        "loadeddata",
-        function() {
-
-            console.log(
-                "MBSC: loans.mp4 loaded successfully."
-            );
-
-        }
-    );
-
-
-    // ------------------------------------------------------
-    // OVERLAY
-    // ------------------------------------------------------
-
-    const overlay =
-        document.createElement(
-            "div"
-        );
-
-
-    overlay.className =
-        "loans-video-overlay";
-
-
-    // ------------------------------------------------------
-    // ADD TO CARD
-    // ------------------------------------------------------
-
-    card.prepend(
-        video
-    );
-
-
-    card.prepend(
-        overlay
-    );
-
-
-    // ------------------------------------------------------
-    // PLAY
-    // ------------------------------------------------------
-
-    video.play()
-        .catch(
-            function(error) {
-
-                console.log(
-                    "Loans video autoplay message:",
-                    error
-                );
-
-            }
-        );
-
-}
-
-
-// ==========================================================
-// 10. SHOW DOCUMENTS
+// SHOW DOCUMENTS
 // ==========================================================
 
 function showServiceDocuments(
     serviceName,
-    documents
+    docs,
+    service
 ) {
 
     if (!documentBox) {
 
-        documentBox =
-            document.getElementById(
-                "documentBox"
-            );
-
-    }
-
-
-    if (!documentBox) {
-
         console.error(
-            "MBSC ERROR: documentBox not found."
+            "MBSC: documentBox not found."
         );
 
         return;
+
     }
 
-
-    // ------------------------------------------------------
-    // CLEAR
-    // ------------------------------------------------------
 
     documentBox.innerHTML =
         "";
 
 
     // ------------------------------------------------------
-    // HEADING
+    // Heading
     // ------------------------------------------------------
 
     const heading =
-        document.createElement(
-            "h3"
-        );
+        document.createElement("h3");
 
 
     heading.textContent =
@@ -784,48 +774,40 @@ function showServiceDocuments(
 
 
     // ------------------------------------------------------
-    // LIST
+    // Requirements
     // ------------------------------------------------------
 
     const list =
-        document.createElement(
-            "ul"
-        );
+        document.createElement("ul");
 
 
     list.className =
         "requirements-list";
 
 
-    let items =
+    let documentItems =
         [];
 
 
-    // ------------------------------------------------------
-    // ARRAY
-    // ------------------------------------------------------
-
+    // Array
     if (
-        Array.isArray(documents)
+        Array.isArray(docs)
     ) {
 
-        items =
-            documents;
+        documentItems =
+            docs;
 
     }
 
 
-    // ------------------------------------------------------
-    // STRING
-    // ------------------------------------------------------
-
+    // String
     else if (
-        typeof documents ===
+        typeof docs ===
         "string"
     ) {
 
-        items =
-            documents
+        documentItems =
+            docs
                 .split(
                     /\r?\n|,|;/
                 )
@@ -844,17 +826,16 @@ function showServiceDocuments(
 
 
     // ------------------------------------------------------
-    // NO DOCUMENTS
+    // No documents
     // ------------------------------------------------------
 
     if (
-        items.length === 0
+        documentItems.length ===
+        0
     ) {
 
         const item =
-            document.createElement(
-                "li"
-            );
+            document.createElement("li");
 
 
         item.className =
@@ -880,18 +861,16 @@ function showServiceDocuments(
 
 
     // ------------------------------------------------------
-    // DOCUMENT ITEMS
+    // Documents
     // ------------------------------------------------------
 
     else {
 
-        items.forEach(
+        documentItems.forEach(
             function(itemText) {
 
                 const item =
-                    document.createElement(
-                        "li"
-                    );
+                    document.createElement("li");
 
 
                 item.className =
@@ -919,57 +898,50 @@ function showServiceDocuments(
     }
 
 
-    // ------------------------------------------------------
-    // ADD LIST
-    // ------------------------------------------------------
-
     documentBox.appendChild(
         list
     );
 
 
     // ------------------------------------------------------
-    // WHATSAPP BUTTON
+    // WhatsApp
     // ------------------------------------------------------
 
-    const whatsapp =
-        document.createElement(
-            "a"
-        );
+    const whatsappButton =
+        document.createElement("a");
 
 
-    whatsapp.className =
+    whatsappButton.className =
         "primary";
 
 
-    whatsapp.href =
-        createWhatsAppLink(
-            "Hello MBSC SOLUTIONS, " +
-            "I need details about " +
+    whatsappButton.href =
+        whatsappLink(
+            "Hello MBSC SOLUTIONS, I need details about " +
             serviceName +
             "."
         );
 
 
-    whatsapp.target =
+    whatsappButton.target =
         "_blank";
 
 
-    whatsapp.rel =
+    whatsappButton.rel =
         "noopener noreferrer";
 
 
-    whatsapp.textContent =
+    whatsappButton.textContent =
         "Message on WhatsApp";
 
 
     documentBox.appendChild(
-        whatsapp
+        whatsappButton
     );
 
 
     // ------------------------------------------------------
-    // SCROLL TO DOCUMENTS
+    // Scroll
     // ------------------------------------------------------
 
     const documentsSection =
@@ -978,16 +950,17 @@ function showServiceDocuments(
         );
 
 
-    if (
-        documentsSection
-    ) {
+    if (documentsSection) {
 
-        documentsSection.scrollIntoView(
-            {
-                behavior: "smooth",
-                block: "start"
-            }
-        );
+        documentsSection.scrollIntoView({
+
+            behavior:
+                "smooth",
+
+            block:
+                "start"
+
+        });
 
     }
 
@@ -995,119 +968,55 @@ function showServiceDocuments(
 
 
 // ==========================================================
-// 11. SUB SERVICE BUTTON SUPPORT
+// ESCAPE HTML
 // ==========================================================
 
-document.addEventListener(
-    "click",
-    function(event) {
+function escapeHTML(value) {
 
-        const button =
-            event.target.closest(
-                ".sub-service-button"
-            );
+    return String(value)
 
+        .replace(
+            /&/g,
+            "&amp;"
+        )
 
-        if (!button) {
-            return;
-        }
+        .replace(
+            /</g,
+            "&lt;"
+        )
 
+        .replace(
+            />/g,
+            "&gt;"
+        )
 
-        const serviceName =
-            button.dataset.service ||
-            button.textContent.trim();
+        .replace(
+            /"/g,
+            "&quot;"
+        )
 
-
-        const documents =
-            button.dataset.documents ||
-            "";
-
-
-        showServiceDocuments(
-            serviceName,
-            documents
+        .replace(
+            /'/g,
+            "&#039;"
         );
 
-    }
-);
+}
 
 
 // ==========================================================
-// 12. KEEP LOANS VIDEO PLAYING
+// PAGE LOAD
 // ==========================================================
 
 document.addEventListener(
-    "visibilitychange",
+    "DOMContentLoaded",
     function() {
 
-        if (
-            document.visibilityState !==
-            "visible"
-        ) {
-
-            return;
-        }
-
-
-        const videos =
-            document.querySelectorAll(
-                ".loans-video"
-            );
-
-
-        videos.forEach(
-            function(video) {
-
-                video.play()
-                    .catch(
-                        function() {}
-                    );
-
-            }
+        console.log(
+            "MBSC: Page loaded."
         );
+
+
+        loadServices();
 
     }
 );
-
-
-// ==========================================================
-// 13. START WEBSITE
-// ==========================================================
-
-function startMBSC() {
-
-    console.log(
-        "MBSC: Website starting..."
-    );
-
-
-    loadServices();
-
-}
-
-
-// ==========================================================
-// 14. DOM READY
-// ==========================================================
-
-if (
-    document.readyState ===
-    "loading"
-) {
-
-    document.addEventListener(
-        "DOMContentLoaded",
-        startMBSC
-    );
-
-}
-else {
-
-    startMBSC();
-
-}
-
-
-// ==========================================================
-// END
-// ==========================================================
