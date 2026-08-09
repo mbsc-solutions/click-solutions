@@ -10,14 +10,22 @@
   --black: #050608;
   --black2: #0b0d11;
   --card: #11151c;
+
   --blue: #4da3ff;
   --blue2: #1677e8;
+
   --gold: #e4bd62;
   --gold2: #ffe39a;
+
   --white: #f8fafc;
   --muted: #a5afbf;
+
   --line: #273140;
 }
+
+/* =========================================================
+   BASIC
+   ========================================================= */
 
 html {
   scroll-behavior: smooth;
@@ -41,14 +49,20 @@ a {
 
 .topbar {
   height: 78px;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   padding: 0 6%;
+
   border-bottom: 1px solid var(--line);
+
   background: #050608;
+
   position: sticky;
   top: 0;
+
   z-index: 50;
 }
 
@@ -73,13 +87,19 @@ a {
 .logo {
   width: 45px;
   height: 45px;
+
   border: 2px solid var(--blue);
+
   border-radius: 12px;
+
   display: grid;
   place-items: center;
+
   font-size: 12px;
   font-weight: 900;
+
   color: var(--blue);
+
   background: #090c11;
 }
 
@@ -91,20 +111,32 @@ a {
 .primary,
 button {
   display: inline-flex;
+
   align-items: center;
   justify-content: center;
+
   border-radius: 10px;
+
   padding: 12px 18px;
+
   font-weight: 800;
+
   border: 0;
+
   cursor: pointer;
-  background: linear-gradient(
-    135deg,
-    var(--blue),
-    var(--blue2)
-  );
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--blue),
+      var(--blue2)
+    );
+
   color: #fff;
-  box-shadow: 0 8px 25px rgba(22, 119, 232, 0.2);
+
+  box-shadow:
+    0 8px 25px rgba(22, 119, 232, 0.2);
+
   transition: 0.2s ease;
 }
 
@@ -112,19 +144,29 @@ button {
 .primary:hover,
 button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(22, 119, 232, 0.35);
+
+  box-shadow:
+    0 12px 30px rgba(22, 119, 232, 0.35);
 }
 
 .secondary {
   display: inline-flex;
+
   align-items: center;
   justify-content: center;
+
   border: 1px solid #394554;
+
   background: #10141a;
+
   color: #edf3fa;
+
   border-radius: 10px;
+
   padding: 12px 18px;
+
   font-weight: 800;
+
   transition: 0.2s ease;
 }
 
@@ -139,10 +181,15 @@ button:hover {
 
 .hero {
   min-height: 580px;
+
   padding: 75px 7%;
+
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
+
   gap: 60px;
 
   background:
@@ -151,6 +198,7 @@ button:hover {
       rgba(22, 119, 232, 0.18) 0,
       transparent 35%
     ),
+
     radial-gradient(
       circle at 12% 80%,
       rgba(228, 189, 98, 0.08) 0,
@@ -164,21 +212,29 @@ button:hover {
 
 .eyebrow {
   font-size: 11px;
+
   letter-spacing: 0.2em;
+
   color: var(--gold2);
+
   font-weight: 900;
 }
 
 .hero h1 {
   font-size: clamp(42px, 7vw, 78px);
+
   line-height: 0.95;
+
   margin: 15px 0;
 }
 
 .hero p {
   max-width: 620px;
+
   color: #b1bbc9;
+
   font-size: 18px;
+
   line-height: 1.7;
 }
 
@@ -189,8 +245,11 @@ button:hover {
 .actions,
 .contact-actions {
   display: flex;
+
   gap: 12px;
+
   flex-wrap: wrap;
+
   margin-top: 28px;
 }
 
@@ -200,16 +259,21 @@ button:hover {
 
 .hero-card {
   width: 470px;
+
   min-width: 470px;
+
   height: 520px;
 
   border: 1px solid #34404f;
+
   border-radius: 30px;
 
   padding: 18px;
 
   display: flex;
+
   align-items: center;
+
   justify-content: center;
 
   background:
@@ -221,9 +285,11 @@ button:hover {
     );
 
   position: relative;
+
   overflow: hidden;
 
-  box-shadow: 0 25px 60px #000;
+  box-shadow:
+    0 25px 60px #000;
 
   isolation: isolate;
 }
@@ -236,6 +302,7 @@ button:hover {
   position: absolute;
 
   width: 300px;
+
   height: 300px;
 
   border-radius: 50%;
@@ -247,11 +314,37 @@ button:hover {
   opacity: 0.24;
 
   top: -70px;
+
   right: -70px;
 
   z-index: -1;
 
-  animation: glowPulse 4s ease-in-out infinite;
+  animation:
+    glowPulse
+    4s
+    ease-in-out
+    infinite;
+}
+
+@keyframes glowPulse {
+
+  0% {
+    opacity: 0.18;
+
+    transform: scale(0.95);
+  }
+
+  50% {
+    opacity: 0.32;
+
+    transform: scale(1.08);
+  }
+
+  100% {
+    opacity: 0.18;
+
+    transform: scale(0.95);
+  }
 }
 
 /* =========================================================
@@ -260,49 +353,65 @@ button:hover {
 
 .hero-animation {
   width: 100%;
+
   height: 100%;
 
   display: flex;
+
   align-items: center;
+
   justify-content: center;
 
   position: relative;
+
   z-index: 2;
 
   overflow: hidden;
+
   border-radius: 24px;
 
   background: transparent;
 }
 
 /* =========================================================
-   MAIN HERO IMAGE
+   HERO IMAGE
+   NO ZOOM
    ========================================================= */
 
 .hero-person-image {
   display: block;
 
   width: 100%;
+
   height: 100%;
 
   max-width: 100%;
+
   max-height: 100%;
 
   object-fit: contain;
+
   object-position: center;
 
   border: none;
+
   outline: none;
+
   border-radius: 0;
 
   background: transparent;
 
   filter:
     drop-shadow(
-      0 18px 35px rgba(0, 0, 0, 0.55)
+      0 18px 35px
+      rgba(0, 0, 0, 0.55)
     );
 
-  animation: heroFloat 4s ease-in-out infinite;
+  animation:
+    mbscHeroFloat
+    4s
+    ease-in-out
+    infinite;
 
   transform-origin: center center;
 
@@ -310,48 +419,30 @@ button:hover {
 }
 
 /* =========================================================
-   HERO IMAGE FLOAT
+   ONLY UP / DOWN MOVEMENT
+   NO SCALE / NO ZOOM
    ========================================================= */
 
-@keyframes heroFloat {
+@keyframes mbscHeroFloat {
 
   0% {
-    transform: translateY(0) scale(1);
+    transform:
+      translateY(0);
   }
 
   50% {
-    transform: translateY(-10px) scale(1.015);
+    transform:
+      translateY(-6px);
   }
 
   100% {
-    transform: translateY(0) scale(1);
+    transform:
+      translateY(0);
   }
 }
 
 /* =========================================================
-   BLUE GLOW ANIMATION
-   ========================================================= */
-
-@keyframes glowPulse {
-
-  0% {
-    opacity: 0.18;
-    transform: scale(0.95);
-  }
-
-  50% {
-    opacity: 0.32;
-    transform: scale(1.08);
-  }
-
-  100% {
-    opacity: 0.18;
-    transform: scale(0.95);
-  }
-}
-
-/* =========================================================
-   HIDE OLD HERO TEXT
+   OLD HERO TEXT HIDE
    ========================================================= */
 
 .hero-card > span,
@@ -361,7 +452,7 @@ button:hover {
 }
 
 /* =========================================================
-   SERVICES SECTION
+   SERVICES
    ========================================================= */
 
 .section {
@@ -375,6 +466,7 @@ button:hover {
 .section h2,
 .contact h2 {
   font-size: 36px;
+
   margin: 8px 0;
 }
 
@@ -386,7 +478,10 @@ button:hover {
   display: grid;
 
   grid-template-columns:
-    repeat(3, minmax(0, 1fr));
+    repeat(
+      3,
+      minmax(0, 1fr)
+    );
 
   gap: 18px;
 
@@ -413,38 +508,47 @@ button:hover {
 
   transition: 0.2s;
 
-  box-shadow: 0 10px 30px #000;
+  box-shadow:
+    0 10px 30px #000;
 
   overflow: visible;
 }
 
 .service:hover {
-  transform: translateY(-4px);
-  border-color: var(--blue);
-  box-shadow: 0 16px 35px #000;
+  transform:
+    translateY(-4px);
+
+  border-color:
+    var(--blue);
+
+  box-shadow:
+    0 16px 35px #000;
 }
 
 .service h3 {
-  margin: 0 0 12px;
+  margin:
+    0 0 12px;
+
   color: #fff;
+
   font-size: 20px;
 }
 
 .service p {
   color: #9da8b7;
+
   font-size: 13px;
+
   line-height: 1.6;
+
   min-height: 42px;
 }
 
 .service button {
   margin-top: 14px;
+
   width: 100%;
 }
-
-/* =========================================================
-   SERVICE BUTTON
-   ========================================================= */
 
 .service-button {
   cursor: pointer;
@@ -517,7 +621,8 @@ button:hover {
 
   padding: 12px 16px;
 
-  border: 1px solid #2d3a4d;
+  border:
+    1px solid #2d3a4d;
 
   border-radius: 8px;
 
@@ -550,6 +655,7 @@ button:hover {
 
 .sub-service-button:hover {
   background: #162235;
+
   border-color: #3e91ee;
 }
 
@@ -573,7 +679,9 @@ button:hover {
 
 .item-list {
   list-style: none;
+
   padding: 0;
+
   margin: 16px 0;
 }
 
@@ -588,7 +696,8 @@ button:hover {
 
   margin-bottom: 8px;
 
-  border: 1px solid #2d3a4d;
+  border:
+    1px solid #2d3a4d;
 
   border-radius: 8px;
 
@@ -622,7 +731,8 @@ button:hover {
 
 .info-panel,
 .doc-box {
-  border: 1px solid #29323e;
+  border:
+    1px solid #29323e;
 
   background: #10141a;
 
@@ -630,17 +740,20 @@ button:hover {
 
   padding: 28px;
 
-  box-shadow: 0 12px 35px #000;
+  box-shadow:
+    0 12px 35px #000;
 }
 
 .info-panel p,
 .doc-box p {
   color: #a5afbf;
+
   line-height: 1.7;
 }
 
 .doc-box ul {
   line-height: 2;
+
   color: #e5eaf1;
 }
 
@@ -650,6 +763,7 @@ button:hover {
 
 .requirements-list {
   margin: 15px 0;
+
   padding-left: 5px;
 }
 
@@ -684,21 +798,27 @@ button:hover {
    ========================================================= */
 
 .contact {
-  padding: 70px 7%;
+  padding:
+    70px 7%;
 
-  border-top: 1px solid #1f2731;
+  border-top:
+    1px solid #1f2731;
 
-  border-bottom: 1px solid #1f2731;
+  border-bottom:
+    1px solid #1f2731;
 
   display: flex;
 
-  justify-content: space-between;
+  justify-content:
+    space-between;
 
   gap: 30px;
 
-  align-items: center;
+  align-items:
+    center;
 
-  background: #080a0d;
+  background:
+    #080a0d;
 }
 
 .contact-actions {
@@ -729,26 +849,43 @@ footer {
 
   .hero {
     gap: 35px;
-    padding: 65px 5%;
+
+    padding:
+      65px 5%;
   }
 
   .hero-card {
     width: 400px;
+
     min-width: 400px;
+
     height: 470px;
   }
 
   .hero-person-image {
     width: 100%;
+
     height: 100%;
+
     max-width: 100%;
+
     max-height: 100%;
+
     object-fit: contain;
+
+    animation:
+      mbscHeroFloat
+      4s
+      ease-in-out
+      infinite;
   }
 
   .grid {
     grid-template-columns:
-      repeat(2, minmax(0, 1fr));
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
   }
 }
 
@@ -760,7 +897,9 @@ footer {
 
   .topbar {
     height: 70px;
-    padding: 0 4%;
+
+    padding:
+      0 4%;
   }
 
   .brand strong {
@@ -773,24 +912,32 @@ footer {
 
   .logo {
     width: 40px;
+
     height: 40px;
   }
 
   .topbar .wa {
-    padding: 9px 12px;
+    padding:
+      9px 12px;
+
     font-size: 12px;
   }
+
+  /* HERO */
 
   .hero {
     min-height: auto;
 
-    padding: 45px 6% 60px;
+    padding:
+      45px 6% 60px;
 
     display: flex;
 
-    flex-direction: column;
+    flex-direction:
+      column;
 
-    align-items: stretch;
+    align-items:
+      stretch;
 
     gap: 40px;
   }
@@ -802,6 +949,8 @@ footer {
   .hero p {
     font-size: 16px;
   }
+
+  /* HERO CARD */
 
   .hero-card {
     width: 100%;
@@ -819,6 +968,7 @@ footer {
 
   .hero-animation {
     width: 100%;
+
     height: 100%;
 
     display: flex;
@@ -830,6 +980,8 @@ footer {
     overflow: hidden;
 
     border-radius: 18px;
+
+    background: transparent;
   }
 
   .hero-person-image {
@@ -848,36 +1000,38 @@ footer {
     border-radius: 0;
 
     animation:
-      heroFloatMobile
+      mbscHeroFloatMobile
       4s
       ease-in-out
       infinite;
   }
 
-  @keyframes heroFloatMobile {
+  /* MOBILE - NO ZOOM */
+
+  @keyframes mbscHeroFloatMobile {
 
     0% {
       transform:
-        translateY(0)
-        scale(1);
+        translateY(0);
     }
 
     50% {
       transform:
-        translateY(-7px)
-        scale(1.01);
+        translateY(-4px);
     }
 
     100% {
       transform:
-        translateY(0)
-        scale(1);
+        translateY(0);
     }
   }
 
+  /* SECTIONS */
+
   .section,
   .contact {
-    padding: 55px 6%;
+    padding:
+      55px 6%;
   }
 
   .section h2,
@@ -885,13 +1039,21 @@ footer {
     font-size: 30px;
   }
 
+  /* GRID */
+
   .grid {
-    grid-template-columns: 1fr;
+    grid-template-columns:
+      1fr;
   }
 
+  /* DOCUMENTS */
+
   .documents {
-    grid-template-columns: 1fr;
+    grid-template-columns:
+      1fr;
   }
+
+  /* CONTACT */
 
   .contact {
     display: block;
@@ -909,7 +1071,8 @@ footer {
 @media (max-width: 420px) {
 
   .hero {
-    padding: 35px 5% 50px;
+    padding:
+      35px 5% 50px;
   }
 
   .hero h1 {
@@ -934,6 +1097,12 @@ footer {
     max-height: 100%;
 
     object-fit: contain;
+
+    animation:
+      mbscHeroFloatMobile
+      4s
+      ease-in-out
+      infinite;
   }
 
   .actions a {
@@ -950,6 +1119,7 @@ footer {
 
   .sub-service-button {
     font-size: 12px;
+
     min-height: 46px;
   }
 }
@@ -964,12 +1134,16 @@ footer {
   *::before,
   *::after {
 
-    animation-duration: 0.01ms !important;
+    animation-duration:
+      0.01ms !important;
 
-    animation-iteration-count: 1 !important;
+    animation-iteration-count:
+      1 !important;
 
-    scroll-behavior: auto !important;
+    scroll-behavior:
+      auto !important;
 
-    transition-duration: 0.01ms !important;
+    transition-duration:
+      0.01ms !important;
   }
 }
