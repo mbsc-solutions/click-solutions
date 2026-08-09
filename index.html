@@ -1,10 +1,31 @@
-<!-- =========================================================
-     MBSC SOLUTIONS - INDEX HTML
-========================================================= -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
-<!-- =========================================================
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="MBSC Solutions - Loans, Credit Cards, PF, ITR, Banking and Digital Services"
+  >
+
+  <title>MBSC SOLUTIONS</title>
+
+  <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+
+<!-- =====================================================
      TOP BAR
-========================================================= -->
+===================================================== -->
 
 <header class="topbar">
 
@@ -15,8 +36,15 @@
     </div>
 
     <div>
-      <strong>MBSC SOLUTIONS</strong>
-      <span>Financial & Digital Services</span>
+
+      <strong>
+        MBSC SOLUTIONS
+      </strong>
+
+      <span>
+        Financial & Digital Services
+      </span>
+
     </div>
 
   </div>
@@ -34,11 +62,13 @@
 </header>
 
 
-<!-- =========================================================
+
+<!-- =====================================================
      HERO
-========================================================= -->
+===================================================== -->
 
 <section class="hero">
+
 
   <!-- LEFT CONTENT -->
 
@@ -48,10 +78,12 @@
       WELCOME TO
     </p>
 
+
     <h1>
       MBSC<br>
       SOLUTIONS
     </h1>
+
 
     <p>
       Loans, credit cards, PF, ITR, banking and digital
@@ -83,9 +115,10 @@
   </div>
 
 
-  <!-- =====================================================
-       HERO CARD
-  ====================================================== -->
+
+  <!-- =================================================
+       HERO VIDEO
+  ================================================== -->
 
   <div class="hero-card">
 
@@ -94,45 +127,49 @@
 
     <div class="hero-animation">
 
-      <img
-        src="ChatGPT%20Image%20Aug%209,%202026,%2010_06_19%20AM.png"
-        alt="MBSC Solutions"
-        class="hero-person-image"
+      <video
+        class="hero-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        controlslist="nodownload"
       >
 
+        <source
+          src="Untitled design.mp4"
+          type="video/mp4"
+        >
+
+        Your browser does not support HTML5 video.
+
+      </video>
+
     </div>
-
-
-    <!-- Old text hidden by CSS -->
-
-    <span>
-      QUICK ASSISTANCE
-    </span>
-
-    <b>
-      Choose a service<br>
-      and message us.
-    </b>
 
   </div>
 
 </section>
 
 
-<!-- =========================================================
-     SERVICES SECTION
-========================================================= -->
+
+<!-- =====================================================
+     SERVICES
+===================================================== -->
 
 <section
   id="services"
   class="section"
 >
 
+
   <div class="section-head">
 
     <p class="eyebrow">
       OUR SERVICES
     </p>
+
 
     <h2>
       What can we help you with?
@@ -141,12 +178,15 @@
   </div>
 
 
-  <!-- =====================================================
-       IMPORTANT
 
-       script.js automatically loads services
-       from Supabase into this div.
-  ====================================================== -->
+  <!--
+    IMPORTANT
+
+    DO NOT DELETE THIS.
+
+    script.js automatically loads
+    services from Supabase.
+  -->
 
   <div
     id="servicesGrid"
@@ -170,16 +210,15 @@
 </section>
 
 
-<!-- =========================================================
-     DOCUMENTS SECTION
-========================================================= -->
+
+<!-- =====================================================
+     DOCUMENTS
+===================================================== -->
 
 <section class="section documents">
 
 
-  <!-- =====================================================
-       DOCUMENT INFORMATION
-  ====================================================== -->
+  <!-- LEFT -->
 
   <div class="info-panel">
 
@@ -187,9 +226,11 @@
       DOCUMENTS
     </p>
 
+
     <h2>
       Service-wise requirements
     </h2>
+
 
     <p>
       Select a service above to see the usual
@@ -200,9 +241,8 @@
   </div>
 
 
-  <!-- =====================================================
-       DOCUMENT BOX
-  ====================================================== -->
+
+  <!-- RIGHT -->
 
   <div
     id="documentBox"
@@ -213,6 +253,7 @@
       Select a service
     </h3>
 
+
     <p>
       Tap any service to view its document list.
     </p>
@@ -222,14 +263,13 @@
 </section>
 
 
-<!-- =========================================================
-     CONTACT SECTION
-========================================================= -->
+
+<!-- =====================================================
+     CONTACT
+===================================================== -->
 
 <section class="contact">
 
-
-  <!-- LEFT -->
 
   <div>
 
@@ -237,9 +277,11 @@
       CONTACT
     </p>
 
+
     <h2>
       Need assistance?
     </h2>
+
 
     <p>
       Message us on WhatsApp or call us directly.
@@ -248,9 +290,9 @@
   </div>
 
 
-  <!-- RIGHT -->
 
   <div class="contact-actions">
+
 
     <a
       class="primary"
@@ -277,17 +319,122 @@
       9491874820
     </a>
 
+
   </div>
 
 </section>
 
 
-<!-- =========================================================
+
+<!-- =====================================================
      FOOTER
-========================================================= -->
+===================================================== -->
 
 <footer>
 
   © 2026 MBSC SOLUTIONS. All Rights Reserved.
 
 </footer>
+
+
+
+<!-- =====================================================
+     SUPABASE
+===================================================== -->
+
+<script
+  src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+></script>
+
+
+<!-- =====================================================
+     MAIN SCRIPT
+===================================================== -->
+
+<script src="script.js"></script>
+
+
+
+<!-- =====================================================
+     HERO VIDEO SAFETY
+     Makes sure video starts automatically
+===================================================== -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+  const video =
+    document.querySelector(".hero-video");
+
+  if (!video) return;
+
+
+  video.muted = true;
+
+  video.setAttribute(
+    "playsinline",
+    ""
+  );
+
+  video.setAttribute(
+    "autoplay",
+    ""
+  );
+
+  video.setAttribute(
+    "loop",
+    ""
+  );
+
+
+  const playVideo = () => {
+
+    video.play().catch(() => {
+
+      console.log(
+        "Video autoplay waiting for browser."
+      );
+
+    });
+
+  };
+
+
+  playVideo();
+
+
+  document.addEventListener(
+    "visibilitychange",
+    function () {
+
+      if (
+        document.visibilityState === "visible"
+      ) {
+
+        playVideo();
+
+      }
+
+    }
+  );
+
+
+  video.addEventListener(
+    "loadeddata",
+    playVideo
+  );
+
+
+  video.addEventListener(
+    "canplay",
+    playVideo
+  );
+
+});
+
+</script>
+
+
+</body>
+</html>
