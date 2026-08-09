@@ -1,396 +1,18 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="utf-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1"
+>
 
-    <title>MBSC Solutions</title>
+<title>MBSC SOLUTIONS</title>
 
-    <style>
-
-        /* =========================================
-           BASIC RESET
-        ========================================= */
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-
-        body {
-
-            min-height: 100vh;
-
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
-
-            background: #03070c;
-
-            color: #ffffff;
-
-        }
-
-
-        /* =========================================
-           PAGE
-        ========================================= */
-
-        .page {
-
-            width: 100%;
-
-            min-height: 100vh;
-
-            padding: 30px 15px;
-
-        }
-
-
-        .container {
-
-            width: 100%;
-
-            max-width: 1100px;
-
-            margin: 0 auto;
-
-        }
-
-
-        /* =========================================
-           HERO CARD
-        ========================================= */
-
-        .hero-card {
-
-            position: relative;
-
-            width: 100%;
-
-            max-width: 520px;
-
-            min-height: 520px;
-
-            margin: 0 auto;
-
-            padding: 35px;
-
-            border-radius: 28px;
-
-            overflow: hidden;
-
-            background:
-
-                linear-gradient(
-                    180deg,
-                    #101923 0%,
-                    #091018 48%,
-                    #05090e 100%
-                );
-
-            border: 1px solid
-                rgba(150, 190, 220, 0.25);
-
-            box-shadow:
-
-                0 25px 70px
-                rgba(0, 0, 0, 0.55);
-
-        }
-
-
-        /* =========================================
-           CARD GLOW
-        ========================================= */
-
-        .card-glow {
-
-            position: absolute;
-
-            width: 300px;
-
-            height: 300px;
-
-            top: -130px;
-
-            right: -100px;
-
-            border-radius: 50%;
-
-            background:
-                rgba(20, 130, 255, 0.25);
-
-            filter: blur(80px);
-
-            pointer-events: none;
-
-            z-index: 0;
-
-        }
-
-
-        /* =========================================
-           IMAGE AREA
-        ========================================= */
-
-        .hero-animation {
-
-            position: absolute;
-
-            top: 20px;
-
-            left: 50%;
-
-            transform:
-                translateX(-50%);
-
-            width: 360px;
-
-            height: 250px;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            z-index: 2;
-
-            overflow: hidden;
-
-        }
-
-
-        /* =========================================
-           PERSON IMAGE
-        ========================================= */
-
-        .hero-person-image {
-
-            width: 100%;
-
-            height: 100%;
-
-            object-fit: contain;
-
-            object-position: center;
-
-            display: block;
-
-            max-width: 100%;
-
-            max-height: 100%;
-
-        }
-
-
-        /* =========================================
-           QUICK ASSISTANCE TEXT
-        ========================================= */
-
-        .hero-card span {
-
-            position: absolute;
-
-            left: 38px;
-
-            bottom: 180px;
-
-            z-index: 5;
-
-            font-size: 14px;
-
-            font-weight: 700;
-
-            letter-spacing: 2px;
-
-            color: #ffd45a;
-
-        }
-
-
-        .hero-card b {
-
-            position: absolute;
-
-            left: 38px;
-
-            bottom: 45px;
-
-            z-index: 5;
-
-            max-width: 400px;
-
-            font-size: 32px;
-
-            line-height: 1.18;
-
-            font-weight: 700;
-
-            color: #ffffff;
-
-        }
-
-
-        /* =========================================
-           DESKTOP
-        ========================================= */
-
-        @media (min-width: 701px) {
-
-            .hero-card {
-
-                min-height: 520px;
-
-            }
-
-
-            .hero-animation {
-
-                top: 15px;
-
-                width: 390px;
-
-                height: 270px;
-
-            }
-
-        }
-
-
-        /* =========================================
-           MOBILE
-        ========================================= */
-
-        @media (max-width: 700px) {
-
-            .page {
-
-                padding:
-                    15px 8px;
-
-            }
-
-
-            .hero-card {
-
-                width: 100%;
-
-                max-width: 340px;
-
-                min-height: 520px;
-
-                padding: 25px;
-
-                border-radius: 26px;
-
-            }
-
-
-            .hero-animation {
-
-                top: 15px;
-
-                width: 285px;
-
-                height: 220px;
-
-            }
-
-
-            .hero-card span {
-
-                left: 38px;
-
-                bottom: 190px;
-
-                font-size: 13px;
-
-                letter-spacing: 1.7px;
-
-            }
-
-
-            .hero-card b {
-
-                left: 38px;
-
-                right: 25px;
-
-                bottom: 45px;
-
-                font-size: 29px;
-
-                line-height: 1.28;
-
-            }
-
-        }
-
-
-        /* =========================================
-           SMALL MOBILE
-        ========================================= */
-
-        @media (max-width: 380px) {
-
-            .hero-card {
-
-                max-width: 320px;
-
-                min-height: 500px;
-
-            }
-
-
-            .hero-animation {
-
-                width: 265px;
-
-                height: 205px;
-
-            }
-
-
-            .hero-card span {
-
-                bottom: 175px;
-
-                left: 30px;
-
-                font-size: 12px;
-
-            }
-
-
-            .hero-card b {
-
-                left: 30px;
-
-                bottom: 35px;
-
-                font-size: 27px;
-
-            }
-
-        }
-
-    </style>
+<link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -398,55 +20,327 @@
 <body>
 
 
-    <div class="page">
+<!-- =====================================================
+     TOP BAR
+===================================================== -->
 
-        <div class="container">
+<header class="topbar">
 
+  <div class="brand">
 
-            <!-- =====================================
-                 QUICK ASSISTANCE CARD
-            ====================================== -->
+    <div class="logo">
+      MBSC
+    </div>
 
-            <div class="hero-card">
+    <div>
+      <strong>
+        MBSC SOLUTIONS
+      </strong>
 
+      <span>
+        Financial & Digital Services
+      </span>
+    </div>
 
-                <!-- CARD GLOW -->
-
-                <div class="card-glow"></div>
-
-
-                <!-- IMAGE -->
-
-                <div class="hero-animation">
-
-                    <img
-                        src="ChatGPT%20Image%20Aug%209,%202026,%2010_06_19%20AM.png"
-                        alt="MBSC Solutions"
-                        class="hero-person-image"
-                    >
-
-                </div>
+  </div>
 
 
-                <!-- TEXT -->
+  <a
+    class="wa"
+    href="https://wa.me/917093334820"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    WhatsApp
+  </a>
 
-                <span>
-                    QUICK ASSISTANCE
-                </span>
-
-
-                <b>
-                    Choose a service<br>
-                    and message us.
-                </b>
-
-
-            </div>
+</header>
 
 
-        </div>
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main>
+
+
+<!-- =====================================================
+     HERO SECTION
+===================================================== -->
+
+<section class="hero">
+
+
+  <!-- LEFT SIDE -->
+  <div>
+
+    <p class="eyebrow">
+      WELCOME TO
+    </p>
+
+
+    <h1>
+      MBSC<br>
+      SOLUTIONS
+    </h1>
+
+
+    <p>
+      Loans, credit cards, PF, ITR, banking and digital
+      services — all in one place.
+    </p>
+
+
+    <div class="actions">
+
+      <a
+        class="primary"
+        href="https://wa.me/917093334820?text=Hello%20MBSC%20SOLUTIONS%2C%20I%20need%20service%20details"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Chat on WhatsApp
+      </a>
+
+
+      <a
+        class="secondary"
+        href="#services"
+      >
+        View Services
+      </a>
 
     </div>
+
+  </div>
+
+
+
+  <!-- =================================================
+       HERO CARD WITH IMAGE
+  ================================================= -->
+
+  <div class="hero-card">
+
+
+    <!-- Glow background -->
+    <div class="card-glow"></div>
+
+
+    <!-- Animated image area -->
+    <div class="hero-animation">
+
+      <img
+        src="ChatGPT%20Image%20Aug%209,%202026,%2010_06_19%20AM.png"
+        alt="MBSC Solutions"
+        class="hero-person-image"
+      >
+
+    </div>
+
+
+    <!-- Hero text -->
+    <div class="hero-card-text">
+
+      <span>
+        QUICK ASSISTANCE
+      </span>
+
+
+      <b>
+        Choose a service<br>
+        and message us.
+      </b>
+
+    </div>
+
+
+  </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     SERVICES SECTION
+===================================================== -->
+
+<section
+  id="services"
+  class="section"
+>
+
+
+  <div class="section-head">
+
+    <p class="eyebrow">
+      OUR SERVICES
+    </p>
+
+    <h2>
+      What can we help you with?
+    </h2>
+
+  </div>
+
+
+
+  <!-- =================================================
+       SUPABASE SERVICES WILL LOAD HERE
+  ================================================= -->
+
+  <div class="grid">
+
+    <!-- Services will be loaded automatically from Supabase -->
+
+  </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     DOCUMENTS SECTION
+===================================================== -->
+
+<section
+  class="section documents"
+>
+
+
+  <div class="info-panel">
+
+    <p class="eyebrow">
+      DOCUMENTS
+    </p>
+
+
+    <h2>
+      Service-wise requirements
+    </h2>
+
+
+    <p>
+      Select a service above to see the usual document
+      checklist. Final requirements may vary by
+      product/provider.
+    </p>
+
+  </div>
+
+
+
+  <!-- =================================================
+       DOCUMENT BOX
+  ================================================= -->
+
+  <div
+    id="documentBox"
+    class="doc-box"
+  >
+
+    <h3>
+      Select a service
+    </h3>
+
+
+    <p>
+      Tap any service to view its document list.
+    </p>
+
+  </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     CONTACT SECTION
+===================================================== -->
+
+<section class="contact">
+
+
+  <div>
+
+    <p class="eyebrow">
+      CONTACT
+    </p>
+
+
+    <h2>
+      Need assistance?
+    </h2>
+
+
+    <p>
+      Message us on WhatsApp or call us directly.
+    </p>
+
+  </div>
+
+
+
+  <div class="contact-actions">
+
+
+    <a
+      class="primary"
+      href="https://wa.me/917093334820"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      WhatsApp Us
+    </a>
+
+
+    <a
+      class="secondary"
+      href="tel:+917093334820"
+    >
+      7093334820
+    </a>
+
+
+    <a
+      class="secondary"
+      href="tel:+919491874820"
+    >
+      9491874820
+    </a>
+
+
+  </div>
+
+
+</section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+  MBSC SOLUTIONS · All rights reserved.
+
+</footer>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script src="script.js?v=3"></script>
 
 
 </body>
