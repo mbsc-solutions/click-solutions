@@ -978,87 +978,105 @@ function createDepartmentCard(
 
 
 // ==========================================================
-// NORMAL SERVICE CARD
+// NORMAL SERVICE CARD WITH IMAGE
 // ==========================================================
 
-function createNormalServiceCard(
-    service
-) {
+function createNormalServiceCard(service) {
 
-    const article =
-        document.createElement("article");
+  const article =
+    document.createElement("article");
 
-    article.className =
-        "service-card";
+  article.className =
+    "service-card";
 
+  const name =
+    getServiceName(service);
 
-    const name =
-        getServiceName(service);
+  const description =
+    getDescription(service);
 
+  const documents =
+    getDocuments(service);
 
-    const description =
-        getDescription(service);
+  // ======================================================
+  // IMAGE
+  // ======================================================
 
+  const imageUrl =
+    service.image_url || "";
 
-    const documents =
-        getDocuments(service);
+  article.innerHTML = `
 
+    <div class="service-card-image-wrapper">
 
-    article.innerHTML = `
+      ${
+        imageUrl
+          ? `
+            <img
+              class="service-card-image"
+              src="${escapeHTML(imageUrl)}"
+              alt="${escapeHTML(name)}"
+              loading="lazy"
+            >
+          `
+          : `
+            <div class="service-card-no-image">
+              No Image
+            </div>
+          `
+      }
 
-        <div class="service-card-content">
+    </div>
 
-            <h3>
-                ${escapeHTML(name)}
-            </h3>
+    <div class="service-card-content">
 
-            <p>
-                ${escapeHTML(description)}
-            </p>
+      <h3>
+        ${escapeHTML(name)}
+      </h3>
 
-        </div>
+      <p>
+        ${escapeHTML(description)}
+      </p>
 
-    `;
+    </div>
 
+  `;
 
-    // ======================================================
-    // BUTTON
-    // ======================================================
+  // ======================================================
+  // BUTTON
+  // ======================================================
 
-    const button =
-        document.createElement("button");
+  const button =
+    document.createElement("button");
 
-    button.className =
-        "service-button";
+  button.className =
+    "service-button";
 
-    button.type =
-        "button";
+  button.type =
+    "button";
 
-    button.textContent =
-        "View & WhatsApp";
+  button.textContent =
+    "View & WhatsApp";
 
+  button.addEventListener(
+    "click",
+    function () {
 
-    button.addEventListener(
-        "click",
-        function () {
+      showServiceDocuments(
+        name,
+        documents
+      );
 
-            showServiceDocuments(
-                name,
-                documents
-            );
+    }
+  );
 
-        }
-    );
+  article.appendChild(
+    button
+  );
 
-
-    article.appendChild(
-        button
-    );
-
-
-    departmentsContainer.appendChild(
-        article
-    );
+  departmentsContainer.appendChild(
+    article
+  );
 
 }
 
