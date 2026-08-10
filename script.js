@@ -825,13 +825,94 @@ function createDepartmentCard(
     "loan-sub-services";
 
 
-  // ======================================================
-  // CREATE SUB SERVICES
-  // ======================================================
+ // ======================================================
+// CREATE SUB SERVICES
+// ======================================================
 
-  subServices.forEach(
-    function (subService, index) {
+subServices.forEach(function (subService, index) {
 
+  const subName =
+    getSubServiceName(subService);
+
+  const documents =
+    getDocuments(subService);
+
+  const subServiceId =
+    Number(subService.id);
+
+  const items =
+    subServiceItemMap[subServiceId] || [];
+
+  console.log(
+    "MBSC SUB SERVICE:",
+    subName,
+    "ID:",
+    subServiceId,
+    "ITEMS:",
+    items
+  );
+
+  const subWrapper =
+    document.createElement("div");
+
+  subWrapper.className =
+    "loan-sub-wrapper";
+
+  const button =
+    document.createElement("button");
+
+  button.className =
+    "loan-sub-button";
+
+  button.type =
+    "button";
+
+  button.innerHTML = `
+    <span class="loan-number">
+      ${index + 1}.
+    </span>
+
+    <span>
+      ${escapeHTML(subName)}
+    </span>
+  `;
+
+  if (items.length > 0) {
+
+    const itemCount =
+      document.createElement("span");
+
+    itemCount.className =
+      "sub-item-count";
+
+    itemCount.textContent =
+      items.length + " items";
+
+    button.appendChild(itemCount);
+  }
+
+  button.addEventListener(
+    "click",
+    function () {
+
+      showSubServiceDetails(
+        subName,
+        documents,
+        items
+      );
+
+    }
+  );
+
+  subWrapper.appendChild(
+    button
+  );
+
+  subContainer.appendChild(
+    subWrapper
+  );
+
+});
       const subName =
         getSubServiceName(
           subService
