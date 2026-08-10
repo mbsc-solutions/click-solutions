@@ -744,16 +744,116 @@ function createDepartmentCard(
 
 
   // ======================================================
-  // CREATE SUB SERVICES
-  // ======================================================
+// CREATE SUB SERVICES
+// ======================================================
 
-  subServices.forEach(
-    function (subService, index) {
+subServices.forEach(function (subService, index) {
 
-      const subName =
-        getSubServiceName(
-          subService
-        );
+    const subName =
+        getSubServiceName(subService);
+
+    const documents =
+        getDocuments(subService);
+
+    const subServiceId =
+        Number(subService.id);
+
+    // Get items ONLY for this sub-service
+    const items =
+        subServiceItemMap[subServiceId] || [];
+
+    console.log(
+        "SCHOOL SUB SERVICE:",
+        subName,
+        "ID:",
+        subServiceId,
+        "ITEM COUNT:",
+        items.length,
+        "ITEMS:",
+        items
+    );
+
+    // ==================================================
+    // SUB SERVICE WRAPPER
+    // ==================================================
+
+    const subWrapper =
+        document.createElement("div");
+
+    subWrapper.className =
+        "loan-sub-wrapper";
+
+    // ==================================================
+    // SUB SERVICE BUTTON
+    // ==================================================
+
+    const button =
+        document.createElement("button");
+
+    button.className =
+        "loan-sub-button";
+
+    button.type =
+        "button";
+
+    button.innerHTML = `
+        <span class="loan-number">
+            ${index + 1}.
+        </span>
+
+        <span>
+            ${escapeHTML(subName)}
+        </span>
+    `;
+
+    // ==================================================
+    // ITEM COUNT
+    // ==================================================
+
+    if (items.length > 0) {
+
+        const itemCount =
+            document.createElement("span");
+
+        itemCount.className =
+            "sub-item-count";
+
+        itemCount.textContent =
+            items.length + " items";
+
+        button.appendChild(itemCount);
+    }
+
+    // ==================================================
+    // CLICK SUB SERVICE
+    // ==================================================
+
+    button.addEventListener(
+        "click",
+        function () {
+
+            showSubServiceDetails(
+                subName,
+                documents,
+                items
+            );
+
+        }
+    );
+
+    // ==================================================
+    // ADD BUTTON
+    // ==================================================
+
+    subWrapper.appendChild(
+        button
+    );
+
+    subContainer.appendChild(
+        subWrapper
+    );
+
+});
 
 
       const documents =
