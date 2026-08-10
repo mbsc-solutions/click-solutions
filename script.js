@@ -918,33 +918,7 @@ function createDepartmentCard(
       );
 
 
-      // ==================================================
-      // ITEM COUNT
-      // ==================================================
-
-      if (items.length > 0) {
-
-        const itemCount =
-          document.createElement("span");
-
-
-        itemCount.className =
-          "sub-item-count";
-
-
-        itemCount.textContent =
-          items.length +
-          " items";
-
-
-        subWrapper.appendChild(
-          itemCount
-        );
-
-      }
-
-
-      subContainer.appendChild(
+          subContainer.appendChild(
         subWrapper
       );
 
