@@ -1001,3 +1001,21 @@ footer {
 .service-card-content {
   padding: 18px;
 }
+/* ==========================================================
+   DEPARTMENT SERVICE IMAGE
+   ========================================================== */
+
+.department-image-wrapper {
+    width: 100%;
+    margin-bottom: 18px;
+    border-radius: 18px;
+    overflow: hidden;
+}
+
+.department-image {
+    width: 100%;
+    height: 220px;
+    display: block;
+    object-fit: cover;
+    border-radius: 18px;
+}
