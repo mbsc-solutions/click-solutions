@@ -1,7 +1,9 @@
 // ==========================================================
 // MBSC SOLUTIONS
 // COMPLETE SCRIPT.JS
-// SERVICES + SUB SERVICES + SUB SERVICE ITEMS
+// SERVICES
+// SUB SERVICES
+// SUB SERVICE ITEMS
 // ==========================================================
 
 
@@ -28,7 +30,7 @@ const supabaseClient =
 
 
 // ==========================================================
-// GLOBAL
+// GLOBAL ELEMENTS
 // ==========================================================
 
 const departmentsContainer =
@@ -107,6 +109,23 @@ function getSubServiceName(subService) {
 
 
 // ==========================================================
+// ITEM NAME
+// ==========================================================
+
+function getItemName(item) {
+
+  return (
+    item.item_name ||
+    item.sub_service_item_name ||
+    item.name ||
+    item.title ||
+    "Service Item"
+  );
+
+}
+
+
+// ==========================================================
 // DOCUMENTS
 // ==========================================================
 
@@ -146,7 +165,7 @@ function normalizeDocuments(docs) {
   if (Array.isArray(docs)) {
 
     return docs
-      .map(function(item) {
+      .map(function (item) {
         return String(item).trim();
       })
       .filter(Boolean);
@@ -158,7 +177,7 @@ function normalizeDocuments(docs) {
 
     return docs
       .split(/\r?\n|,|;/)
-      .map(function(item) {
+      .map(function (item) {
         return item.trim();
       })
       .filter(Boolean);
@@ -177,21 +196,10 @@ function normalizeDocuments(docs) {
 
 async function loadServices() {
 
-  console.log(
-    "================================="
-  );
-
-  console.log(
-    "MBSC SOLUTIONS"
-  );
-
-  console.log(
-    "Loading services..."
-  );
-
-  console.log(
-    "================================="
-  );
+  console.log("=================================");
+  console.log("MBSC SOLUTIONS");
+  console.log("Loading services...");
+  console.log("=================================");
 
 
   if (!departmentsContainer) {
@@ -227,7 +235,7 @@ async function loadServices() {
   try {
 
     // ======================================================
-    // GET SERVICES
+    // 1. GET SERVICES
     // ======================================================
 
     const servicesResult =
@@ -261,7 +269,7 @@ async function loadServices() {
 
 
     // ======================================================
-    // GET SUB SERVICES
+    // 2. GET SUB SERVICES
     // ======================================================
 
     const subServicesResult =
@@ -295,11 +303,8 @@ async function loadServices() {
 
 
     // ======================================================
-    // GET SUB SERVICE ITEMS
+    // 3. GET SUB SERVICE ITEMS
     // ======================================================
-
-    let subServiceItems = [];
-
 
     const itemsResult =
       await supabaseClient
@@ -314,15 +319,17 @@ async function loadServices() {
         );
 
 
+    let subServiceItems = [];
+
+
     if (itemsResult.error) {
 
       console.warn(
-        "MBSC: sub_service_items could not be loaded:",
+        "MBSC WARNING: sub_service_items error:",
         itemsResult.error
       );
 
     }
-
     else {
 
       subServiceItems =
@@ -338,17 +345,24 @@ async function loadServices() {
 
 
     // ======================================================
-    // CREATE MAP
+    // 4. CREATE SUB SERVICE MAP
     // ======================================================
 
     const subServiceMap = {};
 
 
     subServices.forEach(
-      function(subService) {
+      function (subService) {
 
         const serviceId =
           Number(subService.service_id);
+
+
+        if (!serviceId) {
+
+          return;
+
+        }
 
 
         if (!subServiceMap[serviceId]) {
@@ -373,37 +387,43 @@ async function loadServices() {
 
 
     // ======================================================
-    // CREATE ITEM MAP
+    // 5. CREATE SUB SERVICE ITEM MAP
     // ======================================================
 
     const subServiceItemMap = {};
 
 
     subServiceItems.forEach(
-      function(item) {
+      function (item) {
 
-        const possibleId =
+        const subServiceId =
           Number(
             item.sub_service_id ||
-            item.subservice_id
+            item.subservice_id ||
+            item.subServiceId
           );
 
 
-        if (!possibleId) {
+        if (!subServiceId) {
+
+          console.warn(
+            "MBSC: Item has no sub_service_id:",
+            item
+          );
 
           return;
 
         }
 
 
-        if (!subServiceItemMap[possibleId]) {
+        if (!subServiceItemMap[subServiceId]) {
 
-          subServiceItemMap[possibleId] = [];
+          subServiceItemMap[subServiceId] = [];
 
         }
 
 
-        subServiceItemMap[possibleId].push(
+        subServiceItemMap[subServiceId].push(
           item
         );
 
@@ -418,7 +438,7 @@ async function loadServices() {
 
 
     // ======================================================
-    // BUILD PAGE
+    // 6. CREATE DEPARTMENTS
     // ======================================================
 
     createDepartments(
@@ -429,7 +449,6 @@ async function loadServices() {
 
 
   }
-
   catch (error) {
 
     console.error(
@@ -479,11 +498,83 @@ function createDepartments(
 
 
   // ======================================================
-  // EVERY SERVICE BECOMES A DEPARTMENT
+  // FIND ALL SERVICES WHICH ARE CHILD SERVICES
+  // ======================================================
+
+  const childServiceIds =
+    new Set();
+
+
+  Object.keys(subServiceMap)
+    .forEach(
+      function (serviceId) {
+
+        const subServices =
+          subServiceMap[serviceId] || [];
+
+
+        subServices.forEach(
+          function (subService) {
+
+            /*
+             * IMPORTANT:
+             *
+             * Here we only identify the parent
+             * service IDs.
+             *
+             * Example:
+             *
+             * service 16 = Loans
+             *
+             * sub_services:
+             * Tractor Loans
+             * Business Loans
+             * etc.
+             *
+             * Those sub-services themselves have
+             * service_id = 16.
+             *
+             * They are NOT removed from services table
+             * using their own IDs.
+             *
+             * We remove only actual child service IDs
+             * when their ID is referenced as a parent
+             * elsewhere.
+             */
+
+          }
+        );
+
+      }
+    );
+
+
+  // ======================================================
+  // ACTUAL PARENT SERVICE IDS
+  // ======================================================
+
+  const parentServiceIds =
+    new Set(
+      Object.keys(subServiceMap)
+        .map(function (id) {
+          return Number(id);
+        })
+        .filter(Boolean)
+    );
+
+
+  console.log(
+    "MBSC PARENT SERVICE IDS:",
+    [...parentServiceIds]
+  );
+
+
+  // ======================================================
+  // BUILD PAGE
   // ======================================================
 
   services.forEach(
-    function(service) {
+    function (service) {
 
       const serviceId =
         Number(service.id);
@@ -493,9 +584,9 @@ function createDepartments(
         subServiceMap[serviceId] || [];
 
 
-      // ====================================================
-      // IF SUB SERVICES EXIST
-      // ====================================================
+      // ==================================================
+      // PARENT DEPARTMENT
+      // ==================================================
 
       if (subServices.length > 0) {
 
@@ -505,20 +596,111 @@ function createDepartments(
           subServiceItemMap
         );
 
+
+        departmentCount++;
+
+        return;
+
       }
 
 
-      // ====================================================
-      // NO SUB SERVICES
-      // ====================================================
+      // ==================================================
+      // CHILD SERVICE DETECTION
+      // ==================================================
 
-      else {
+      /*
+       * If a service has no own sub_services,
+       * check whether it belongs to a parent department
+       * through the sub_services table.
+       *
+       * We identify child service names against
+       * sub-service names.
+       */
 
-        createNormalServiceCard(
-          service
+      const serviceName =
+        getServiceName(service)
+          .trim()
+          .toLowerCase();
+
+
+      let isChildService =
+        false;
+
+
+      subServicesLoop:
+      for (
+        let i = 0;
+        i < services.length;
+        i++
+      ) {
+
+        const possibleParent =
+          services[i];
+
+
+        const possibleParentId =
+          Number(possibleParent.id);
+
+
+        const children =
+          subServiceMap[possibleParentId] || [];
+
+
+        for (
+          let j = 0;
+          j < children.length;
+          j++
+        ) {
+
+          const child =
+            children[j];
+
+
+          const childName =
+            getSubServiceName(child)
+              .trim()
+              .toLowerCase();
+
+
+          if (
+            childName === serviceName
+          ) {
+
+            isChildService =
+              true;
+
+            break subServicesLoop;
+
+          }
+
+        }
+
+      }
+
+
+      // ==================================================
+      // DO NOT SHOW CHILD SERVICE AGAIN
+      // ==================================================
+
+      if (isChildService) {
+
+        console.log(
+          "MBSC: Hiding duplicate child service:",
+          serviceName
         );
 
+        return;
+
       }
+
+
+      // ==================================================
+      // NORMAL SERVICE
+      // ==================================================
+
+      createNormalServiceCard(
+        service
+      );
 
 
       departmentCount++;
@@ -530,6 +712,7 @@ function createDepartments(
   console.log(
     "MBSC: Departments created successfully."
   );
+
 
   console.log(
     "MBSC Department count:",
@@ -615,6 +798,10 @@ function createDepartmentCard(
     "loan-main-button";
 
 
+  mainButton.type =
+    "button";
+
+
   mainButton.textContent =
     "View " +
     serviceName +
@@ -639,11 +826,11 @@ function createDepartmentCard(
 
 
   // ======================================================
-  // SUB SERVICES
+  // CREATE SUB SERVICES
   // ======================================================
 
   subServices.forEach(
-    function(subService, index) {
+    function (subService, index) {
 
       const subName =
         getSubServiceName(
@@ -665,6 +852,18 @@ function createDepartmentCard(
         subServiceItemMap[
           subServiceId
         ] || [];
+
+
+      // ==================================================
+      // SUB SERVICE WRAPPER
+      // ==================================================
+
+      const subWrapper =
+        document.createElement("div");
+
+
+      subWrapper.className =
+        "loan-sub-wrapper";
 
 
       // ==================================================
@@ -702,7 +901,7 @@ function createDepartmentCard(
 
       button.addEventListener(
         "click",
-        function() {
+        function () {
 
           showSubServiceDetails(
             subName,
@@ -714,8 +913,39 @@ function createDepartmentCard(
       );
 
 
-      subContainer.appendChild(
+      subWrapper.appendChild(
         button
+      );
+
+
+      // ==================================================
+      // ITEM COUNT
+      // ==================================================
+
+      if (items.length > 0) {
+
+        const itemCount =
+          document.createElement("span");
+
+
+        itemCount.className =
+          "sub-item-count";
+
+
+        itemCount.textContent =
+          items.length +
+          " items";
+
+
+        subWrapper.appendChild(
+          itemCount
+        );
+
+      }
+
+
+      subContainer.appendChild(
+        subWrapper
       );
 
     }
@@ -723,7 +953,7 @@ function createDepartmentCard(
 
 
   // ======================================================
-  // WHATSAPP
+  // WHATSAPP DEPARTMENT BUTTON
   // ======================================================
 
   const whatsappButton =
@@ -775,7 +1005,7 @@ function createDepartmentCard(
 
   mainButton.addEventListener(
     "click",
-    function() {
+    function () {
 
       const isOpen =
         subContainer.classList.toggle(
@@ -791,7 +1021,6 @@ function createDepartmentCard(
           " Services";
 
       }
-
       else {
 
         mainButton.textContent =
@@ -883,7 +1112,7 @@ function createNormalServiceCard(
 
   button.addEventListener(
     "click",
-    function() {
+    function () {
 
       showServiceDocuments(
         name,
@@ -948,25 +1177,7 @@ function showSubServiceDetails(
 
 
   // ======================================================
-  // DOCUMENT LIST
-  // ======================================================
-
-  const list =
-    document.createElement("ul");
-
-
-  list.className =
-    "requirements-list";
-
-
-  let documentItems =
-    normalizeDocuments(
-      documents
-    );
-
-
-  // ======================================================
-  // ADD ITEMS IF AVAILABLE
+  // SUB SERVICE ITEMS
   // ======================================================
 
   if (
@@ -974,71 +1185,65 @@ function showSubServiceDetails(
     items.length > 0
   ) {
 
+    const itemHeading =
+      document.createElement("h4");
+
+
+    itemHeading.textContent =
+      "Available Services";
+
+
+    documentBox.appendChild(
+      itemHeading
+    );
+
+
+    const itemList =
+      document.createElement("ul");
+
+
+    itemList.className =
+      "requirements-list";
+
+
     items.forEach(
-      function(item) {
+      function (item) {
 
         const itemName =
-          item.item_name ||
-          item.name ||
-          item.title ||
-          item.sub_service_item_name;
+          getItemName(item);
 
 
-        if (itemName) {
+        const listItem =
+          document.createElement("li");
 
-          documentItems.push(
-            itemName
-          );
 
-        }
+        listItem.className =
+          "requirement-item";
+
+
+        listItem.innerHTML = `
+
+          <span class="bullet">
+            •
+          </span>
+
+          <span>
+            ${escapeHTML(itemName)}
+          </span>
+
+        `;
+
+
+        itemList.appendChild(
+          listItem
+        );
 
       }
     );
 
-  }
 
-
-  // ======================================================
-  // REMOVE DUPLICATES
-  // ======================================================
-
-  documentItems =
-    [...new Set(
-      documentItems
-    )];
-
-
-  // ======================================================
-  // NO DOCUMENTS
-  // ======================================================
-
-  if (
-    documentItems.length === 0
-  ) {
-
-    const item =
-      document.createElement("li");
-
-
-    item.className =
-      "requirement-item";
-
-
-    item.innerHTML = `
-
-      <span class="bullet">
-        •
-      </span>
-
-      <span>
-        Contact us for document requirements.
-      </span>
-
-    `;
-
-
-    list.appendChild(
-      item
+    documentBox.appendChild(
+      itemList
     );
 
   }
@@ -1048,10 +1253,39 @@ function showSubServiceDetails(
   // DOCUMENTS
   // ======================================================
 
-  else {
+  const documentItems =
+    normalizeDocuments(
+      documents
+    );
+
+
+  if (
+    documentItems.length > 0
+  ) {
+
+    const documentHeading =
+      document.createElement("h4");
+
+
+    documentHeading.textContent =
+      "Required Documents";
+
+
+    documentBox.appendChild(
+      documentHeading
+    );
+
+
+    const documentList =
+      document.createElement("ul");
+
+
+    documentList.className =
+      "requirements-list";
+
 
     documentItems.forEach(
-      function(itemText) {
+      function (itemText) {
 
         const item =
           document.createElement("li");
@@ -1074,19 +1308,43 @@ function showSubServiceDetails(
         `;
 
 
-        list.appendChild(
+        documentList.appendChild(
           item
         );
 
       }
     );
 
+
+    documentBox.appendChild(
+      documentList
+    );
+
   }
 
 
-  documentBox.appendChild(
-    list
-  );
+  // ======================================================
+  // NO DATA
+  // ======================================================
+
+  if (
+    (!items || items.length === 0) &&
+    documentItems.length === 0
+  ) {
+
+    const noData =
+      document.createElement("p");
+
+
+    noData.textContent =
+      "Contact us for service details and document requirements.";
+
+
+    documentBox.appendChild(
+      noData
+    );
+
+  }
 
 
   // ======================================================
@@ -1223,11 +1481,10 @@ function showServiceDocuments(
     );
 
   }
-
   else {
 
     documentItems.forEach(
-      function(itemText) {
+      function (itemText) {
 
         const item =
           document.createElement("li");
@@ -1308,7 +1565,7 @@ function showServiceDocuments(
 
 
 // ==========================================================
-// SCROLL DOCUMENTS
+// SCROLL TO DOCUMENTS
 // ==========================================================
 
 function scrollToDocuments() {
@@ -1371,7 +1628,7 @@ function setupHeroVideo() {
 
   video.play()
     .then(
-      function() {
+      function () {
 
         console.log(
           "Hero video playing."
@@ -1380,7 +1637,7 @@ function setupHeroVideo() {
       }
     )
     .catch(
-      function(error) {
+      function (error) {
 
         console.log(
           "Hero video autoplay blocked:",
@@ -1399,7 +1656,7 @@ function setupHeroVideo() {
 
 document.addEventListener(
   "DOMContentLoaded",
-  function() {
+  function () {
 
     console.log(
       "MBSC page loaded."
@@ -1421,7 +1678,7 @@ document.addEventListener(
 
 document.addEventListener(
   "visibilitychange",
-  function() {
+  function () {
 
     if (
       document.visibilityState !==
@@ -1443,7 +1700,7 @@ document.addEventListener(
 
       video.play()
         .catch(
-          function() {}
+          function () {}
         );
 
     }
