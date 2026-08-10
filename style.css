@@ -14,8 +14,7 @@ html {
 body {
   margin: 0;
   background: #050608;
-  color: #f5f7fb;
-  font-family: Arial, Helvetica, sans-serif;
+  color: #f5f7fb;font-family: "Inter", sans-serif;
 }
 
 a {
