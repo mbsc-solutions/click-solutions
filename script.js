@@ -661,7 +661,9 @@ function createDepartmentCard(
     const description =
         getDescription(service);
 
-
+const imageUrl =
+    service.image_url || "";
+    
     // ======================================================
     // HEADER
     // ======================================================
@@ -675,24 +677,38 @@ function createDepartmentCard(
 
     header.innerHTML = `
 
-        <div>
+    ${
+        imageUrl
+            ? `
+                <div class="department-image-wrapper">
+                    <img
+                        src="${escapeHTML(imageUrl)}"
+                        alt="${escapeHTML(serviceName)}"
+                        class="department-image"
+                        loading="lazy"
+                    >
+                </div>
+              `
+            : ""
+    }
 
-            <span class="department-label">
-                DEPARTMENT
-            </span>
+    <div>
 
-            <h3>
-                ${escapeHTML(serviceName)}
-            </h3>
+        <span class="department-label">
+            DEPARTMENT
+        </span>
 
-            <p>
-                ${escapeHTML(description)}
-            </p>
+        <h3>
+            ${escapeHTML(serviceName)}
+        </h3>
 
-        </div>
+        <p>
+            ${escapeHTML(description)}
+        </p>
 
-    `;
+    </div>
 
+`;
 
     department.appendChild(
         header
