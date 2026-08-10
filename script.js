@@ -355,10 +355,17 @@ async function loadServices() {
       function (subService) {
 
         const serviceId =
-          Number(subService.service_id);
+          Number(
+            subService.service_id
+          );
 
 
         if (!serviceId) {
+
+          console.warn(
+            "MBSC: Sub service has no service_id:",
+            subService
+          );
 
           return;
 
@@ -447,7 +454,6 @@ async function loadServices() {
       subServiceItemMap
     );
 
-
   }
   catch (error) {
 
@@ -498,10 +504,10 @@ function createDepartments(
 
 
   // ======================================================
-  // FIND ALL SERVICES WHICH ARE CHILD SERVICES
+  // FIND CHILD SERVICE NAMES
   // ======================================================
 
-  const childServiceIds =
+  const childServiceNames =
     new Set();
 
 
@@ -509,38 +515,26 @@ function createDepartments(
     .forEach(
       function (serviceId) {
 
-        const subServices =
+        const children =
           subServiceMap[serviceId] || [];
 
 
-        subServices.forEach(
-          function (subService) {
+        children.forEach(
+          function (child) {
 
-            /*
-             * IMPORTANT:
-             *
-             * Here we only identify the parent
-             * service IDs.
-             *
-             * Example:
-             *
-             * service 16 = Loans
-             *
-             * sub_services:
-             * Tractor Loans
-             * Business Loans
-             * etc.
-             *
-             * Those sub-services themselves have
-             * service_id = 16.
-             *
-             * They are NOT removed from services table
-             * using their own IDs.
-             *
-             * We remove only actual child service IDs
-             * when their ID is referenced as a parent
-             * elsewhere.
-             */
+            const childName =
+              getSubServiceName(child)
+                .trim()
+                .toLowerCase();
+
+
+            if (childName) {
+
+              childServiceNames.add(
+                childName
+              );
+
+            }
 
           }
         );
@@ -549,23 +543,9 @@ function createDepartments(
     );
 
 
-  // ======================================================
-  // ACTUAL PARENT SERVICE IDS
-  // ======================================================
-
-  const parentServiceIds =
-    new Set(
-      Object.keys(subServiceMap)
-        .map(function (id) {
-          return Number(id);
-        })
-        .filter(Boolean)
-    );
-
-
   console.log(
-    "MBSC PARENT SERVICE IDS:",
-    [...parentServiceIds]
+    "MBSC CHILD SERVICE NAMES:",
+    [...childServiceNames]
   );
 
 
@@ -585,7 +565,7 @@ function createDepartments(
 
 
       // ==================================================
-      // PARENT DEPARTMENT
+      // SERVICE HAS SUB SERVICES
       // ==================================================
 
       if (subServices.length > 0) {
@@ -599,23 +579,15 @@ function createDepartments(
 
         departmentCount++;
 
+
         return;
 
       }
 
 
       // ==================================================
-      // CHILD SERVICE DETECTION
+      // CHECK DUPLICATE CHILD SERVICE
       // ==================================================
-
-      /*
-       * If a service has no own sub_services,
-       * check whether it belongs to a parent department
-       * through the sub_services table.
-       *
-       * We identify child service names against
-       * sub-service names.
-       */
 
       const serviceName =
         getServiceName(service)
@@ -623,71 +595,17 @@ function createDepartments(
           .toLowerCase();
 
 
-      let isChildService =
-        false;
-
-
-      subServicesLoop:
-      for (
-        let i = 0;
-        i < services.length;
-        i++
+      if (
+        childServiceNames.has(
+          serviceName
+        )
       ) {
-
-        const possibleParent =
-          services[i];
-
-
-        const possibleParentId =
-          Number(possibleParent.id);
-
-
-        const children =
-          subServiceMap[possibleParentId] || [];
-
-
-        for (
-          let j = 0;
-          j < children.length;
-          j++
-        ) {
-
-          const child =
-            children[j];
-
-
-          const childName =
-            getSubServiceName(child)
-              .trim()
-              .toLowerCase();
-
-
-          if (
-            childName === serviceName
-          ) {
-
-            isChildService =
-              true;
-
-            break subServicesLoop;
-
-          }
-
-        }
-
-      }
-
-
-      // ==================================================
-      // DO NOT SHOW CHILD SERVICE AGAIN
-      // ==================================================
-
-      if (isChildService) {
 
         console.log(
           "MBSC: Hiding duplicate child service:",
           serviceName
         );
+
 
         return;
 
@@ -825,94 +743,13 @@ function createDepartmentCard(
     "loan-sub-services";
 
 
- // ======================================================
-// CREATE SUB SERVICES
-// ======================================================
+  // ======================================================
+  // CREATE SUB SERVICES
+  // ======================================================
 
-subServices.forEach(function (subService, index) {
+  subServices.forEach(
+    function (subService, index) {
 
-  const subName =
-    getSubServiceName(subService);
-
-  const documents =
-    getDocuments(subService);
-
-  const subServiceId =
-    Number(subService.id);
-
-  const items =
-    subServiceItemMap[subServiceId] || [];
-
-  console.log(
-    "MBSC SUB SERVICE:",
-    subName,
-    "ID:",
-    subServiceId,
-    "ITEMS:",
-    items
-  );
-
-  const subWrapper =
-    document.createElement("div");
-
-  subWrapper.className =
-    "loan-sub-wrapper";
-
-  const button =
-    document.createElement("button");
-
-  button.className =
-    "loan-sub-button";
-
-  button.type =
-    "button";
-
-  button.innerHTML = `
-    <span class="loan-number">
-      ${index + 1}.
-    </span>
-
-    <span>
-      ${escapeHTML(subName)}
-    </span>
-  `;
-
-  if (items.length > 0) {
-
-    const itemCount =
-      document.createElement("span");
-
-    itemCount.className =
-      "sub-item-count";
-
-    itemCount.textContent =
-      items.length + " items";
-
-    button.appendChild(itemCount);
-  }
-
-  button.addEventListener(
-    "click",
-    function () {
-
-      showSubServiceDetails(
-        subName,
-        documents,
-        items
-      );
-
-    }
-  );
-
-  subWrapper.appendChild(
-    button
-  );
-
-  subContainer.appendChild(
-    subWrapper
-  );
-
-});
       const subName =
         getSubServiceName(
           subService
@@ -926,13 +763,25 @@ subServices.forEach(function (subService, index) {
 
 
       const subServiceId =
-        Number(subService.id);
+        Number(
+          subService.id
+        );
 
 
       const items =
         subServiceItemMap[
           subServiceId
         ] || [];
+
+
+      console.log(
+        "MBSC SUB SERVICE:",
+        subName,
+        "ID:",
+        subServiceId,
+        "ITEMS:",
+        items
+      );
 
 
       // ==================================================
@@ -969,11 +818,37 @@ subServices.forEach(function (subService, index) {
           ${index + 1}.
         </span>
 
-        <span>
+        <span class="sub-service-name">
           ${escapeHTML(subName)}
         </span>
 
       `;
+
+
+      // ==================================================
+      // ITEM COUNT
+      // ==================================================
+
+      if (items.length > 0) {
+
+        const itemCount =
+          document.createElement("span");
+
+
+        itemCount.className =
+          "sub-item-count";
+
+
+        itemCount.textContent =
+          items.length +
+          " items";
+
+
+        button.appendChild(
+          itemCount
+        );
+
+      }
 
 
       // ==================================================
@@ -994,12 +869,20 @@ subServices.forEach(function (subService, index) {
       );
 
 
+      // ==================================================
+      // ADD BUTTON
+      // ==================================================
+
       subWrapper.appendChild(
         button
       );
 
 
-          subContainer.appendChild(
+      // ==================================================
+      // ADD WRAPPER
+      // ==================================================
+
+      subContainer.appendChild(
         subWrapper
       );
 
@@ -1613,6 +1496,10 @@ function showServiceDocuments(
     whatsappButton
   );
 
+
+  // ======================================================
+  // SCROLL
+  // ======================================================
 
   scrollToDocuments();
 
