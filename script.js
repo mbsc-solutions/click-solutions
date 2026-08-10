@@ -4,8 +4,8 @@
 // SERVICES
 // SUB SERVICES
 // SUB SERVICE ITEMS
+// IMAGE SUPPORT
 // ==========================================================
-
 
 // ==========================================================
 // SUPABASE CONFIG
@@ -17,7 +17,6 @@ const SUPABASE_URL =
 const SUPABASE_ANON_KEY =
     "sb_publishable_wlqTaOkM3fML9cuUES54fw_8TlbSi-H";
 
-
 // ==========================================================
 // SUPABASE CLIENT
 // ==========================================================
@@ -27,7 +26,6 @@ const supabaseClient =
         SUPABASE_URL,
         SUPABASE_ANON_KEY
     );
-
 
 // ==========================================================
 // GLOBAL ELEMENTS
@@ -41,7 +39,6 @@ const documentBox =
 
 const WHATSAPP_NUMBER =
     "917093334820";
-
 
 // ==========================================================
 // WHATSAPP LINK
@@ -58,7 +55,6 @@ function whatsappLink(message) {
 
 }
 
-
 // ==========================================================
 // ESCAPE HTML
 // ==========================================================
@@ -74,7 +70,6 @@ function escapeHTML(value) {
 
 }
 
-
 // ==========================================================
 // SERVICE NAME
 // ==========================================================
@@ -89,7 +84,6 @@ function getServiceName(service) {
     );
 
 }
-
 
 // ==========================================================
 // SUB SERVICE NAME
@@ -107,7 +101,6 @@ function getSubServiceName(subService) {
 
 }
 
-
 // ==========================================================
 // ITEM NAME
 // ==========================================================
@@ -124,7 +117,6 @@ function getItemName(item) {
 
 }
 
-
 // ==========================================================
 // DOCUMENTS
 // ==========================================================
@@ -140,7 +132,6 @@ function getDocuments(row) {
 
 }
 
-
 // ==========================================================
 // DESCRIPTION
 // ==========================================================
@@ -155,6 +146,20 @@ function getDescription(row) {
 
 }
 
+// ==========================================================
+// IMAGE URL
+// ==========================================================
+
+function getImageUrl(row) {
+
+    return (
+        row.image_url ||
+        row.image ||
+        row.imageUrl ||
+        ""
+    );
+
+}
 
 // ==========================================================
 // NORMALIZE DOCUMENTS
@@ -172,7 +177,6 @@ function normalizeDocuments(docs) {
 
     }
 
-
     if (typeof docs === "string") {
 
         return docs
@@ -184,11 +188,9 @@ function normalizeDocuments(docs) {
 
     }
 
-
     return [];
 
 }
-
 
 // ==========================================================
 // LOAD ALL DATA
@@ -201,7 +203,6 @@ async function loadServices() {
     console.log("Loading services...");
     console.log("=================================");
 
-
     if (!departmentsContainer) {
 
         console.error(
@@ -211,7 +212,6 @@ async function loadServices() {
         return;
 
     }
-
 
     departmentsContainer.innerHTML = `
 
@@ -231,7 +231,6 @@ async function loadServices() {
 
     `;
 
-
     try {
 
         // ==================================================
@@ -250,23 +249,35 @@ async function loadServices() {
                     }
                 );
 
-
         if (servicesResult.error) {
 
             throw servicesResult.error;
 
         }
 
-
         const services =
             servicesResult.data || [];
-
 
         console.log(
             "MBSC SERVICES:",
             services
         );
 
+        // ==================================================
+        // IMAGE DEBUG
+        // ==================================================
+
+        services.forEach(
+            function (service) {
+
+                console.log(
+                    "SERVICE IMAGE:",
+                    getServiceName(service),
+                    getImageUrl(service)
+                );
+
+            }
+        );
 
         // ==================================================
         // 2. GET SUB SERVICES
@@ -284,23 +295,19 @@ async function loadServices() {
                     }
                 );
 
-
         if (subServicesResult.error) {
 
             throw subServicesResult.error;
 
         }
 
-
         const subServices =
             subServicesResult.data || [];
-
 
         console.log(
             "MBSC SUB SERVICES:",
             subServices
         );
-
 
         // ==================================================
         // 3. GET SUB SERVICE ITEMS
@@ -318,9 +325,7 @@ async function loadServices() {
                     }
                 );
 
-
         let subServiceItems = [];
-
 
         if (itemsResult.error) {
 
@@ -337,19 +342,16 @@ async function loadServices() {
 
         }
 
-
         console.log(
             "MBSC SUB SERVICE ITEMS:",
             subServiceItems
         );
-
 
         // ==================================================
         // 4. CREATE SUB SERVICE MAP
         // ==================================================
 
         const subServiceMap = {};
-
 
         subServices.forEach(
             function (subService) {
@@ -358,7 +360,6 @@ async function loadServices() {
                     Number(
                         subService.service_id
                     );
-
 
                 if (!serviceId) {
 
@@ -371,13 +372,11 @@ async function loadServices() {
 
                 }
 
-
                 if (!subServiceMap[serviceId]) {
 
                     subServiceMap[serviceId] = [];
 
                 }
-
 
                 subServiceMap[serviceId].push(
                     subService
@@ -386,19 +385,16 @@ async function loadServices() {
             }
         );
 
-
         console.log(
             "MBSC SUB SERVICE MAP:",
             subServiceMap
         );
-
 
         // ==================================================
         // 5. CREATE SUB SERVICE ITEM MAP
         // ==================================================
 
         const subServiceItemMap = {};
-
 
         subServiceItems.forEach(
             function (item) {
@@ -409,7 +405,6 @@ async function loadServices() {
                         item.subservice_id ||
                         item.subServiceId
                     );
-
 
                 if (!subServiceId) {
 
@@ -422,13 +417,11 @@ async function loadServices() {
 
                 }
 
-
                 if (!subServiceItemMap[subServiceId]) {
 
                     subServiceItemMap[subServiceId] = [];
 
                 }
-
 
                 subServiceItemMap[subServiceId].push(
                     item
@@ -437,12 +430,10 @@ async function loadServices() {
             }
         );
 
-
         console.log(
             "MBSC SUB SERVICE ITEM MAP:",
             subServiceItemMap
         );
-
 
         // ==================================================
         // 6. CREATE DEPARTMENTS
@@ -461,7 +452,6 @@ async function loadServices() {
             "MBSC ERROR:",
             error
         );
-
 
         departmentsContainer.innerHTML = `
 
@@ -486,7 +476,6 @@ async function loadServices() {
 
 }
 
-
 // ==========================================================
 // CREATE DEPARTMENTS
 // ==========================================================
@@ -501,14 +490,12 @@ function createDepartments(
 
     let departmentCount = 0;
 
-
     // ======================================================
     // FIND CHILD SERVICE NAMES
     // ======================================================
 
     const childServiceNames =
         new Set();
-
 
     Object.keys(subServiceMap)
         .forEach(
@@ -517,7 +504,6 @@ function createDepartments(
                 const children =
                     subServiceMap[serviceId] || [];
 
-
                 children.forEach(
                     function (child) {
 
@@ -525,7 +511,6 @@ function createDepartments(
                             getSubServiceName(child)
                                 .trim()
                                 .toLowerCase();
-
 
                         if (childName) {
 
@@ -541,12 +526,10 @@ function createDepartments(
             }
         );
 
-
     console.log(
         "MBSC CHILD SERVICE NAMES:",
         [...childServiceNames]
     );
-
 
     // ======================================================
     // BUILD PAGE
@@ -558,10 +541,8 @@ function createDepartments(
             const serviceId =
                 Number(service.id);
 
-
             const subServices =
                 subServiceMap[serviceId] || [];
-
 
             // ==================================================
             // SERVICE HAS SUB SERVICES
@@ -575,13 +556,11 @@ function createDepartments(
                     subServiceItemMap
                 );
 
-
                 departmentCount++;
 
                 return;
 
             }
-
 
             // ==================================================
             // CHECK DUPLICATE CHILD SERVICE
@@ -591,7 +570,6 @@ function createDepartments(
                 getServiceName(service)
                     .trim()
                     .toLowerCase();
-
 
             if (
                 childServiceNames.has(
@@ -608,7 +586,6 @@ function createDepartments(
 
             }
 
-
             // ==================================================
             // NORMAL SERVICE
             // ==================================================
@@ -617,17 +594,14 @@ function createDepartments(
                 service
             );
 
-
             departmentCount++;
 
         }
     );
 
-
     console.log(
         "MBSC: Departments created successfully."
     );
-
 
     console.log(
         "MBSC Department count:",
@@ -635,7 +609,6 @@ function createDepartments(
     );
 
 }
-
 
 // ==========================================================
 // CREATE DEPARTMENT CARD
@@ -653,17 +626,19 @@ function createDepartmentCard(
     department.className =
         "loan-department";
 
-
     const serviceName =
         getServiceName(service);
-
 
     const description =
         getDescription(service);
 
-const imageUrl =
-    service.image_url || "";
-    
+    // ======================================================
+    // IMAGE URL
+    // ======================================================
+
+    const imageUrl =
+        getImageUrl(service);
+
     // ======================================================
     // HEADER
     // ======================================================
@@ -674,46 +649,47 @@ const imageUrl =
     header.className =
         "department-header";
 
-
     header.innerHTML = `
 
-    ${
-        imageUrl
-            ? `
-                <div class="department-image-wrapper">
-                    <img
-                        src="${escapeHTML(imageUrl)}"
-                        alt="${escapeHTML(serviceName)}"
-                        class="department-image"
-                        loading="lazy"
-                    >
-                </div>
-              `
-            : ""
-    }
+        ${
+            imageUrl
+                ? `
+                    <div class="department-image-wrapper">
 
-    <div>
+                        <img
+                            src="${escapeHTML(imageUrl)}"
+                            alt="${escapeHTML(serviceName)}"
+                            class="department-image"
+                            loading="lazy"
+                            onerror="this.parentElement.style.display='none';"
+                        >
 
-        <span class="department-label">
-            DEPARTMENT
-        </span>
+                    </div>
+                  `
+                : ""
+        }
 
-        <h3>
-            ${escapeHTML(serviceName)}
-        </h3>
+        <div class="department-header-content">
 
-        <p>
-            ${escapeHTML(description)}
-        </p>
+            <span class="department-label">
+                DEPARTMENT
+            </span>
 
-    </div>
+            <h3>
+                ${escapeHTML(serviceName)}
+            </h3>
 
-`;
+            <p>
+                ${escapeHTML(description)}
+            </p>
+
+        </div>
+
+    `;
 
     department.appendChild(
         header
     );
-
 
     // ======================================================
     // MAIN BUTTON
@@ -733,11 +709,9 @@ const imageUrl =
         serviceName +
         " Services";
 
-
     department.appendChild(
         mainButton
     );
-
 
     // ======================================================
     // SUB SERVICE CONTAINER
@@ -748,7 +722,6 @@ const imageUrl =
 
     subContainer.className =
         "loan-sub-services";
-
 
     // ======================================================
     // CREATE SUB SERVICES
@@ -762,28 +735,20 @@ const imageUrl =
                     subService
                 );
 
-
             const documents =
                 getDocuments(
                     subService
                 );
-
 
             const subServiceId =
                 Number(
                     subService.id
                 );
 
-
-            // ==================================================
-            // GET ITEMS FOR THIS SUB SERVICE
-            // ==================================================
-
             const items =
                 subServiceItemMap[
                     subServiceId
                 ] || [];
-
 
             console.log(
                 "MBSC SUB SERVICE:",
@@ -795,7 +760,6 @@ const imageUrl =
                 items
             );
 
-
             // ==================================================
             // SUB SERVICE WRAPPER
             // ==================================================
@@ -805,7 +769,6 @@ const imageUrl =
 
             subWrapper.className =
                 "loan-sub-wrapper";
-
 
             // ==================================================
             // SUB SERVICE BUTTON
@@ -820,7 +783,6 @@ const imageUrl =
             button.type =
                 "button";
 
-
             button.innerHTML = `
 
                 <span class="loan-number">
@@ -833,7 +795,6 @@ const imageUrl =
 
             `;
 
-
             // ==================================================
             // ITEM COUNT
             // ==================================================
@@ -845,22 +806,18 @@ const imageUrl =
                 const itemCount =
                     document.createElement("span");
 
-
                 itemCount.className =
                     "sub-item-count";
-
 
                 itemCount.textContent =
                     items.length +
                     " items";
-
 
                 button.appendChild(
                     itemCount
                 );
 
             }
-
 
             // ==================================================
             // CLICK SUB SERVICE
@@ -879,7 +836,6 @@ const imageUrl =
                 }
             );
 
-
             // ==================================================
             // ADD BUTTON
             // ==================================================
@@ -888,18 +844,12 @@ const imageUrl =
                 button
             );
 
-
-            // ==================================================
-            // ADD WRAPPER
-            // ==================================================
-
             subContainer.appendChild(
                 subWrapper
             );
 
         }
     );
-
 
     // ======================================================
     // WHATSAPP DEPARTMENT BUTTON
@@ -911,7 +861,6 @@ const imageUrl =
     whatsappButton.className =
         "loan-whatsapp";
 
-
     whatsappButton.href =
         whatsappLink(
             "Hello MBSC SOLUTIONS, I need details about " +
@@ -919,24 +868,19 @@ const imageUrl =
             "."
         );
 
-
     whatsappButton.target =
         "_blank";
 
-
     whatsappButton.rel =
         "noopener noreferrer";
-
 
     whatsappButton.textContent =
         "WhatsApp for " +
         serviceName;
 
-
     subContainer.appendChild(
         whatsappButton
     );
-
 
     // ======================================================
     // ADD SUB CONTAINER
@@ -945,7 +889,6 @@ const imageUrl =
     department.appendChild(
         subContainer
     );
-
 
     // ======================================================
     // TOGGLE
@@ -959,7 +902,6 @@ const imageUrl =
                 subContainer.classList.toggle(
                     "show"
                 );
-
 
             if (isOpen) {
 
@@ -981,7 +923,6 @@ const imageUrl =
         }
     );
 
-
     // ======================================================
     // ADD TO PAGE
     // ======================================================
@@ -992,110 +933,115 @@ const imageUrl =
 
 }
 
-
 // ==========================================================
-// NORMAL SERVICE CARD WITH IMAGE
+// CREATE NORMAL SERVICE CARD WITH IMAGE
 // ==========================================================
 
-function createNormalServiceCard(service) {
+function createNormalServiceCard(
+    service
+) {
 
-  const article =
-    document.createElement("article");
+    const article =
+        document.createElement("article");
 
-  article.className =
-    "service-card";
+    article.className =
+        "service-card";
 
-  const name =
-    getServiceName(service);
+    const name =
+        getServiceName(service);
 
-  const description =
-    getDescription(service);
+    const description =
+        getDescription(service);
 
-  const documents =
-    getDocuments(service);
+    const documents =
+        getDocuments(service);
 
-  // ======================================================
-  // IMAGE
-  // ======================================================
+    // ======================================================
+    // IMAGE URL
+    // ======================================================
 
-  const imageUrl =
-    service.image_url || "";
+    const imageUrl =
+        getImageUrl(service);
 
-  article.innerHTML = `
+    // ======================================================
+    // CARD HTML
+    // ======================================================
 
-    <div class="service-card-image-wrapper">
+    article.innerHTML = `
 
-      ${
-        imageUrl
-          ? `
-            <img
-              class="service-card-image"
-              src="${escapeHTML(imageUrl)}"
-              alt="${escapeHTML(name)}"
-              loading="lazy"
-            >
-          `
-          : `
-            <div class="service-card-no-image">
-              No Image
-            </div>
-          `
-      }
+        <div class="service-card-image-wrapper">
 
-    </div>
+            ${
+                imageUrl
+                    ? `
+                        <img
+                            class="service-card-image"
+                            src="${escapeHTML(imageUrl)}"
+                            alt="${escapeHTML(name)}"
+                            loading="lazy"
+                            onerror="this.parentElement.innerHTML='<div class=&quot;service-card-no-image&quot;>Image unavailable</div>';"
+                        >
+                      `
+                    : `
+                        <div class="service-card-no-image">
+                            No Image
+                        </div>
+                      `
+            }
 
-    <div class="service-card-content">
+        </div>
 
-      <h3>
-        ${escapeHTML(name)}
-      </h3>
+        <div class="service-card-content">
 
-      <p>
-        ${escapeHTML(description)}
-      </p>
+            <h3>
+                ${escapeHTML(name)}
+            </h3>
 
-    </div>
+            <p>
+                ${escapeHTML(description)}
+            </p>
 
-  `;
+        </div>
 
-  // ======================================================
-  // BUTTON
-  // ======================================================
+    `;
 
-  const button =
-    document.createElement("button");
+    // ======================================================
+    // BUTTON
+    // ======================================================
 
-  button.className =
-    "service-button";
+    const button =
+        document.createElement("button");
 
-  button.type =
-    "button";
+    button.className =
+        "service-button";
 
-  button.textContent =
-    "View & WhatsApp";
+    button.type =
+        "button";
 
-  button.addEventListener(
-    "click",
-    function () {
+    button.textContent =
+        "View & WhatsApp";
 
-      showServiceDocuments(
-        name,
-        documents
-      );
+    button.addEventListener(
+        "click",
+        function () {
 
-    }
-  );
+            showServiceDocuments(
+                name,
+                documents
+            );
 
-  article.appendChild(
-    button
-  );
+        }
+    );
 
-  departmentsContainer.appendChild(
-    article
-  );
+    article.appendChild(
+        button
+    );
+
+    departmentsContainer.appendChild(
+        article
+    );
 
 }
-
 
 // ==========================================================
 // SHOW SUB SERVICE DETAILS
@@ -1117,9 +1063,7 @@ function showSubServiceDetails(
 
     }
 
-
     documentBox.innerHTML = "";
-
 
     // ======================================================
     // HEADING
@@ -1131,11 +1075,9 @@ function showSubServiceDetails(
     heading.textContent =
         subName;
 
-
     documentBox.appendChild(
         heading
     );
-
 
     // ======================================================
     // SUB SERVICE ITEMS
@@ -1149,23 +1091,18 @@ function showSubServiceDetails(
         const itemHeading =
             document.createElement("h4");
 
-
         itemHeading.textContent =
             "Available Services";
-
 
         documentBox.appendChild(
             itemHeading
         );
 
-
         const itemList =
             document.createElement("ul");
 
-
         itemList.className =
             "requirements-list";
-
 
         items.forEach(
             function (item) {
@@ -1173,14 +1110,11 @@ function showSubServiceDetails(
                 const itemName =
                     getItemName(item);
 
-
                 const listItem =
                     document.createElement("li");
 
-
                 listItem.className =
                     "requirement-item";
-
 
                 listItem.innerHTML = `
 
@@ -1194,7 +1128,6 @@ function showSubServiceDetails(
 
                 `;
 
-
                 itemList.appendChild(
                     listItem
                 );
@@ -1202,13 +1135,11 @@ function showSubServiceDetails(
             }
         );
 
-
         documentBox.appendChild(
             itemList
         );
 
     }
-
 
     // ======================================================
     // DOCUMENTS
@@ -1219,7 +1150,6 @@ function showSubServiceDetails(
             documents
         );
 
-
     if (
         documentItems.length > 0
     ) {
@@ -1227,23 +1157,18 @@ function showSubServiceDetails(
         const documentHeading =
             document.createElement("h4");
 
-
         documentHeading.textContent =
             "Required Documents";
-
 
         documentBox.appendChild(
             documentHeading
         );
 
-
         const documentList =
             document.createElement("ul");
 
-
         documentList.className =
             "requirements-list";
-
 
         documentItems.forEach(
             function (itemText) {
@@ -1251,10 +1176,8 @@ function showSubServiceDetails(
                 const item =
                     document.createElement("li");
 
-
                 item.className =
                     "requirement-item";
-
 
                 item.innerHTML = `
 
@@ -1268,7 +1191,6 @@ function showSubServiceDetails(
 
                 `;
 
-
                 documentList.appendChild(
                     item
                 );
@@ -1276,13 +1198,11 @@ function showSubServiceDetails(
             }
         );
 
-
         documentBox.appendChild(
             documentList
         );
 
     }
-
 
     // ======================================================
     // NO DATA
@@ -1296,17 +1216,14 @@ function showSubServiceDetails(
         const noData =
             document.createElement("p");
 
-
         noData.textContent =
             "Contact us for service details and document requirements.";
-
 
         documentBox.appendChild(
             noData
         );
 
     }
-
 
     // ======================================================
     // WHATSAPP
@@ -1315,10 +1232,8 @@ function showSubServiceDetails(
     const whatsappButton =
         document.createElement("a");
 
-
     whatsappButton.className =
         "primary";
-
 
     whatsappButton.href =
         whatsappLink(
@@ -1327,23 +1242,18 @@ function showSubServiceDetails(
             "."
         );
 
-
     whatsappButton.target =
         "_blank";
-
 
     whatsappButton.rel =
         "noopener noreferrer";
 
-
     whatsappButton.textContent =
         "Message on WhatsApp";
-
 
     documentBox.appendChild(
         whatsappButton
     );
-
 
     // ======================================================
     // SCROLL
@@ -1352,7 +1262,6 @@ function showSubServiceDetails(
     scrollToDocuments();
 
 }
-
 
 // ==========================================================
 // SHOW NORMAL SERVICE DOCUMENTS
@@ -1373,9 +1282,7 @@ function showServiceDocuments(
 
     }
 
-
     documentBox.innerHTML = "";
-
 
     // ======================================================
     // HEADING
@@ -1384,15 +1291,12 @@ function showServiceDocuments(
     const heading =
         document.createElement("h3");
 
-
     heading.textContent =
         serviceName;
-
 
     documentBox.appendChild(
         heading
     );
-
 
     // ======================================================
     // DOCUMENT LIST
@@ -1401,16 +1305,13 @@ function showServiceDocuments(
     const list =
         document.createElement("ul");
 
-
     list.className =
         "requirements-list";
-
 
     const documentItems =
         normalizeDocuments(
             docs
         );
-
 
     if (
         documentItems.length === 0
@@ -1419,10 +1320,8 @@ function showServiceDocuments(
         const item =
             document.createElement("li");
 
-
         item.className =
             "requirement-item";
-
 
         item.innerHTML = `
 
@@ -1435,7 +1334,6 @@ function showServiceDocuments(
             </span>
 
         `;
-
 
         list.appendChild(
             item
@@ -1450,10 +1348,8 @@ function showServiceDocuments(
                 const item =
                     document.createElement("li");
 
-
                 item.className =
                     "requirement-item";
-
 
                 item.innerHTML = `
 
@@ -1467,7 +1363,6 @@ function showServiceDocuments(
 
                 `;
 
-
                 list.appendChild(
                     item
                 );
@@ -1477,11 +1372,9 @@ function showServiceDocuments(
 
     }
 
-
     documentBox.appendChild(
         list
     );
-
 
     // ======================================================
     // WHATSAPP
@@ -1490,10 +1383,8 @@ function showServiceDocuments(
     const whatsappButton =
         document.createElement("a");
 
-
     whatsappButton.className =
         "primary";
-
 
     whatsappButton.href =
         whatsappLink(
@@ -1502,28 +1393,26 @@ function showServiceDocuments(
             "."
         );
 
-
     whatsappButton.target =
         "_blank";
-
 
     whatsappButton.rel =
         "noopener noreferrer";
 
-
     whatsappButton.textContent =
         "Message on WhatsApp";
-
 
     documentBox.appendChild(
         whatsappButton
     );
 
+    // ======================================================
+    // SCROLL
+    // ======================================================
 
     scrollToDocuments();
 
 }
-
 
 // ==========================================================
 // SCROLL TO DOCUMENTS
@@ -1536,7 +1425,6 @@ function scrollToDocuments() {
             ".documents"
         );
 
-
     if (documentsSection) {
 
         documentsSection.scrollIntoView({
@@ -1547,7 +1435,6 @@ function scrollToDocuments() {
     }
 
 }
-
 
 // ==========================================================
 // HERO VIDEO
@@ -1560,7 +1447,6 @@ function setupHeroVideo() {
             ".hero-video"
         );
 
-
     if (!video) {
 
         console.log(
@@ -1571,21 +1457,17 @@ function setupHeroVideo() {
 
     }
 
-
     video.muted = true;
-
 
     video.setAttribute(
         "muted",
         ""
     );
 
-
     video.setAttribute(
         "playsinline",
         ""
     );
-
 
     video.play()
         .then(
@@ -1610,7 +1492,6 @@ function setupHeroVideo() {
 
 }
 
-
 // ==========================================================
 // PAGE LOAD
 // ==========================================================
@@ -1623,15 +1504,12 @@ document.addEventListener(
             "MBSC page loaded."
         );
 
-
         setupHeroVideo();
-
 
         loadServices();
 
     }
 );
-
 
 // ==========================================================
 // PAGE VISIBILITY
@@ -1650,12 +1528,10 @@ document.addEventListener(
 
         }
 
-
         const video =
             document.querySelector(
                 ".hero-video"
             );
-
 
         if (video) {
 
@@ -1668,7 +1544,6 @@ document.addEventListener(
 
     }
 );
-
 
 // ==========================================================
 // FINAL LOG
