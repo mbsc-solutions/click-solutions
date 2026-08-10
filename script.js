@@ -1,11 +1,6 @@
 // ==========================================================
 // MBSC SOLUTIONS
-// COMPLETE SERVICES SCRIPT
-// ==========================================================
-
-
-// ==========================================================
-// SUPABASE CONFIG
+// SERVICES + DEPARTMENTS
 // ==========================================================
 
 const SUPABASE_URL =
@@ -13,7 +8,6 @@ const SUPABASE_URL =
 
 const SUPABASE_ANON_KEY =
   "sb_publishable_wlqTaOkM3fML9cuUES54fw_8TlbSi-H";
-
 
 // ==========================================================
 // SUPABASE CLIENT
@@ -25,52 +19,66 @@ const supabaseClient =
     SUPABASE_ANON_KEY
   );
 
-
 // ==========================================================
 // GLOBAL
 // ==========================================================
 
-const departmentsContainer =
-  document.getElementById("departmentsContainer");
+let departmentsContainer;
+let documentBox;
 
-const documentBox =
-  document.getElementById("documentBox");
-
-const WHATSAPP_NUMBER =
-  "917093334820";
-
+const WHATSAPP_NUMBER = "917093334820";
 
 // ==========================================================
-// WHATSAPP LINK
+// WHATSAPP
 // ==========================================================
 
 function whatsappLink(message) {
-
   return (
     "https://wa.me/" +
     WHATSAPP_NUMBER +
     "?text=" +
     encodeURIComponent(message)
   );
-
 }
-
 
 // ==========================================================
 // ESCAPE HTML
 // ==========================================================
 
 function escapeHTML(value) {
-
-  return String(value || "")
+  return String(value ?? "")
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
-
 }
 
+// ==========================================================
+// GET SERVICE NAME
+// ==========================================================
+
+function getServiceName(service) {
+  return (
+    service.service_name ||
+    service.name ||
+    service.title ||
+    "Service"
+  );
+}
+
+// ==========================================================
+// GET DOCUMENTS
+// ==========================================================
+
+function getDocuments(service) {
+  return (
+    service.documents ||
+    service.requirements ||
+    service.docs ||
+    ""
+  );
+}
 
 // ==========================================================
 // LOAD SERVICES
@@ -78,167 +86,85 @@ function escapeHTML(value) {
 
 async function loadServices() {
 
-  console.log("=================================");
-  console.log("MBSC SOLUTIONS");
-  console.log("Loading services...");
-  console.log("=================================");
+  console.log("MBSC: Loading services...");
 
+  departmentsContainer =
+    document.getElementById("departmentsContainer");
+
+  documentBox =
+    document.getElementById("documentBox");
 
   if (!departmentsContainer) {
-
     console.error(
-      "departmentsContainer not found"
+      "MBSC ERROR: departmentsContainer not found."
     );
-
     return;
-
   }
 
-
   departmentsContainer.innerHTML = `
-
     <div class="loading-box">
-
       <div class="loading-spinner"></div>
-
-      <h3>
-        Loading Services...
-      </h3>
-
-      <p>
-        Please wait while our services are loading.
-      </p>
-
+      <h3>Loading Services...</h3>
+      <p>Please wait while our services are loading.</p>
     </div>
-
   `;
-
 
   try {
 
-    const result =
+    const { data, error } =
       await supabaseClient
         .from("services")
-        .select("*")
-        .order(
-          "sort_order",
-          {
-            ascending: true,
-            nullsFirst: false
-          }
-        );
+        .select("*");
 
-
-    const data =
-      result.data;
-
-    const error =
-      result.error;
-
-
-    console.log(
-      "Supabase data:",
-      data
-    );
-
-
-    // ====================================================
-    // ERROR
-    // ====================================================
+    console.log("MBSC Supabase data:", data);
+    console.log("MBSC Supabase error:", error);
 
     if (error) {
 
-      console.error(
-        "Supabase error:",
-        error
-      );
-
-
       departmentsContainer.innerHTML = `
-
         <div class="error-box">
-
-          <h3>
-            Unable to Load Services
-          </h3>
-
-          <p>
-            ${escapeHTML(error.message)}
-          </p>
-
+          <h3>Unable to Load Services</h3>
+          <p>${escapeHTML(error.message)}</p>
         </div>
-
       `;
 
       return;
-
     }
-
-
-    // ====================================================
-    // EMPTY
-    // ====================================================
 
     if (!data || data.length === 0) {
 
       departmentsContainer.innerHTML = `
-
         <div class="error-box">
-
-          <h3>
-            No Services Found
-          </h3>
-
+          <h3>No Services Found</h3>
           <p>
-            Your Supabase services table is empty.
+            Supabase connected, but no records
+            were found in the services table.
           </p>
-
         </div>
-
       `;
 
       return;
-
     }
-
-
-    // ====================================================
-    // BUILD DEPARTMENTS
-    // ====================================================
 
     createDepartments(data);
 
-
-  }
-
-  catch (error) {
+  } catch (error) {
 
     console.error(
-      "MBSC unexpected error:",
+      "MBSC ERROR:",
       error
     );
 
-
     departmentsContainer.innerHTML = `
-
       <div class="error-box">
-
-        <h3>
-          Something Went Wrong
-        </h3>
-
+        <h3>Something Went Wrong</h3>
         <p>
-          Please refresh the page and try again.
+          ${escapeHTML(error.message)}
         </p>
-
       </div>
-
     `;
-
   }
-
 }
-
 
 // ==========================================================
 // CREATE DEPARTMENTS
@@ -248,59 +174,49 @@ function createDepartments(services) {
 
   departmentsContainer.innerHTML = "";
 
-
-  // ======================================================
-  // FIND LOANS
-  // ======================================================
+  // --------------------------------------------------------
+  // LOANS
+  // --------------------------------------------------------
 
   const loanServices =
-    services.filter(function(service) {
+    services.filter(service => {
 
       const name =
         getServiceName(service)
           .toLowerCase();
 
-      return (
-        name.includes("loan")
-      );
-
+      return name.includes("loan");
     });
 
-
-  // ======================================================
+  // --------------------------------------------------------
   // OTHER SERVICES
-  // ======================================================
+  // --------------------------------------------------------
 
   const otherServices =
-    services.filter(function(service) {
+    services.filter(service => {
 
       const name =
         getServiceName(service)
           .toLowerCase();
 
       return !name.includes("loan");
-
     });
 
-
-  // ======================================================
-  // LOANS DEPARTMENT
-  // ======================================================
+  // --------------------------------------------------------
+  // LOAN DEPARTMENT
+  // --------------------------------------------------------
 
   if (loanServices.length > 0) {
-
     createLoanDepartment(
       loanServices
     );
-
   }
 
-
-  // ======================================================
+  // --------------------------------------------------------
   // OTHER SERVICES
-  // ======================================================
+  // --------------------------------------------------------
 
-  otherServices.forEach(function(service) {
+  otherServices.forEach(service => {
 
     createNormalServiceCard(
       service
@@ -308,54 +224,10 @@ function createDepartments(services) {
 
   });
 
-
-  console.log(
-    "Loan services:",
-    loanServices
-  );
-
-  console.log(
-    "Other services:",
-    otherServices
-  );
-
 }
 
-
 // ==========================================================
-// GET SERVICE NAME
-// ==========================================================
-
-function getServiceName(service) {
-
-  return (
-    service.service_name ||
-    service.name ||
-    service.title ||
-    "Service"
-  );
-
-}
-
-
-// ==========================================================
-// GET DOCUMENTS
-// ==========================================================
-
-function getDocuments(service) {
-
-  return (
-    service.documents ||
-    service.requirements ||
-    service.docs ||
-    ""
-  );
-
-}
-
-
-// ==========================================================
-// LOANS DEPARTMENT
+// LOAN DEPARTMENT
 // ==========================================================
 
 function createLoanDepartment(
@@ -366,12 +238,11 @@ function createLoanDepartment(
     document.createElement("div");
 
   department.className =
-    "department loan-department";
+    "loan-department";
 
-
-  // ======================================================
+  // --------------------------------------------------------
   // HEADER
-  // ======================================================
+  // --------------------------------------------------------
 
   const header =
     document.createElement("div");
@@ -379,36 +250,25 @@ function createLoanDepartment(
   header.className =
     "department-header";
 
-
   header.innerHTML = `
+    <span class="department-label">
+      DEPARTMENT
+    </span>
 
-    <div>
+    <h3>Loans</h3>
 
-      <span class="department-label">
-        DEPARTMENT
-      </span>
-
-      <h3>
-        Loans
-      </h3>
-
-      <p>
-        Choose the loan service you need.
-      </p>
-
-    </div>
-
+    <p>
+      Choose the loan service you need.
+    </p>
   `;
-
 
   department.appendChild(
     header
   );
 
-
-  // ======================================================
-  // LOAN BUTTON
-  // ======================================================
+  // --------------------------------------------------------
+  // MAIN BUTTON
+  // --------------------------------------------------------
 
   const mainButton =
     document.createElement("button");
@@ -419,15 +279,13 @@ function createLoanDepartment(
   mainButton.textContent =
     "View Loan Services";
 
-
   department.appendChild(
     mainButton
   );
 
-
-  // ======================================================
+  // --------------------------------------------------------
   // SUB SERVICES
-  // ======================================================
+  // --------------------------------------------------------
 
   const subContainer =
     document.createElement("div");
@@ -435,9 +293,8 @@ function createLoanDepartment(
   subContainer.className =
     "loan-sub-services";
 
-
   loanServices.forEach(
-    function(service, index) {
+    (service, index) => {
 
       const name =
         getServiceName(service);
@@ -445,16 +302,13 @@ function createLoanDepartment(
       const docs =
         getDocuments(service);
 
-
       const subButton =
         document.createElement("button");
 
       subButton.className =
         "loan-sub-button";
 
-
       subButton.innerHTML = `
-
         <span class="loan-number">
           ${index + 1}.
         </span>
@@ -462,13 +316,11 @@ function createLoanDepartment(
         <span>
           ${escapeHTML(name)}
         </span>
-
       `;
-
 
       subButton.addEventListener(
         "click",
-        function() {
+        () => {
 
           showServiceDocuments(
             name,
@@ -478,7 +330,6 @@ function createLoanDepartment(
         }
       );
 
-
       subContainer.appendChild(
         subButton
       );
@@ -486,10 +337,9 @@ function createLoanDepartment(
     }
   );
 
-
-  // ======================================================
+  // --------------------------------------------------------
   // WHATSAPP
-  // ======================================================
+  // --------------------------------------------------------
 
   const loanWhatsApp =
     document.createElement("a");
@@ -511,29 +361,25 @@ function createLoanDepartment(
   loanWhatsApp.textContent =
     "WhatsApp for Loans";
 
-
   subContainer.appendChild(
     loanWhatsApp
   );
-
 
   department.appendChild(
     subContainer
   );
 
-
-  // ======================================================
+  // --------------------------------------------------------
   // TOGGLE
-  // ======================================================
+  // --------------------------------------------------------
 
   mainButton.addEventListener(
     "click",
-    function() {
+    () => {
 
       subContainer.classList.toggle(
         "show"
       );
-
 
       if (
         subContainer.classList.contains(
@@ -544,9 +390,7 @@ function createLoanDepartment(
         mainButton.textContent =
           "Hide Loan Services";
 
-      }
-
-      else {
+      } else {
 
         mainButton.textContent =
           "View Loan Services";
@@ -556,13 +400,10 @@ function createLoanDepartment(
     }
   );
 
-
   departmentsContainer.appendChild(
     department
   );
-
 }
-
 
 // ==========================================================
 // NORMAL SERVICE CARD
@@ -578,7 +419,6 @@ function createNormalServiceCard(
   article.className =
     "service-card";
 
-
   const name =
     getServiceName(service);
 
@@ -587,13 +427,10 @@ function createNormalServiceCard(
     service.details ||
     "Click below to view service details.";
 
-
   const docs =
     getDocuments(service);
 
-
   article.innerHTML = `
-
     <div class="service-card-content">
 
       <h3>
@@ -605,13 +442,7 @@ function createNormalServiceCard(
       </p>
 
     </div>
-
   `;
-
-
-  // ======================================================
-  // BUTTON
-  // ======================================================
 
   const button =
     document.createElement("button");
@@ -622,10 +453,9 @@ function createNormalServiceCard(
   button.textContent =
     "View & WhatsApp";
 
-
   button.addEventListener(
     "click",
-    function() {
+    () => {
 
       showServiceDocuments(
         name,
@@ -635,18 +465,14 @@ function createNormalServiceCard(
     }
   );
 
-
   article.appendChild(
     button
   );
 
-
   departmentsContainer.appendChild(
     article
   );
-
 }
-
 
 // ==========================================================
 // SHOW DOCUMENTS
@@ -658,22 +484,13 @@ function showServiceDocuments(
 ) {
 
   if (!documentBox) {
-
     console.error(
-      "documentBox not found"
+      "MBSC ERROR: documentBox not found."
     );
-
     return;
-
   }
 
-
   documentBox.innerHTML = "";
-
-
-  // ======================================================
-  // HEADING
-  // ======================================================
 
   const heading =
     document.createElement("h3");
@@ -681,15 +498,9 @@ function showServiceDocuments(
   heading.textContent =
     serviceName;
 
-
   documentBox.appendChild(
     heading
   );
-
-
-  // ======================================================
-  // DOCUMENT LIST
-  // ======================================================
 
   const list =
     document.createElement("ul");
@@ -697,23 +508,22 @@ function showServiceDocuments(
   list.className =
     "requirements-list";
 
-
   let documentItems = [];
 
-
+  // --------------------------------------------------------
   // ARRAY
+  // --------------------------------------------------------
 
-  if (
-    Array.isArray(docs)
-  ) {
+  if (Array.isArray(docs)) {
 
     documentItems =
       docs;
 
   }
 
-
+  // --------------------------------------------------------
   // STRING
+  // --------------------------------------------------------
 
   else if (
     typeof docs === "string"
@@ -722,19 +532,14 @@ function showServiceDocuments(
     documentItems =
       docs
         .split(/\r?\n|,|;/)
-        .map(function(item) {
-
-          return item.trim();
-
-        })
+        .map(item => item.trim())
         .filter(Boolean);
 
   }
 
-
-  // ======================================================
-  // DOCUMENTS
-  // ======================================================
+  // --------------------------------------------------------
+  // EMPTY
+  // --------------------------------------------------------
 
   if (
     documentItems.length === 0
@@ -755,10 +560,14 @@ function showServiceDocuments(
 
   }
 
+  // --------------------------------------------------------
+  // DOCUMENTS
+  // --------------------------------------------------------
+
   else {
 
     documentItems.forEach(
-      function(itemText) {
+      itemText => {
 
         const item =
           document.createElement("li");
@@ -767,15 +576,11 @@ function showServiceDocuments(
           "requirement-item";
 
         item.innerHTML = `
-
-          <span class="bullet">
-            •
-          </span>
+          <span class="bullet">•</span>
 
           <span>
             ${escapeHTML(itemText)}
           </span>
-
         `;
 
         list.appendChild(
@@ -787,15 +592,13 @@ function showServiceDocuments(
 
   }
 
-
   documentBox.appendChild(
     list
   );
 
-
-  // ======================================================
+  // --------------------------------------------------------
   // WHATSAPP
-  // ======================================================
+  // --------------------------------------------------------
 
   const whatsappButton =
     document.createElement("a");
@@ -819,21 +622,18 @@ function showServiceDocuments(
   whatsappButton.textContent =
     "Message on WhatsApp";
 
-
   documentBox.appendChild(
     whatsappButton
   );
 
-
-  // ======================================================
+  // --------------------------------------------------------
   // SCROLL
-  // ======================================================
+  // --------------------------------------------------------
 
   const documentsSection =
     document.querySelector(
       ".documents"
     );
-
 
   if (documentsSection) {
 
@@ -843,9 +643,7 @@ function showServiceDocuments(
     });
 
   }
-
 }
-
 
 // ==========================================================
 // HERO VIDEO
@@ -858,13 +656,12 @@ function setupHeroVideo() {
       ".hero-video"
     );
 
-
   if (!video) {
-
+    console.warn(
+      "MBSC: hero-video not found."
+    );
     return;
-
   }
-
 
   video.muted = true;
 
@@ -878,18 +675,16 @@ function setupHeroVideo() {
     ""
   );
 
-
   video.play()
-    .catch(function() {
+    .catch(error => {
 
-      console.log(
-        "Hero video autoplay blocked."
+      console.warn(
+        "Hero video autoplay blocked:",
+        error
       );
 
     });
-
 }
-
 
 // ==========================================================
 // PAGE LOAD
@@ -897,12 +692,11 @@ function setupHeroVideo() {
 
 document.addEventListener(
   "DOMContentLoaded",
-  function() {
+  () => {
 
     console.log(
-      "MBSC page loaded."
+      "MBSC: Page loaded."
     );
-
 
     setupHeroVideo();
 
@@ -911,35 +705,30 @@ document.addEventListener(
   }
 );
 
-
 // ==========================================================
-// PAGE VISIBILITY
+// VISIBILITY
 // ==========================================================
 
 document.addEventListener(
   "visibilitychange",
-  function() {
+  () => {
 
     if (
       document.visibilityState !==
       "visible"
     ) {
-
       return;
-
     }
-
 
     const video =
       document.querySelector(
         ".hero-video"
       );
 
-
     if (video) {
 
       video.play()
-        .catch(function() {});
+        .catch(() => {});
 
     }
 
