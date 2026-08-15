@@ -1,5 +1,5 @@
 // ==========================================================
-// MBSC SOLUTIONS
+// CLICK SOLUTIONS
 // COMPLETE SCRIPT.JS
 // SERVICES
 // SUB SERVICES
@@ -199,14 +199,14 @@ function normalizeDocuments(docs) {
 async function loadServices() {
 
     console.log("=================================");
-    console.log("MBSC SOLUTIONS");
+    console.log("CLICK SOLUTIONS");
     console.log("Loading services...");
     console.log("=================================");
 
     if (!departmentsContainer) {
 
         console.error(
-            "MBSC ERROR: departmentsContainer not found."
+            "CLICK ERROR: departmentsContainer not found."
         );
 
         return;
@@ -259,7 +259,7 @@ async function loadServices() {
             servicesResult.data || [];
 
         console.log(
-            "MBSC SERVICES:",
+            "CLICK SERVICES:",
             services
         );
 
@@ -305,7 +305,7 @@ async function loadServices() {
             subServicesResult.data || [];
 
         console.log(
-            "MBSC SUB SERVICES:",
+            "CLICK SUB SERVICES:",
             subServices
         );
 
@@ -330,7 +330,7 @@ async function loadServices() {
         if (itemsResult.error) {
 
             console.warn(
-                "MBSC WARNING: sub_service_items error:",
+                "CLICK WARNING: sub_service_items error:",
                 itemsResult.error
             );
 
@@ -343,7 +343,7 @@ async function loadServices() {
         }
 
         console.log(
-            "MBSC SUB SERVICE ITEMS:",
+            "CLICK SUB SERVICE ITEMS:",
             subServiceItems
         );
 
@@ -364,7 +364,7 @@ async function loadServices() {
                 if (!serviceId) {
 
                     console.warn(
-                        "MBSC: Sub service has no service_id:",
+                        "CLICK: Sub service has no service_id:",
                         subService
                     );
 
@@ -386,7 +386,7 @@ async function loadServices() {
         );
 
         console.log(
-            "MBSC SUB SERVICE MAP:",
+            "CLICK SUB SERVICE MAP:",
             subServiceMap
         );
 
@@ -409,7 +409,7 @@ async function loadServices() {
                 if (!subServiceId) {
 
                     console.warn(
-                        "MBSC: Item has no sub_service_id:",
+                        "CLICK: Item has no sub_service_id:",
                         item
                     );
 
@@ -431,7 +431,7 @@ async function loadServices() {
         );
 
         console.log(
-            "MBSC SUB SERVICE ITEM MAP:",
+            "CLICK SUB SERVICE ITEM MAP:",
             subServiceItemMap
         );
 
@@ -449,7 +449,7 @@ async function loadServices() {
     catch (error) {
 
         console.error(
-            "MBSC ERROR:",
+            "CLICK ERROR:",
             error
         );
 
@@ -527,7 +527,7 @@ function createDepartments(
         );
 
     console.log(
-        "MBSC CHILD SERVICE NAMES:",
+        "CLICK CHILD SERVICE NAMES:",
         [...childServiceNames]
     );
 
@@ -578,7 +578,7 @@ function createDepartments(
             ) {
 
                 console.log(
-                    "MBSC: Hiding duplicate child service:",
+                    "CLICK: Hiding duplicate child service:",
                     serviceName
                 );
 
@@ -600,11 +600,11 @@ function createDepartments(
     );
 
     console.log(
-        "MBSC: Departments created successfully."
+        "CLICK: Departments created successfully."
     );
 
     console.log(
-        "MBSC Department count:",
+        "CLICK Department count:",
         departmentCount
     );
 
@@ -751,7 +751,7 @@ function createDepartmentCard(
                 ] || [];
 
             console.log(
-                "MBSC SUB SERVICE:",
+                "CLICK SUB SERVICE:",
                 subName,
                 "ID:",
                 subServiceId,
@@ -863,7 +863,7 @@ function createDepartmentCard(
 
     whatsappButton.href =
         whatsappLink(
-            "Hello MBSC SOLUTIONS, I need details about " +
+            "Hello CLICK SOLUTIONS, I need details about " +
             serviceName +
             "."
         );
@@ -1056,7 +1056,7 @@ function showSubServiceDetails(
     if (!documentBox) {
 
         console.error(
-            "MBSC ERROR: documentBox not found."
+            "CLICK ERROR: documentBox not found."
         );
 
         return;
@@ -1237,7 +1237,7 @@ function showSubServiceDetails(
 
     whatsappButton.href =
         whatsappLink(
-            "Hello MBSC SOLUTIONS, I need details about " +
+            "Hello CLICK SOLUTIONS, I need details about " +
             subName +
             "."
         );
@@ -1275,7 +1275,7 @@ function showServiceDocuments(
     if (!documentBox) {
 
         console.error(
-            "MBSC ERROR: documentBox not found."
+            "CLICK ERROR: documentBox not found."
         );
 
         return;
@@ -1388,7 +1388,7 @@ function showServiceDocuments(
 
     whatsappButton.href =
         whatsappLink(
-            "Hello MBSC SOLUTIONS, I need details about " +
+            "Hello CLICK SOLUTIONS, I need details about " +
             serviceName +
             "."
         );
@@ -1501,7 +1501,7 @@ document.addEventListener(
     function () {
 
         console.log(
-            "MBSC page loaded."
+            "CLICK page loaded."
         );
 
         setupHeroVideo();
@@ -1550,5 +1550,5 @@ document.addEventListener(
 // ==========================================================
 
 console.log(
-    "MBSC Solutions script.js loaded."
+    "CLICK Solutions script.js loaded."
 );
