@@ -1552,3 +1552,146 @@ document.addEventListener(
 console.log(
     "CLICK Solutions script.js loaded."
 );
+// ==========================================================
+// CLICK SOLUTIONS - SERVICE STATUS
+// ==========================================================
+
+async function loadServiceStatus() {
+
+    const totalCustomersElement =
+        document.getElementById("totalVisitingCustomers");
+
+    const serviceStatusBody =
+        document.getElementById("serviceStatusBody");
+
+    if (!totalCustomersElement || !serviceStatusBody) {
+        return;
+    }
+
+    try {
+
+        // TOTAL VISITING CUSTOMERS
+        const statsResult = await supabaseClient
+            .from("website_stats")
+            .select("total_visiting_customers")
+            .limit(1)
+            .maybeSingle();
+
+        if (statsResult.error) {
+            throw statsResult.error;
+        }
+
+        const totalCustomers =
+            Number(
+                statsResult.data?.total_visiting_customers || 0
+            );
+
+        totalCustomersElement.textContent =
+            totalCustomers.toLocaleString("en-IN");
+
+
+        // SERVICE STATUS
+        const statusResult = await supabaseClient
+            .from("service_status")
+            .select(
+                "service_name, success_count, failed_count, processing_count, sort_order"
+            )
+            .order("sort_order", {
+                ascending: true
+            });
+
+        if (statusResult.error) {
+            throw statusResult.error;
+        }
+
+        const services =
+            statusResult.data || [];
+
+
+        if (services.length === 0) {
+
+            serviceStatusBody.innerHTML = `
+                <tr>
+                    <td colspan="5" class="status-loading">
+                        No service status available.
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+
+        serviceStatusBody.innerHTML =
+            services.map(service => {
+
+                const success =
+                    Number(service.success_count || 0);
+
+                const failed =
+                    Number(service.failed_count || 0);
+
+                const processing =
+                    Number(service.processing_count || 0);
+
+                const total =
+                    success + failed + processing;
+
+                return `
+                    <tr>
+
+                        <td>
+                            ${escapeHTML(service.service_name)}
+                        </td>
+
+                        <td>
+                            ${success}
+                        </td>
+
+                        <td>
+                            ${failed}
+                        </td>
+
+                        <td>
+                            ${processing}
+                        </td>
+
+                        <td>
+                            <strong>${total}</strong>
+                        </td>
+
+                    </tr>
+                `;
+
+            }).join("");
+
+
+    } catch (error) {
+
+        console.error(
+            "Service Status Error:",
+            error
+        );
+
+        serviceStatusBody.innerHTML = `
+            <tr>
+                <td colspan="5" class="status-loading">
+                    Unable to load service status.
+                </td>
+            </tr>
+        `;
+
+    }
+
+}
+
+
+// LOAD SERVICE STATUS
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        loadServiceStatus();
+
+    }
+);
