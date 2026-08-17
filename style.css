@@ -1019,3 +1019,198 @@ footer {
     object-fit: cover;
     border-radius: 18px;
 }
+/* =====================================================
+   SERVICE STATUS
+===================================================== */
+
+.service-status-section {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+.visiting-customers-card {
+  width: 100%;
+  max-width: 420px;
+  margin: 30px auto 35px;
+  padding: 25px 30px;
+
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  background: #111318;
+  border: 1px solid #2a2d35;
+  border-radius: 18px;
+
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+}
+
+.visiting-icon {
+  width: 55px;
+  height: 55px;
+
+  display: grid;
+  place-items: center;
+
+  background: #1d2028;
+  border-radius: 14px;
+
+  font-size: 28px;
+}
+
+.visiting-customers-card span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+
+  color: #999;
+}
+
+.visiting-customers-card strong {
+  display: block;
+
+  font-size: 32px;
+  font-weight: 800;
+
+  color: #fff;
+}
+
+
+/* =====================================================
+   SERVICE TABLE
+===================================================== */
+
+.service-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+
+  margin-top: 25px;
+
+  border-radius: 18px;
+
+  background: #111318;
+  border: 1px solid #2a2d35;
+
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+}
+
+.service-status-table {
+  width: 100%;
+  min-width: 700px;
+
+  border-collapse: collapse;
+
+  color: #fff;
+}
+
+.service-status-table th {
+  padding: 18px 20px;
+
+  text-align: center;
+
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1px;
+
+  background: #181b22;
+
+  color: #aaa;
+
+  border-bottom: 1px solid #2a2d35;
+}
+
+.service-status-table th:first-child {
+  text-align: left;
+}
+
+.service-status-table td {
+  padding: 20px;
+
+  text-align: center;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  border-bottom: 1px solid #242730;
+}
+
+.service-status-table td:first-child {
+  text-align: left;
+
+  font-weight: 700;
+  color: #fff;
+}
+
+.service-status-table tbody tr {
+  transition: background 0.2s ease;
+}
+
+.service-status-table tbody tr:hover {
+  background: #181b22;
+}
+
+.service-status-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+
+/* SUCCESS */
+
+.service-status-table td:nth-child(2) {
+  color: #35d07f;
+}
+
+
+/* FAILED */
+
+.service-status-table td:nth-child(3) {
+  color: #ff5c5c;
+}
+
+
+/* PROCESSING */
+
+.service-status-table td:nth-child(4) {
+  color: #ffbf45;
+}
+
+
+/* TOTAL */
+
+.service-status-table td:nth-child(5) {
+  color: #ffffff;
+  font-weight: 900;
+}
+
+
+/* LOADING */
+
+.status-loading {
+  padding: 35px !important;
+
+  text-align: center !important;
+
+  color: #999 !important;
+  font-weight: 500 !important;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+  .visiting-customers-card {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .service-status-table th,
+  .service-status-table td {
+    padding: 15px 12px;
+  }
+
+}
