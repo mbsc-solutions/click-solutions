@@ -1277,3 +1277,16 @@ body > *:not(.site-background-video):not(.site-background-overlay) {
     object-position: center center !important;
   }
 }
+/* CLICK SOLUTIONS LOGO */
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  width: 75px;
+  height: 75px;
+  object-fit: contain;
+  display: block;
+}
