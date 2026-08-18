@@ -1280,13 +1280,17 @@ body > *:not(.site-background-video):not(.site-background-overlay) {
 /* CLICK SOLUTIONS LOGO */
 
 .logo {
+  width: 45px;
+  height: 45px;
   display: flex;
   align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .logo img {
-  width: 75px;
-  height: 75px;
+  width: 42px;
+  height: 42px;
   object-fit: contain;
   display: block;
 }
