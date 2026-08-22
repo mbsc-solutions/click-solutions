@@ -237,17 +237,10 @@ async function loadServices() {
         // 1. GET SERVICES
         // ==================================================
 
-        const servicesResult =
-            await supabaseClient
-                .from("services")
-                .select("*")
-                .order(
-                    "sort_order",
-                    {
-                        ascending: true,
-                        nullsFirst: false
-                    }
-                );
+       const servicesResult =
+    await supabaseClient
+        .from("services")
+        .select("*");
 
         if (servicesResult.error) {
 
