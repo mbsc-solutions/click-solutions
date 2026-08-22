@@ -1013,7 +1013,7 @@ function createNormalServiceCard(
 
     `;
 
-    // ======================================================
+// ======================================================
 // ACTION BUTTONS
 // ======================================================
 
@@ -1095,6 +1095,10 @@ actionButtons.appendChild(
 
 article.appendChild(
     actionButtons
+);
+
+departmentsContainer.appendChild(
+    article
 );
 // ==========================================================
 // SHOW SUB SERVICE DETAILS
