@@ -872,24 +872,142 @@ button {
 
 
 .loan-whatsapp {
-
   display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
 
   margin-top: 10px;
 
-  padding: 7px 10px;
+  min-height: 38px;
 
-  border-radius: 6px;
+  padding: 0 15px;
 
-  background: #101820;
+  border-radius: 9px;
 
-  border: 1px solid #263443;
+  background: linear-gradient(
+    145deg,
+    #25d366,
+    #128c7e
+  );
+
+  border: 1px solid #34e47a;
 
   color: #fff;
 
-  font-size: 9px;
+  font-size: 10px;
 
-  font-weight: 700;
+  font-weight: 800;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  position: relative;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 5px 0 #075e54,
+    0 9px 16px rgba(0, 0, 0, 0.35);
+
+  transform: translateY(0);
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    filter 0.2s ease;
+
+  animation: whatsappPulse 2.5s infinite;
+}
+
+
+/* 3D HOVER */
+
+.loan-whatsapp:hover {
+
+  filter: brightness(1.12);
+
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 8px 0 #075e54,
+    0 14px 22px rgba(0, 0, 0, 0.4);
+
+}
+
+
+/* 3D PRESS */
+
+.loan-whatsapp:active {
+
+  transform: translateY(4px);
+
+  box-shadow:
+    0 1px 0 #075e54,
+    0 4px 8px rgba(0, 0, 0, 0.25);
+
+}
+
+
+/* SHINE */
+
+.loan-whatsapp::before {
+
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+
+  left: -120%;
+
+  width: 55%;
+
+  height: 100%;
+
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.5),
+    transparent
+  );
+
+  transform: skewX(-20deg);
+
+  animation: whatsappButtonShine 3s infinite;
+
+}
+
+
+/* PULSE */
+
+@keyframes whatsappPulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.025);
+  }
+
+}
+
+
+/* SHINE ANIMATION */
+
+@keyframes whatsappButtonShine {
+
+  0% {
+    left: -120%;
+  }
+
+  45%,
+  100% {
+    left: 150%;
+  }
 
 }
 
