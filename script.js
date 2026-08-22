@@ -690,27 +690,43 @@ function createDepartmentCard(
     );
 
     // ======================================================
-    // MAIN BUTTON
-    // ======================================================
+// ACTION BUTTONS
+// ======================================================
 
-    const mainButton =
-        document.createElement("button");
+const actionButtons =
+    document.createElement("div");
 
-    mainButton.className =
-        "loan-main-button";
+actionButtons.className =
+    "service-action-buttons";
 
-    mainButton.type =
-        "button";
+// ======================================================
+// VIEW BUTTON
+// ======================================================
 
-    mainButton.textContent =
-        "View " +
-        serviceName +
-        " Services";
+const mainButton =
+    document.createElement("button");
 
-    department.appendChild(
-        mainButton
-    );
+mainButton.className =
+    "service-view-button";
 
+mainButton.type =
+    "button";
+
+mainButton.innerHTML = `
+    <span class="real-eye" aria-hidden="true">
+        <span class="eye-white">
+            <span class="eye-iris">
+                <span class="eye-pupil"></span>
+            </span>
+        </span>
+    </span>
+
+    <span>View</span>
+`;
+
+actionButtons.appendChild(
+    mainButton
+);
     // ======================================================
     // SUB SERVICE CONTAINER
     // ======================================================
@@ -849,46 +865,44 @@ function createDepartmentCard(
         }
     );
 
-    // ======================================================
-    // WHATSAPP DEPARTMENT BUTTON
-    // ======================================================
+   // ======================================================
+// WHATSAPP BUTTON
+// ======================================================
 
-    const whatsappButton =
-        document.createElement("a");
+const whatsappButton =
+    document.createElement("a");
 
-    whatsappButton.className =
-        "loan-whatsapp";
+whatsappButton.className =
+    "service-whatsapp-button";
 
-    const whatsappMessage =
+const whatsappMessage =
     "Hello CLICK SOLUTIONS,\n\n" +
-    "I need this – " + serviceName + "\n\n" +
-    "Required Documents:\n" +
-    (
-        documentItems.length > 0
-            ? documentItems.map(
-                function (doc) {
-                    return "* " + doc;
-                }
-            ).join("\n")
-            : "* Please confirm the required documents."
-    );
+    "I need details about " +
+    serviceName;
 
 whatsappButton.href =
-    whatsappLink(whatsappMessage);
-
-    whatsappButton.target =
-        "_blank";
-
-    whatsappButton.rel =
-        "noopener noreferrer";
-
-    whatsappButton.textContent =
-        "WhatsApp for " +
-        serviceName;
-
-    subContainer.appendChild(
-        whatsappButton
+    whatsappLink(
+        whatsappMessage
     );
+
+whatsappButton.target =
+    "_blank";
+
+whatsappButton.rel =
+    "noopener noreferrer";
+
+whatsappButton.innerHTML = `
+    <span class="whatsapp-icon">◉</span>
+    <span>WhatsApp</span>
+`;
+
+actionButtons.appendChild(
+    whatsappButton
+);
+
+department.appendChild(
+    actionButtons
+);
 
     // ======================================================
     // ADD SUB CONTAINER
