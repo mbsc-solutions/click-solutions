@@ -625,6 +625,11 @@ function createDepartmentCard(
     const description =
         getDescription(service);
 
+    const documentItems =
+    normalizeDocuments(
+        getDocuments(service)
+    );
+    
     // ======================================================
     // IMAGE URL
     // ======================================================
