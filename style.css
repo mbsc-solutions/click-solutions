@@ -208,11 +208,111 @@ button {
 
 
 .primary {
-  background: #2388ff;
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 44px;
+
+  padding: 0 22px;
+
+  border-radius: 10px;
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  background: linear-gradient(
+    145deg,
+    #25d366,
+    #128c7e
+  );
 
   color: white;
 
-  border: 0;
+  border: none;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 6px 0 #075e54,
+    0 10px 18px rgba(0, 0, 0, 0.35);
+
+  transform: translateY(0);
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    filter 0.2s ease;
+
+  position: relative;
+
+  overflow: hidden;
+}
+
+
+/* 3D PRESS EFFECT */
+
+.primary:hover {
+  filter: brightness(1.08);
+
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 9px 0 #075e54,
+    0 15px 24px rgba(0, 0, 0, 0.4);
+}
+
+
+.primary:active {
+  transform: translateY(5px);
+
+  box-shadow:
+    0 2px 0 #075e54,
+    0 5px 10px rgba(0, 0, 0, 0.25);
+}
+
+
+/* SHINE ANIMATION */
+
+.primary::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: -100%;
+
+  width: 55%;
+  height: 100%;
+
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.45),
+    transparent
+  );
+
+  transform: skewX(-20deg);
+
+  animation: whatsappShine 3s infinite;
+}
+
+
+@keyframes whatsappShine {
+
+  0% {
+    left: -100%;
+  }
+
+  45%,
+  100% {
+    left: 150%;
+  }
+
 }
 
 
