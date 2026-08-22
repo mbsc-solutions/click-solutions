@@ -861,12 +861,22 @@ function createDepartmentCard(
     whatsappButton.className =
         "loan-whatsapp";
 
-    whatsappButton.href =
-        whatsappLink(
-            "Hello CLICK SOLUTIONS, I need details about " +
-            serviceName +
-            "."
-        );
+    const whatsappMessage =
+    "Hello CLICK SOLUTIONS,\n\n" +
+    "I need this – " + serviceName + "\n\n" +
+    "Required Documents:\n" +
+    (
+        documentItems.length > 0
+            ? documentItems.map(
+                function (doc) {
+                    return "* " + doc;
+                }
+            ).join("\n")
+            : "* Please confirm the required documents."
+    );
+
+whatsappButton.href =
+    whatsappLink(whatsappMessage);
 
     whatsappButton.target =
         "_blank";
