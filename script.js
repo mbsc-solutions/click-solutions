@@ -1230,17 +1230,31 @@ function showSubServiceDetails(
     // ======================================================
 
     const whatsappButton =
-        document.createElement("a");
+    document.createElement("a");
 
-    whatsappButton.className =
-        "primary";
+whatsappButton.className =
+    "primary";
 
-    whatsappButton.href =
-        whatsappLink(
-            "Hello CLICK SOLUTIONS, I need details about " +
-            subName +
-            "."
-        );
+const whatsappMessage =
+    "Hello CLICK SOLUTIONS,\n\n" +
+    "I need details about " +
+    subName +
+    ".\n\n" +
+    "Required Documents:\n" +
+    (
+        documentItems.length > 0
+            ? documentItems.map(
+                function (doc, index) {
+                    return (index + 1) + ". " + doc;
+                }
+            ).join("\n")
+            : "Please confirm the required documents."
+    );
+
+whatsappButton.href =
+    whatsappLink(
+        whatsappMessage
+    );
 
     whatsappButton.target =
         "_blank";
@@ -1386,12 +1400,26 @@ function showServiceDocuments(
     whatsappButton.className =
         "primary";
 
-    whatsappButton.href =
-        whatsappLink(
-            "Hello CLICK SOLUTIONS, I need details about " +
-            serviceName +
-            "."
-        );
+    const whatsappMessage =
+    "Hello CLICK SOLUTIONS,\n\n" +
+    "I need details about " +
+    serviceName +
+    ".\n\n" +
+    "Required Documents:\n" +
+    (
+        documentItems.length > 0
+            ? documentItems.map(
+                function (doc, index) {
+                    return (index + 1) + ". " + doc;
+                }
+            ).join("\n")
+            : "Please confirm the required documents."
+    );
+
+whatsappButton.href =
+    whatsappLink(
+        whatsappMessage
+    );
 
     whatsappButton.target =
         "_blank";
