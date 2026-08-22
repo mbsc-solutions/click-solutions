@@ -1014,43 +1014,88 @@ function createNormalServiceCard(
     `;
 
     // ======================================================
-    // BUTTON
-    // ======================================================
+// ACTION BUTTONS
+// ======================================================
 
-    const button =
-        document.createElement("button");
+const actionButtons =
+    document.createElement("div");
 
-    button.className =
-        "service-button";
+actionButtons.className =
+    "service-action-buttons";
 
-    button.type =
-        "button";
+// ======================================================
+// VIEW BUTTON
+// ======================================================
 
-    button.textContent =
-        "View & WhatsApp";
+const viewButton =
+    document.createElement("button");
 
-    button.addEventListener(
-        "click",
-        function () {
+viewButton.className =
+    "service-view-button";
 
-            showServiceDocuments(
-                name,
-                documents
-            );
+viewButton.type =
+    "button";
 
-        }
+viewButton.innerHTML = `
+    <span class="eye-icon">👁</span>
+    <span>View</span>
+`;
+
+viewButton.addEventListener(
+    "click",
+    function () {
+
+        showServiceDocuments(
+            name,
+            documents
+        );
+
+    }
+);
+
+// ======================================================
+// WHATSAPP BUTTON
+// ======================================================
+
+const whatsappButton =
+    document.createElement("a");
+
+whatsappButton.className =
+    "service-whatsapp-button";
+
+whatsappButton.href =
+    whatsappLink(
+        "Hello CLICK SOLUTIONS,\n\n" +
+        "I need details about " +
+        name
     );
 
-    article.appendChild(
-        button
-    );
+whatsappButton.target =
+    "_blank";
 
-    departmentsContainer.appendChild(
-        article
-    );
+whatsappButton.rel =
+    "noopener noreferrer";
 
-}
+whatsappButton.innerHTML = `
+    <span class="whatsapp-icon">💬</span>
+    <span>WhatsApp</span>
+`;
 
+// ======================================================
+// ADD BUTTONS
+// ======================================================
+
+actionButtons.appendChild(
+    viewButton
+);
+
+actionButtons.appendChild(
+    whatsappButton
+);
+
+article.appendChild(
+    actionButtons
+);
 // ==========================================================
 // SHOW SUB SERVICE DETAILS
 // ==========================================================
