@@ -1738,3 +1738,203 @@ body > *:not(.site-background-video):not(.site-background-overlay) {
   object-fit: contain;
   display: block;
 }
+/* ======================================================
+   SERVICE ACTION BUTTONS
+   ====================================================== */
+
+.service-action-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+/* ======================================================
+   VIEW BUTTON
+   ====================================================== */
+
+.service-view-button,
+.service-whatsapp-button {
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  padding: 9px 14px;
+  min-width: 105px;
+
+  border-radius: 10px;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+/* VIEW */
+
+.service-view-button {
+  background: linear-gradient(
+    145deg,
+    #20252b,
+    #080a0d
+  );
+
+  color: #ffffff;
+
+  box-shadow:
+    0 5px 0 #000,
+    0 8px 15px rgba(0, 0, 0, 0.35);
+}
+
+/* Eye */
+
+.eye-icon {
+  display: inline-block;
+  font-size: 17px;
+
+  transform-origin: center;
+  animation: eyeBlink 4s infinite;
+}
+
+/* Eye blink */
+
+@keyframes eyeBlink {
+
+  0%,
+  42%,
+  46%,
+  100% {
+    transform: scaleY(1);
+  }
+
+  44% {
+    transform: scaleY(0.08);
+  }
+}
+
+/* View hover */
+
+.service-view-button:hover {
+  transform:
+    translateY(-3px)
+    scale(1.04);
+
+  box-shadow:
+    0 7px 0 #000,
+    0 12px 22px rgba(0, 0, 0, 0.45);
+}
+
+/* ======================================================
+   WHATSAPP BUTTON
+   ====================================================== */
+
+.service-whatsapp-button {
+  background: linear-gradient(
+    145deg,
+    #25d366,
+    #128c7e
+  );
+
+  color: white;
+
+  box-shadow:
+    0 5px 0 #075e54,
+    0 8px 18px rgba(37, 211, 102, 0.35);
+
+  animation:
+    whatsappFloat 2.5s ease-in-out infinite;
+}
+
+/* WhatsApp icon */
+
+.whatsapp-icon {
+  display: inline-block;
+
+  font-size: 17px;
+
+  animation:
+    whatsappIconPulse 1.8s ease-in-out infinite;
+}
+
+/* Floating 3D effect */
+
+@keyframes whatsappFloat {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+/* Icon pulse */
+
+@keyframes whatsappIconPulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.18);
+  }
+}
+
+/* WhatsApp hover */
+
+.service-whatsapp-button:hover {
+  transform:
+    translateY(-4px)
+    scale(1.05);
+
+  box-shadow:
+    0 7px 0 #075e54,
+    0 14px 25px rgba(37, 211, 102, 0.5);
+}
+
+/* Click */
+
+.service-view-button:active,
+.service-whatsapp-button:active {
+  transform:
+    translateY(3px)
+    scale(0.98);
+
+  box-shadow:
+    0 2px 0 #000;
+}
+
+/* ======================================================
+   MOBILE
+   ====================================================== */
+
+@media (max-width: 480px) {
+
+  .service-action-buttons {
+    gap: 7px;
+  }
+
+  .service-view-button,
+  .service-whatsapp-button {
+    min-width: 95px;
+    padding: 8px 11px;
+    font-size: 11px;
+  }
+
+  .eye-icon,
+  .whatsapp-icon {
+    font-size: 15px;
+  }
+}
