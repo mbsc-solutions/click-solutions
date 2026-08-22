@@ -89,61 +89,61 @@ a {
         0 14px 25px rgba(37,137,255,.38);
 }
 
-/* =========================
-   REALISTIC EYE
-   ========================= */
+/* =========================================
+   REALISTIC HUMAN EYE
+   ========================================= */
 
 .real-eye {
+    position: relative;
     width: 31px;
-    height: 22px;
+    height: 20px;
 
     display: inline-flex;
     align-items: center;
     justify-content: center;
 
-    position: relative;
+    overflow: hidden;
 
-    animation:
-        realisticEyeBlink 4.5s infinite;
+    animation: humanEyeBlink 5s infinite;
     transform-origin: center;
 }
 
+/* Eyeball / white */
+
 .eye-white {
-    width: 30px;
+    position: relative;
+
+    width: 29px;
     height: 17px;
 
-    background:
-        radial-gradient(
-            ellipse at center,
-            #ffffff 0%,
-            #e7edf2 65%,
-            #aeb8c2 100%
-        );
+    background: #ffffff;
 
-    border-radius:
-        70% 10% 70% 10%;
+    border-radius: 75% 15% 75% 15%;
 
     transform: rotate(0deg);
 
     box-shadow:
-        0 0 5px rgba(255,255,255,.35);
+        inset 0 -2px 3px rgba(0,0,0,.18),
+        0 0 4px rgba(255,255,255,.35);
 }
+
+/* Iris */
 
 .eye-iris {
     position: absolute;
 
-    width: 14px;
-    height: 14px;
+    width: 13px;
+    height: 13px;
 
     border-radius: 50%;
 
     background:
         radial-gradient(
             circle,
-            #050505 0 24%,
-            #173c62 25% 43%,
-            #4ea3e8 44% 60%,
-            #101820 61% 100%
+            #050505 0 22%,
+            #3b6f91 23% 42%,
+            #182d3d 43% 68%,
+            #05080b 69% 100%
         );
 
     border: 1px solid #111;
@@ -152,6 +152,8 @@ a {
     align-items: center;
     justify-content: center;
 }
+
+/* Pupil */
 
 .eye-pupil {
     width: 5px;
@@ -162,25 +164,32 @@ a {
     border-radius: 50%;
 
     box-shadow:
-        1px -1px 2px rgba(255,255,255,.8);
+        1px -1px 2px rgba(255,255,255,.9);
 }
 
-/* blink */
+/* Natural blink */
 
-@keyframes realisticEyeBlink {
+@keyframes humanEyeBlink {
 
     0%,
-    44%,
-    48%,
+    45%,
+    49%,
     100% {
         transform: scaleY(1);
     }
 
     46% {
-        transform: scaleY(.08);
+        transform: scaleY(.82);
+    }
+
+    47% {
+        transform: scaleY(.12);
+    }
+
+    48% {
+        transform: scaleY(.82);
     }
 }
-
 /* =========================
    WHATSAPP
    ========================= */
@@ -242,17 +251,30 @@ a {
     width: 23px;
     height: 23px;
 
-    border: 2px solid #fff;
     border-radius: 50%;
+
+    background: #ffffff;
 
     display: inline-flex;
     align-items: center;
     justify-content: center;
 
-    font-size: 9px;
+    position: relative;
 
-    animation:
-        whatsappPulse 1.8s infinite;
+    font-size: 0;
+
+    animation: whatsappPulse 1.8s infinite;
+}
+
+.whatsapp-icon::after {
+    content: "☎";
+
+    font-size: 12px;
+    font-weight: 900;
+
+    color: #16a765;
+
+    transform: rotate(-18deg);
 }
 
 @keyframes whatsappFloat {
@@ -2113,11 +2135,12 @@ body > *:not(.site-background-video):not(.site-background-overlay) {
    ====================================================== */
 
 .service-whatsapp-button {
-  background: linear-gradient(
-    145deg,
-    #25d366,
-    #128c7e
-  );
+  background:
+    linear-gradient(
+        145deg,
+        #20d86a,
+        #087d4a
+    );
 
   color: white;
 
