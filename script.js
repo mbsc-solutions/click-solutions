@@ -1100,6 +1100,9 @@ article.appendChild(
 departmentsContainer.appendChild(
     article
 );
+
+}
+
 // ==========================================================
 // SHOW SUB SERVICE DETAILS
 // ==========================================================
