@@ -25,7 +25,283 @@ a {
   text-decoration: none;
   color: inherit;
 }
+/* ======================================================
+   NEW SERVICE BUTTON DESIGN
+   ====================================================== */
 
+.service-action-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 16px;
+    width: 100%;
+}
+
+/* =========================
+   VIEW BUTTON
+   ========================= */
+
+.service-view-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    min-width: 115px;
+    height: 48px;
+
+    padding: 0 16px;
+
+    border: 1px solid #2589ff;
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #172536,
+            #080d15
+        );
+
+    color: #ffffff;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 5px 0 #06101d,
+        0 8px 18px rgba(37,137,255,.25);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+.service-view-button:hover {
+    transform:
+        translateY(-4px)
+        scale(1.04);
+
+    box-shadow:
+        0 8px 0 #06101d,
+        0 14px 25px rgba(37,137,255,.38);
+}
+
+/* =========================
+   REALISTIC EYE
+   ========================= */
+
+.real-eye {
+    width: 31px;
+    height: 22px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+
+    animation:
+        realisticEyeBlink 4.5s infinite;
+    transform-origin: center;
+}
+
+.eye-white {
+    width: 30px;
+    height: 17px;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            #ffffff 0%,
+            #e7edf2 65%,
+            #aeb8c2 100%
+        );
+
+    border-radius:
+        70% 10% 70% 10%;
+
+    transform: rotate(0deg);
+
+    box-shadow:
+        0 0 5px rgba(255,255,255,.35);
+}
+
+.eye-iris {
+    position: absolute;
+
+    width: 14px;
+    height: 14px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            #050505 0 24%,
+            #173c62 25% 43%,
+            #4ea3e8 44% 60%,
+            #101820 61% 100%
+        );
+
+    border: 1px solid #111;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.eye-pupil {
+    width: 5px;
+    height: 5px;
+
+    background: #000;
+
+    border-radius: 50%;
+
+    box-shadow:
+        1px -1px 2px rgba(255,255,255,.8);
+}
+
+/* blink */
+
+@keyframes realisticEyeBlink {
+
+    0%,
+    44%,
+    48%,
+    100% {
+        transform: scaleY(1);
+    }
+
+    46% {
+        transform: scaleY(.08);
+    }
+}
+
+/* =========================
+   WHATSAPP
+   ========================= */
+
+.service-whatsapp-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    min-width: 125px;
+    height: 48px;
+
+    padding: 0 17px;
+
+    border-radius: 12px;
+
+    border: 1px solid #36e27b;
+
+    background:
+        linear-gradient(
+            145deg,
+            #20d86a,
+            #087d4a
+        );
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    box-shadow:
+        0 5px 0 #045c36,
+        0 9px 20px rgba(32,216,106,.30);
+
+    animation:
+        whatsappFloat 2.8s ease-in-out infinite;
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+.service-whatsapp-button:hover {
+    transform:
+        translateY(-4px)
+        scale(1.04);
+
+    box-shadow:
+        0 8px 0 #045c36,
+        0 15px 28px rgba(32,216,106,.45);
+}
+
+/* WhatsApp icon */
+
+.whatsapp-icon {
+    width: 23px;
+    height: 23px;
+
+    border: 2px solid #fff;
+    border-radius: 50%;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 9px;
+
+    animation:
+        whatsappPulse 1.8s infinite;
+}
+
+@keyframes whatsappFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-2px);
+    }
+}
+
+@keyframes whatsappPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.12);
+    }
+}
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 480px) {
+
+    .service-action-buttons {
+        gap: 7px;
+    }
+
+    .service-view-button,
+    .service-whatsapp-button {
+        min-width: 0;
+        flex: 1;
+        height: 44px;
+        padding: 0 9px;
+        font-size: 11px;
+    }
+
+    .real-eye {
+        transform-origin: center;
+    }
+}
 button {
   font-family: inherit;
 }
