@@ -892,7 +892,18 @@ whatsappButton.rel =
     "noopener noreferrer";
 
 whatsappButton.innerHTML = `
-    <span class="whatsapp-icon">◉</span>
+    <video
+        class="whatsapp-icon"
+        autoplay
+        muted
+        loop
+        playsinline
+    >
+        <source
+            src="0_Whatsapp_Messenger_1280x720.mp4"
+            type="video/mp4"
+        >
+    </video>
     <span>WhatsApp</span>
 `;
 
