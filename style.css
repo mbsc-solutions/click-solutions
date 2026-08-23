@@ -2248,7 +2248,7 @@ body > *:not(.site-background-video):not(.site-background-overlay) {
 }
 
 .main-nav a {
-  color: #ffffff;
+  color: #303840;
   text-decoration: none;
 
   font-size: 13px;
@@ -2381,7 +2381,7 @@ body {
 .main-nav a {
   position: relative;
 
-  color: #303840;
+  color: #ffffff;
 
   font-size: 12px;
   font-weight: 600;
