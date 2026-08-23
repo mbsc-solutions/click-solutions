@@ -2237,3 +2237,29 @@ body > *:not(.site-background-video):not(.site-background-overlay) {
     font-size: 15px;
   }
 }
+/* =====================================================
+   MAIN NAVIGATION
+===================================================== */
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.main-nav a {
+  color: #ffffff;
+  text-decoration: none;
+
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+
+  padding: 8px 2px;
+
+  transition: all 0.25s ease;
+}
+
+.main-nav a:hover {
+  color: #2388ff;
+}
