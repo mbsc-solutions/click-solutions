@@ -2874,3 +2874,8 @@ top: 0;
 .main-nav a:hover {
   color: #2388ff;
 }
+#services,
+#contact,
+#performance {
+  scroll-margin-top: 90px;
+}
