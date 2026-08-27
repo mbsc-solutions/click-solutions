@@ -448,9 +448,7 @@ function createDepartments(
         }
     );
 
-
-    createOneStopBanner();
-
+    
 }
 
 
@@ -1033,8 +1031,8 @@ function showSelectedService(
         document.createElement("a");
 
 
-    whatsappButton.className =
-        "primary";
+   whatsappButton.className =
+    "whatsapp-animated-button";
 
 
     whatsappButton.href =
@@ -1051,9 +1049,25 @@ function showSelectedService(
         "noopener noreferrer";
 
 
-    whatsappButton.textContent =
-        "WhatsApp";
+    whatsappButton.innerHTML = `
+    <span class="whatsapp-video-wrap">
+        <video
+            class="whatsapp-video"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="auto"
+        >
+            <source
+                src="https://whxlatxnqjpccwrmtmph.supabase.co/storage/v1/object/public/images/whats%20app%20(online-video-cutter.com).mp4"
+                type="video/mp4"
+            >
+        </video>
+    </span>
 
+    <span>WhatsApp</span>
+`;
 
     documentBox.appendChild(
         whatsappButton
@@ -1083,110 +1097,6 @@ function showSelectedService(
     }
 
 }
-
-
-// ==========================================================
-// ONE STOP BANNER
-// ==========================================================
-
-function createOneStopBanner() {
-
-    const banner =
-        document.createElement("section");
-
-
-    banner.className =
-        "one-stop-banner";
-
-
-    banner.innerHTML = `
-
-        <div class="one-stop-content">
-
-            <div class="one-stop-icon">
-                🛡️
-            </div>
-
-
-            <div class="one-stop-text">
-
-                <span class="one-stop-small">
-                    ONE STOP SOLUTION
-                </span>
-
-
-                <h2>
-                    FOR ALL YOUR NEEDS
-                </h2>
-
-
-                <div class="one-stop-line"></div>
-
-
-                <div class="one-stop-features">
-
-                    <div>
-
-                        <span>🛡️</span>
-
-                        <strong>
-                            Trusted<br>
-                            Services
-                        </strong>
-
-                    </div>
-
-
-                    <div>
-
-                        <span>⚡</span>
-
-                        <strong>
-                            Quick<br>
-                            Support
-                        </strong>
-
-                    </div>
-
-
-                    <div>
-
-                        <span>🔒</span>
-
-                        <strong>
-                            Secure<br>
-                            Transactions
-                        </strong>
-
-                    </div>
-
-
-                    <div>
-
-                        <span>👍</span>
-
-                        <strong>
-                            100%<br>
-                            Satisfaction
-                        </strong>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    `;
-
-
-    departmentsContainer.appendChild(
-        banner
-    );
-
-}
-
 
 // ==========================================================
 // HERO VIDEO
