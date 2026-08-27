@@ -1,339 +1,48 @@
+```css
 /* ==========================================================
    MBSC SOLUTIONS
-   COMPLETE STYLE
+   COMPLETE RESPONSIVE CSS
 ========================================================== */
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 html {
-  scroll-behavior: smooth;
+    scroll-behavior: smooth;
 }
 
-/* Keep sections below the header when navigating */
+body {
+    margin: 0;
+    background: #ffffff;
+    color: #202832;
+    font-family: "Inter", Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    font-family: inherit;
+}
 
 #services,
 #contact,
 #performance {
-  scroll-margin-top: 90px;
+    scroll-margin-top: 90px;
 }
 
-body {
-  margin: 0;
-  background: transparent;
-  color: #f5f7fb;
-  font-family: "Inter", sans-serif;
-  position: relative;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
 
-a {
-  text-decoration: none;
-  color: inherit;
-}
-/* ======================================================
-   NEW SERVICE BUTTON DESIGN
-   ====================================================== */
+/* ==========================================================
+   REMOVE FULL WEBSITE BACKGROUND VIDEO
+========================================================== */
 
-.service-action-buttons {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    margin-top: 16px;
-    width: 100%;
-}
-
-/* =========================
-   VIEW BUTTON
-   ========================= */
-
-.service-view-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 9px;
-
-    min-width: 115px;
-    height: 48px;
-
-    padding: 0 16px;
-
-    border: 1px solid #2589ff;
-    border-radius: 12px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #172536,
-            #080d15
-        );
-
-    color: #303840;
-
-    font-size: 13px;
-    font-weight: 800;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 5px 0 #06101d,
-        0 8px 18px rgba(37,137,255,.25);
-
-    transition:
-        transform .25s ease,
-        box-shadow .25s ease;
-}
-
-.service-view-button:hover {
-    transform:
-        translateY(-4px)
-        scale(1.04);
-
-    box-shadow:
-        0 8px 0 #06101d,
-        0 14px 25px rgba(37,137,255,.38);
-}
-
-/* =========================================
-   REALISTIC HUMAN EYE
-   ========================================= */
-
-.real-eye {
-    position: relative;
-    width: 31px;
-    height: 20px;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    overflow: hidden;
-
-    animation: humanEyeBlink 5s infinite;
-    transform-origin: center;
-}
-
-/* Eyeball / white */
-
-.eye-white {
-    position: relative;
-
-    width: 29px;
-    height: 17px;
-
-    background: #ffffff;
-
-    border-radius: 75% 15% 75% 15%;
-
-    transform: rotate(0deg);
-
-    box-shadow:
-        inset 0 -2px 3px rgba(0,0,0,.18),
-        0 0 4px rgba(255,255,255,.35);
-}
-
-/* Iris */
-
-.eye-iris {
-    position: absolute;
-
-    width: 13px;
-    height: 13px;
-
-    border-radius: 50%;
-
-    background:
-        radial-gradient(
-            circle,
-            #050505 0 22%,
-            #3b6f91 23% 42%,
-            #182d3d 43% 68%,
-            #05080b 69% 100%
-        );
-
-    border: 1px solid #111;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Pupil */
-
-.eye-pupil {
-    width: 5px;
-    height: 5px;
-
-    background: #000;
-
-    border-radius: 50%;
-
-    box-shadow:
-        1px -1px 2px rgba(255,255,255,.9);
-}
-
-/* Natural blink */
-
-@keyframes humanEyeBlink {
-
-    0%,
-    45%,
-    49%,
-    100% {
-        transform: scaleY(1);
-    }
-
-    46% {
-        transform: scaleY(.82);
-    }
-
-    47% {
-        transform: scaleY(.12);
-    }
-
-    48% {
-        transform: scaleY(.82);
-    }
-}
-/* =========================
-   WHATSAPP
-   ========================= */
-
-.service-whatsapp-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 9px;
-
-    min-width: 125px;
-    height: 48px;
-
-    padding: 0 17px;
-
-    border-radius: 12px;
-
-    border: 1px solid #36e27b;
-
-    background:
-        linear-gradient(
-            145deg,
-            #20d86a,
-            #087d4a
-        );
-
-    color: #ffffff;
-
-    text-decoration: none;
-
-    font-size: 13px;
-    font-weight: 800;
-
-    box-shadow:
-        0 5px 0 #045c36,
-        0 9px 20px rgba(32,216,106,.30);
-
-    animation:
-        whatsappFloat 2.8s ease-in-out infinite;
-
-    transition:
-        transform .25s ease,
-        box-shadow .25s ease;
-}
-
-.service-whatsapp-button:hover {
-    transform:
-        translateY(-4px)
-        scale(1.04);
-
-    box-shadow:
-        0 8px 0 #045c36,
-        0 15px 28px rgba(32,216,106,.45);
-}
-
-/* WhatsApp icon */
-
-.whatsapp-icon {
-    width: 32px;
-    height: 32px;
-
-    border-radius: 50%;
-
-    background: #ffffff;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    position: relative;
-
-    font-size: 0;
-
-    animation: whatsappPulse 1.8s infinite;
-}
-
-.whatsapp-icon::after {
-    content: "☎";
-
-    font-size: 12px;
-    font-weight: 900;
-
-    color: #16a765;
-
-    transform: rotate(-18deg);
-}
-
-@keyframes whatsappFloat {
-
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-2px);
-    }
-}
-
-@keyframes whatsappPulse {
-
-    0%,
-    100% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.12);
-    }
-}
-
-/* =========================
-   MOBILE
-   ========================= */
-
-@media (max-width: 480px) {
-
-    .service-action-buttons {
-        gap: 7px;
-    }
-
-    .service-view-button,
-    .service-whatsapp-button {
-        min-width: 0;
-        flex: 1;
-        height: 44px;
-        padding: 0 9px;
-        font-size: 11px;
-    }
-
-    .real-eye {
-        transform-origin: center;
-    }
-}
-button {
-  font-family: inherit;
+.site-background-video,
+.site-background-overlay {
+    display: none !important;
 }
 
 
@@ -342,203 +51,118 @@ button {
 ========================================================== */
 
 .header {
-  width: 100%;
-  min-height: 82px;
-
-  padding: 0 6%;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  background: #ffffff;
-
-  border-bottom: 1px solid #eeeeee;
-
-  position: fixed;
-  top: 0;
-  left: 0;
-
-  z-index: 9999;
+    width: 100%;
+    min-height: 82px;
+    padding: 0 6%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #ffffff;
+    border-bottom: 1px solid #eeeeee;
+    z-index: 99999;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
 }
 
+
+/* ==========================================================
+   BRAND
+========================================================== */
 
 .brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
 }
-
 
 .logo {
-  width: 42px;
-  height: 42px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 10px;
-
-  background: #111822;
-
-  border: 1px solid #2388ff;
-
-  color: #fff;
-
-  font-size: 12px;
-  font-weight: 900;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    overflow: hidden;
 }
 
+.logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
 
 .brand-text {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
 }
-
 
 .brand-text strong {
-  font-size: 14px;
+    color: #202832;
+    font-size: 17px;
+    font-weight: 900;
+    letter-spacing: -0.3px;
 }
-
 
 .brand-text span {
-  color: #8e9aaa;
-  font-size: 9px;
+    color: #7b8490;
+    font-size: 9px;
+    letter-spacing: 0.5px;
 }
 
 
-.wa {
-  display: inline-flex;
+/* ==========================================================
+   NAVIGATION
+========================================================== */
 
-  align-items: center;
-  justify-content: center;
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-left: auto;
+}
 
-  padding: 10px 20px;
+.main-nav a {
+    position: relative;
+    color: #3a78c2;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 7px 2px;
+    white-space: nowrap;
+    transition: color 0.25s ease;
+}
 
-  min-width: 84px;
+.main-nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background: #1685d8;
+    transition: width 0.25s ease;
+}
 
-  border-radius: 10px;
+.main-nav a:hover {
+    color: #1685d8;
+}
 
-  background: linear-gradient(
-    145deg,
-    #25d366,
-    #128c7e
-  );
-
-  border: 1px solid #34e47a;
-
-  color: #fff;
-
-  font-size: 12px;
-
-  font-weight: 800;
-
-  text-decoration: none;
-
-  cursor: pointer;
-
-  position: relative;
-
-  overflow: hidden;
-
-  box-shadow:
-    0 5px 0 #075e54,
-    0 10px 20px rgba(0, 0, 0, 0.35);
-
-  transform: translateY(0);
-
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease,
-    filter 0.2s ease;
-
-  animation: headerWhatsAppPulse 2.8s infinite;
+.main-nav a:hover::after {
+    width: 100%;
 }
 
 
-/* 3D HOVER */
+/* OLD HEADER WHATSAPP */
 
-.wa:hover {
-  filter: brightness(1.1);
-
-  transform: translateY(-3px);
-
-  box-shadow:
-    0 8px 0 #075e54,
-    0 15px 25px rgba(0, 0, 0, 0.45);
-}
-
-
-/* 3D CLICK */
-
-.wa:active {
-  transform: translateY(4px);
-
-  box-shadow:
-    0 1px 0 #075e54,
-    0 4px 9px rgba(0, 0, 0, 0.25);
-}
-
-
-/* SHINE */
-
-.wa::before {
-  content: "";
-
-  position: absolute;
-
-  top: 0;
-
-  left: -120%;
-
-  width: 55%;
-
-  height: 100%;
-
-  background: linear-gradient(
-    120deg,
-    transparent,
-    rgba(255, 255, 255, 0.5),
-    transparent
-  );
-
-  transform: skewX(-20deg);
-
-  animation: headerWhatsAppShine 3s infinite;
-}
-
-
-/* SOFT PULSE */
-
-@keyframes headerWhatsAppPulse {
-
-  0%,
-  100% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.025);
-  }
-
-}
-
-
-/* SHINE ANIMATION */
-
-@keyframes headerWhatsAppShine {
-
-  0% {
-    left: -120%;
-  }
-
-  45%,
-  100% {
-    left: 150%;
-  }
-
+.header > .wa {
+    display: none;
 }
 
 
@@ -547,316 +171,118 @@ button {
 ========================================================== */
 
 .hero {
-  max-width: 1200px;
-
-  margin: 0 auto;
-
-  padding: 70px 5%;
-
-  display: grid;
-
-  grid-template-columns:
-    minmax(0, 1fr)
-    minmax(320px, 0.85fr);
-
-  gap: 55px;
-
-  align-items: center;
+    width: 100%;
+    max-width: 1320px;
+    min-height: 570px;
+    margin: 82px auto 0;
+    padding: 55px 30px 70px;
+    display: grid;
+    grid-template-columns: 0.95fr 1.25fr;
+    gap: 0;
+    align-items: stretch;
+    background: #ffffff;
+    position: relative;
+    overflow: hidden;
 }
 
+
+/* ==========================================================
+   HERO CONTENT
+========================================================== */
 
 .hero-content {
-  max-width: 600px;
+    max-width: 560px;
+    padding: 90px 30px 70px 70px;
+    position: relative;
+    z-index: 5;
 }
 
-
-.eyebrow {
-  color: #d9b938;
-
-  font-size: 10px;
-
-  font-weight: 900;
-
-  letter-spacing: 3px;
-
-  margin: 0 0 14px;
+.hero .eyebrow {
+    color: #1685d8;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin: 0 0 20px;
 }
-
 
 .hero h1 {
-  margin: 0;
-
-  font-size: clamp(42px, 6vw, 78px);
-
-  line-height: 0.94;
-
-  letter-spacing: -2px;
+    margin: 0;
+    color: #202832;
+    font-size: clamp(42px, 4.5vw, 64px);
+    line-height: 0.98;
+    letter-spacing: -1px;
+    font-weight: 800;
 }
-
 
 .hero-description {
-  color: #9ba6b5;
-
-  line-height: 1.7;
-
-  max-width: 520px;
-
-  font-size: 15px;
-
-  margin: 24px 0;
+    max-width: 500px;
+    margin: 24px 0 30px;
+    color: #56616d;
+    font-size: 18px;
+    line-height: 1.7;
 }
 
+
+/* ==========================================================
+   HERO ACTIONS
+========================================================== */
 
 .actions {
-  display: flex;
-
-  flex-wrap: wrap;
-
-  gap: 10px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
 }
-
 
 .primary,
 .secondary {
-  display: inline-flex;
-
-  align-items: center;
-  justify-content: center;
-
-  min-height: 40px;
-
-  padding: 0 18px;
-
-  border-radius: 6px;
-
-  font-size: 12px;
-
-  font-weight: 700;
+    min-height: 42px;
+    padding: 0 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
 }
 
 
-.primary {
-  display: inline-flex;
+/* ==========================================================
+   HERO WHATSAPP
+========================================================== */
 
-  align-items: center;
-  justify-content: center;
+.hero .primary {
+    background: #f4d600;
+    color: #202832;
+    border: none;
+    box-shadow: none;
+}
 
-  min-height: 44px;
-
-  padding: 0 22px;
-
-  border-radius: 10px;
-
-  font-size: 13px;
-
-  font-weight: 800;
-
-  background: linear-gradient(
-    145deg,
-    #25d366,
-    #128c7e
-  );
-
-  color: white;
-
-  border: none;
-
-  text-decoration: none;
-
-  cursor: pointer;
-
-  box-shadow:
-    0 6px 0 #075e54,
-    0 10px 18px rgba(0, 0, 0, 0.35);
-
-  transform: translateY(0);
-
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease,
-    filter 0.2s ease;
-
-  position: relative;
-
-  overflow: hidden;
+.hero .primary:hover {
+    background: #e4c800;
+    transform: translateY(-2px);
+    box-shadow: 0 7px 18px rgba(0, 0, 0, 0.12);
 }
 
 
-/* 3D PRESS EFFECT */
+/* ==========================================================
+   HERO VIEW SERVICES
+========================================================== */
 
-.primary:hover {
-  filter: brightness(1.08);
-
-  transform: translateY(-3px);
-
-  box-shadow:
-    0 9px 0 #075e54,
-    0 15px 24px rgba(0, 0, 0, 0.4);
+.hero .secondary {
+    background: #1685d8;
+    color: #ffffff;
+    border: none;
+    box-shadow: none;
 }
 
-
-.primary:active {
-  transform: translateY(5px);
-
-  box-shadow:
-    0 2px 0 #075e54,
-    0 5px 10px rgba(0, 0, 0, 0.25);
-}
-
-
-/* SHINE ANIMATION */
-
-.primary::before {
-  content: "";
-
-  position: absolute;
-
-  top: 0;
-  left: -100%;
-
-  width: 55%;
-  height: 100%;
-
-  background: linear-gradient(
-    120deg,
-    transparent,
-    rgba(255, 255, 255, 0.45),
-    transparent
-  );
-
-  transform: skewX(-20deg);
-
-  animation: whatsappShine 3s infinite;
-}
-
-
-@keyframes whatsappShine {
-
-  0% {
-    left: -100%;
-  }
-
-  45%,
-  100% {
-    left: 150%;
-  }
-
-}
-
-
-.secondary {
-  display: inline-flex;
-
-  align-items: center;
-  justify-content: center;
-
-  min-height: 44px;
-
-  padding: 0 22px;
-
-  border-radius: 10px;
-
-  font-size: 13px;
-
-  font-weight: 800;
-
-  background: linear-gradient(
-    145deg,
-    #2878ff,
-    #1746a2
-  );
-
-  color: white;
-
-  border: 1px solid #3f8cff;
-
-  text-decoration: none;
-
-  cursor: pointer;
-
-  position: relative;
-
-  overflow: hidden;
-
-  box-shadow:
-    0 6px 0 #0d2d70,
-    0 10px 18px rgba(0, 0, 0, 0.35);
-
-  transform: translateY(0);
-
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease,
-    filter 0.2s ease;
-}
-
-
-/* 3D HOVER */
-
-.secondary:hover {
-
-  filter: brightness(1.12);
-
-  transform: translateY(-3px);
-
-  box-shadow:
-    0 9px 0 #0d2d70,
-    0 15px 24px rgba(0, 0, 0, 0.4);
-}
-
-
-/* 3D PRESS */
-
-.secondary:active {
-
-  transform: translateY(5px);
-
-  box-shadow:
-    0 2px 0 #0d2d70,
-    0 5px 10px rgba(0, 0, 0, 0.25);
-}
-
-
-/* SHINE */
-
-.secondary::before {
-
-  content: "";
-
-  position: absolute;
-
-  top: 0;
-
-  left: -100%;
-
-  width: 55%;
-
-  height: 100%;
-
-  background: linear-gradient(
-    120deg,
-    transparent,
-    rgba(255, 255, 255, 0.4),
-    transparent
-  );
-
-  transform: skewX(-20deg);
-
-  animation: viewServicesShine 3.5s infinite;
-}
-
-
-@keyframes viewServicesShine {
-
-  0% {
-    left: -100%;
-  }
-
-  45%,
-  100% {
-    left: 150%;
-  }
-
+.hero .secondary:hover {
+    background: #096fb9;
+    transform: translateY(-2px);
 }
 
 
@@ -865,128 +291,730 @@ button {
 ========================================================== */
 
 .hero-card {
-  position: relative;
-
-  width: 100%;
-
-  aspect-ratio: 1 / 1;
-
-  overflow: hidden;
-
-  border-radius: 20px;
-
-  border: 1px solid #27384d;
-
-  background: #0c1118;
-
-  box-shadow:
-    0 25px 80px rgba(0, 0, 0, 0.5);
-}
-
-
-.hero-video {
-  position: absolute;
-
-  inset: 0;
-
-  width: 100%;
-  height: 100%;
-
-  object-fit: cover;
-
-  display: block;
-
-  z-index: 1;
-}
-
-
-.hero-video-overlay {
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 2;
-
-  background:
-    linear-gradient(
-      to top,
-      rgba(0, 0, 0, 0.75),
-      rgba(0, 0, 0, 0.05) 65%
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 500px;
+    overflow: hidden;
+    background: #e9eef2;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    clip-path: polygon(
+        17% 0%,
+        100% 0%,
+        100% 82%,
+        84% 100%,
+        42% 100%,
+        0% 42%,
+        0% 25%
     );
 }
 
+.hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+    visibility: visible;
+    opacity: 1;
+    z-index: 1;
+}
+
+.hero-video-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.55),
+        rgba(0, 0, 0, 0.03) 65%
+    );
+    z-index: 2;
+}
 
 .hero-video-text {
-  position: absolute;
-
-  left: 25px;
-  bottom: 25px;
-
-  z-index: 3;
+    position: absolute;
+    left: 25%;
+    bottom: 55px;
+    z-index: 3;
 }
-
 
 .hero-video-text span {
-  display: block;
-
-  color: #ffd52b;
-
-  font-size: 11px;
-
-  font-weight: 900;
-
-  letter-spacing: 2px;
-
-  margin-bottom: 8px;
+    display: block;
+    color: #f4d600;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
 }
 
-
 .hero-video-text b {
-  font-size: 24px;
-
-  line-height: 1.1;
+    color: #ffffff;
+    font-size: 25px;
+    line-height: 1.1;
 }
 
 
 /* ==========================================================
-   SERVICES
+   HERO DECORATION
+========================================================== */
+
+.hero::before {
+    content: "";
+    position: absolute;
+    width: 210px;
+    height: 210px;
+    left: 47%;
+    top: -80px;
+    border: 1.5px solid #1685d8;
+    transform: rotate(45deg);
+    opacity: 0.8;
+    pointer-events: none;
+    z-index: 2;
+}
+
+
+/* ==========================================================
+   SERVICES SECTION
 ========================================================== */
 
 .section {
-  max-width: 1200px;
-
-  margin: 0 auto;
-
-  padding: 65px 5%;
+    width: 100%;
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 65px 5%;
+    color: #202832;
 }
-
 
 .section-head {
-  margin-bottom: 28px;
+    margin-bottom: 25px;
 }
 
-
 .section-head h2 {
-  margin: 0;
+    margin: 0;
+    color: #202832;
+    font-size: clamp(28px, 4vw, 42px);
+}
 
-  font-size: clamp(28px, 4vw, 42px);
+.section-head .eyebrow {
+    color: #1685d8;
 }
 
 
 /* ==========================================================
-   DEPARTMENTS CONTAINER
+   SERVICES GRID
 ========================================================== */
 
 #departmentsContainer {
+    width: 100%;
+    max-width: 1450px;
+    margin: 0 auto;
+    padding: 0 20px 40px;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 14px;
+    align-items: stretch;
+}
 
-  display: grid;
 
-  grid-template-columns:
-    repeat(2, minmax(0, 1fr));
+/* ==========================================================
+   NORMAL SERVICE CARD
+========================================================== */
 
-  gap: 14px;
+#departmentsContainer > .service-card {
+    grid-column: span 4;
+    position: relative;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border: 1px solid #cbd8ea;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(15, 45, 85, 0.06);
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+    padding: 0;
+}
 
-  align-items: start;
+#departmentsContainer > .service-card:hover {
+    transform: translateY(-4px);
+    border-color: #1e63c6;
+    box-shadow: 0 10px 25px rgba(20, 70, 130, 0.14);
+}
+
+
+/* ==========================================================
+   NORMAL SERVICE IMAGE
+========================================================== */
+
+.service-card-image-wrapper {
+    position: absolute !important;
+    top: 8px !important;
+    right: 7px !important;
+    width: 145px !important;
+    height: 135px !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: flex-end !important;
+    overflow: visible !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    z-index: 2 !important;
+    pointer-events: none !important;
+}
+
+.service-card-image {
+    width: 100% !important;
+    height: 100% !important;
+    display: block !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    transform: none !important;
+    transition: transform 0.3s ease !important;
+}
+
+.service-card:hover .service-card-image {
+    transform: scale(1.04) !important;
+}
+
+
+/* ==========================================================
+   NORMAL SERVICE CONTENT
+========================================================== */
+
+.service-card-content {
+    position: relative !important;
+    z-index: 4 !important;
+    width: 100% !important;
+    max-width: 63% !important;
+    min-height: 165px;
+    padding: 18px 8px 8px 18px !important;
+}
+
+
+/* ==========================================================
+   SERVICE TITLE
+========================================================== */
+
+.service-card-content h3 {
+    margin: 0 0 8px !important;
+    color: #073d91 !important;
+    font-size: 25px !important;
+    font-weight: 800 !important;
+    line-height: 1.15 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px;
+}
+
+.service-card-content h3::after {
+    content: "";
+    display: block;
+    width: 65px;
+    height: 2px;
+    background: #f2c500;
+    margin-top: 7px;
+}
+
+
+/* ==========================================================
+   DESCRIPTION
+========================================================== */
+
+.service-card-content p {
+    margin: 7px 0 0 !important;
+    color: #263957 !important;
+    font-size: 12px !important;
+    line-height: 1.45 !important;
+}
+
+
+/* ==========================================================
+   NORMAL SERVICE ITEMS
+========================================================== */
+
+.service-card-content button:not(.service-view-button):not(.service-whatsapp-button),
+.service-card-content a:not(.service-view-button):not(.service-whatsapp-button) {
+    display: block !important;
+    width: 100% !important;
+    padding: 3px 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+    color: #102d55 !important;
+    text-align: left !important;
+    font-size: 20px !important;
+    font-weight: 600 !important;
+    line-height: 2.35 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    transform: none !important;
+    cursor: pointer;
+    white-space: normal !important;
+}
+
+.service-card-content button:not(.service-view-button):not(.service-whatsapp-button):hover,
+.service-card-content a:not(.service-view-button):not(.service-whatsapp-button):hover {
+    color: #075fc9 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+
+/* ==========================================================
+   ==========================================================
+   RECHARGE / BILL PAYMENTS DEPARTMENT
+   DESKTOP LAYOUT:
+
+   ┌────────────┬────────────┬──────────────┬─────────┐
+   │ 1          │ 6          │ 11           │ IMAGE   │
+   │ 2          │ 7          │ 12           │         │
+   │ 3          │ 8          │ 13           │         │
+   │ 4          │ 9          │ 14           │         │
+   │ 5          │ 10         │ 15           │         │
+   └────────────┴────────────┴──────────────┴─────────┘
+========================================================== */
+
+#departmentsContainer > .loan-department {
+    grid-column: 1 / -1;
+    position: relative;
+    width: 100%;
+    min-height: 230px;
+    display: block;
+    background: #ffffff;
+    border: 1px solid #cbd8ea;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(15, 45, 85, 0.06);
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+#departmentsContainer > .loan-department:hover {
+    border-color: #1e63c6;
+    box-shadow: 0 10px 25px rgba(20, 70, 130, 0.14);
+}
+
+
+/* ==========================================================
+   DEPARTMENT HEADER
+========================================================== */
+
+.loan-department .department-header {
+    width: calc(100% - 250px);
+    min-height: 75px;
+    padding: 15px 20px 5px 20px;
+    display: block;
+    background: #ffffff;
+}
+
+.loan-department .department-header-content {
+    width: 100%;
+    max-width: 100%;
+}
+
+.loan-department .department-label {
+    display: none;
+}
+
+.loan-department .department-header h3 {
+    margin: 0;
+    color: #073d91;
+    font-size: 20px;
+    line-height: 1.2;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.2px;
+}
+
+.loan-department .department-header h3::after {
+    content: "";
+    display: block;
+    width: 85px;
+    height: 2px;
+    background: #f2c500;
+    margin-top: 7px;
+}
+
+.loan-department .department-header p {
+    margin: 7px 0 0;
+    color: #273b59;
+    font-size: 11px;
+    line-height: 1.45;
+}
+
+
+/* ==========================================================
+   DEPARTMENT IMAGE
+   RIGHT SIDE
+========================================================== */
+
+.loan-department .department-image-wrapper {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    width: 220px;
+    height: 190px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 0;
+    z-index: 5;
+}
+
+.loan-department .department-image {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    object-position: center;
+    transition: transform 0.3s ease;
+}
+
+.loan-department:hover .department-image {
+    transform: scale(1.03);
+}
+
+
+/* ==========================================================
+   SUB SERVICES
+   EXACTLY 3 COLUMNS ON DESKTOP
+
+   COLUMN 1 = 1-5
+   COLUMN 2 = 6-10
+   COLUMN 3 = 11-15
+========================================================== */
+
+.loan-department .loan-sub-services {
+    width: calc(100% - 250px);
+    min-height: 135px;
+    margin: 0;
+    padding: 2px 20px 12px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-flow: row;
+    column-gap: 25px;
+    row-gap: 0;
+    align-items: start;
+}
+
+
+/* ==========================================================
+   IMPORTANT:
+   Keep each 5 items in one column
+
+   JS DOM order:
+   1,2,3,4,5,6,7,8,9,10,11,12,13,14,15
+
+   CSS grid fills rows by default.
+   We override using explicit positioning.
+========================================================== */
+
+.loan-department .loan-sub-wrapper {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* ==========================================================
+   SHOW STATE
+========================================================== */
+
+.loan-department .loan-sub-services.show {
+    display: grid;
+    animation: serviceOpen 0.3s ease;
+}
+
+
+/* ==========================================================
+   SUB SERVICE BUTTON
+========================================================== */
+
+.loan-department .loan-sub-button {
+    all: unset !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    min-height: 25px;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    gap: 7px !important;
+    padding: 3px 0 !important;
+    margin: 0 !important;
+    color: #102d55 !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    line-height: 1.35 !important;
+    text-align: left !important;
+    cursor: pointer !important;
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.loan-department .loan-sub-button:hover {
+    color: #075fc9 !important;
+    transform: translateX(3px);
+}
+
+
+/* ==========================================================
+   NUMBER
+========================================================== */
+
+.loan-department .loan-number {
+    width: 21px !important;
+    min-width: 21px !important;
+    height: 21px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #eef5fd;
+    color: #075fc9 !important;
+    font-size: 10px !important;
+    font-weight: 800 !important;
+}
+
+
+/* ==========================================================
+   SUB SERVICE NAME
+========================================================== */
+
+.loan-department .sub-service-name {
+    flex: 1 !important;
+    color: #102d55 !important;
+    font-size: 11px !important;
+    line-height: 1.4;
+}
+
+
+/* ==========================================================
+   ITEM COUNT
+========================================================== */
+
+.loan-department .sub-item-count {
+    margin-left: auto !important;
+    color: #71809a !important;
+    font-size: 9px !important;
+}
+
+
+/* ==========================================================
+   SERVICE OPEN ANIMATION
+========================================================== */
+
+@keyframes serviceOpen {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* ==========================================================
+   DEPARTMENT ACTION BUTTONS
+========================================================== */
+
+.loan-department .service-action-buttons {
+    position: absolute !important;
+    left: 20px;
+    bottom: 10px;
+    z-index: 10 !important;
+    display: flex !important;
+    align-items: center;
+    gap: 8px !important;
+    width: auto;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+
+/* ==========================================================
+   ACTION BUTTONS
+========================================================== */
+
+.service-action-buttons .service-view-button {
+    width: auto !important;
+    min-width: 95px !important;
+    min-height: 36px !important;
+    padding: 7px 12px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 7px;
+    background: linear-gradient(
+        135deg,
+        #075fc9,
+        #0b4292
+    ) !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 5px !important;
+    box-shadow: 0 4px 0 #062d68 !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    cursor: pointer;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.service-action-buttons .service-view-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 #062d68 !important;
+}
+
+.service-action-buttons .service-view-button:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #062d68 !important;
+}
+
+
+/* ==========================================================
+   SERVICE NUMBER
+========================================================== */
+
+.service-number {
+    width: 22px;
+    height: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.18);
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 900;
+    flex-shrink: 0;
+}
+
+
+/* ==========================================================
+   WHATSAPP BUTTON
+========================================================== */
+
+.service-action-buttons .service-whatsapp-button {
+    width: auto !important;
+    min-width: 100px !important;
+    min-height: 36px !important;
+    padding: 7px 12px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px;
+    background: linear-gradient(
+        135deg,
+        #20c76b,
+        #0c9d50
+    ) !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 5px !important;
+    box-shadow: 0 4px 0 #08753b !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.service-action-buttons .service-whatsapp-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 #08753b !important;
+}
+
+.service-action-buttons .service-whatsapp-button:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #08753b !important;
+}
+
+
+/* ==========================================================
+   WHATSAPP ICON
+========================================================== */
+
+.whatsapp-icon {
+    width: 21px;
+    height: 21px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+
+/* ==========================================================
+   DOCUMENTS
+========================================================== */
+
+.documents {
+    max-width: 1200px;
+    margin: 25px auto 60px;
+    padding: 0 20px;
+}
+
+#documentBox {
+    background: #ffffff;
+    border: 1px solid #cbd8ea;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 5px 20px rgba(20, 60, 110, 0.08);
+}
+
+#documentBox h3 {
+    color: #073d91;
+    margin-top: 0;
+    font-size: 22px;
+}
+
+#documentBox h4 {
+    color: #153d73;
+    margin-top: 20px;
+}
+
+.requirements-list {
+    padding: 0;
+    margin: 15px 0;
+    list-style: none;
+}
+
+.requirement-item {
+    padding: 7px 0;
+    display: flex;
+    gap: 8px;
+    color: #273b59;
+    font-size: 13px;
+    border-bottom: 1px solid #edf1f6;
+}
+
+.requirement-item .bullet {
+    color: #f2c500;
+    font-weight: 900;
 }
 
 
@@ -996,554 +1024,176 @@ button {
 
 .loading-box,
 .error-box {
-
-  grid-column: 1 / -1;
-
-  padding: 45px;
-
-  text-align: center;
-
-  border-radius: 14px;
-
-  background: #10151c;
-
-  border: 1px solid #202b38;
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 55px 20px;
+    background: #ffffff;
+    border: 1px solid #cbd8ea;
+    border-radius: 8px;
 }
-
 
 .loading-box h3,
 .error-box h3 {
-  margin: 10px 0;
+    margin: 10px 0;
+    color: #073d91;
 }
-
 
 .loading-box p,
 .error-box p {
-  color: #8793a3;
-
-  font-size: 13px;
+    color: #71809a;
+    font-size: 12px;
 }
-
 
 .loading-spinner {
-
-  width: 35px;
-  height: 35px;
-
-  margin: 0 auto;
-
-  border-radius: 50%;
-
-  border: 3px solid #263442;
-
-  border-top-color: #2388ff;
-
-  animation:
-    spin 0.8s linear infinite;
+    width: 40px;
+    height: 40px;
+    margin: 0 auto 15px;
+    border: 4px solid #dce7f6;
+    border-top-color: #075fc9;
+    border-radius: 50%;
+    animation: loadingSpin 0.8s linear infinite;
 }
 
-
-@keyframes spin {
-
-  to {
-    transform: rotate(360deg);
-  }
-
+@keyframes loadingSpin {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 
 /* ==========================================================
-   NORMAL SERVICE CARD
+   SERVICE STATUS
 ========================================================== */
 
-.service-card {
-
-  min-height: 165px;
-
-  padding: 22px;
-
-  display: flex;
-
-  flex-direction: column;
-
-  justify-content: space-between;
-
-  gap: 18px;
-
-  border-radius: 12px;
-
-  background:
-    linear-gradient(
-      145deg,
-      #121821,
-      #0c1117
-    );
-
-  border: 1px solid #1e2935;
-
-  box-shadow:
-    0 15px 35px rgba(0, 0, 0, 0.22);
-
-  transition:
-    transform 0.2s ease,
-    border-color 0.2s ease;
+.service-status-section {
+    padding-top: 60px;
+    padding-bottom: 60px;
 }
 
-
-.service-card:hover {
-
-  transform: translateY(-3px);
-
-  border-color: #2388ff;
-
+.visiting-customers-card {
+    width: 100%;
+    max-width: 420px;
+    margin: 25px auto 30px;
+    padding: 22px 26px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: #ffffff;
+    border: 1px solid #cbd8ea;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(20, 60, 110, 0.08);
 }
 
-
-.service-card h3 {
-
-  margin: 0 0 8px;
-
-  font-size: 16px;
-
+.visiting-icon {
+    width: 52px;
+    height: 52px;
+    display: grid;
+    place-items: center;
+    background: #eef5fd;
+    border-radius: 12px;
+    font-size: 25px;
 }
 
-
-.service-card p {
-
-  margin: 0;
-
-  color: #8995a5;
-
-  font-size: 11px;
-
-  line-height: 1.5;
-
+.visiting-customers-card span {
+    display: block;
+    margin-bottom: 4px;
+    color: #7b8490;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 
-
-.service-button {
-
-  width: 100%;
-
-  height: 38px;
-
-  border: 0;
-
-  border-radius: 6px;
-
-  background: #2388ff;
-
-  color: white;
-
-  font-size: 11px;
-
-  font-weight: 800;
-
-  cursor: pointer;
-
+.visiting-customers-card strong {
+    display: block;
+    color: #073d91;
+    font-size: 30px;
+    font-weight: 800;
 }
 
 
 /* ==========================================================
-   LOANS DEPARTMENT
+   SERVICE TABLE
 ========================================================== */
 
-.loan-department {
-
-  padding: 22px;
-
-  border-radius: 12px;
-
-  background:
-    linear-gradient(
-      145deg,
-      #111720,
-      #0b1016
-    );
-
-  border: 1px solid #263241;
-
-  box-shadow:
-    0 15px 40px rgba(0, 0, 0, 0.3);
-
+.service-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 20px;
+    border-radius: 14px;
+    background: #ffffff;
+    border: 1px solid #cbd8ea;
+    box-shadow: 0 10px 30px rgba(20, 60, 110, 0.08);
 }
 
-
-.department-header {
-
-  margin-bottom: 16px;
-
+.service-status-table {
+    width: 100%;
+    min-width: 700px;
+    border-collapse: collapse;
+    color: #202832;
 }
 
-
-.department-label {
-
-  color: #d9b938;
-
-  font-size: 8px;
-
-  font-weight: 900;
-
-  letter-spacing: 2px;
-
+.service-status-table th {
+    padding: 16px 18px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 800;
+    background: #f5f8fc;
+    color: #536274;
+    border-bottom: 1px solid #dce5f0;
 }
 
-
-.department-header h3 {
-
-  margin: 6px 0;
-
-  font-size: 20px;
-
+.service-status-table th:first-child {
+    text-align: left;
 }
 
-
-.department-header p {
-
-  margin: 0;
-
-  color: #8b96a5;
-
-  font-size: 11px;
-
+.service-status-table td {
+    padding: 18px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    border-bottom: 1px solid #edf1f6;
 }
 
-
-.loan-main-button {
-
-  width: 100%;
-
-  height: 40px;
-
-  border: 0;
-
-  border-radius: 6px;
-
-  background: #2388ff;
-
-  color: white;
-
-  font-size: 11px;
-
-  font-weight: 800;
-
-  cursor: pointer;
-
+.service-status-table td:first-child {
+    text-align: left;
+    font-weight: 700;
+    color: #202832;
 }
 
-
-.loan-sub-services {
-
-  display: none;
-
-  margin-top: 10px;
-
+.service-status-table tbody tr {
+    transition: background 0.2s ease;
 }
 
-
-.loan-sub-services.show {
-
-  display: block;
-
+.service-status-table tbody tr:hover {
+    background: #f7faff;
 }
 
-
-.loan-sub-button {
-
-  width: 100%;
-
-  min-height: 34px;
-
-  margin-top: 7px;
-
-  padding: 6px 9px;
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 8px;
-
-  text-align: left;
-
-  border: 1px solid #1d2a38;
-
-  border-radius: 6px;
-
-  background: #080d13;
-
-  color: #f5f7fb;
-
-  font-size: 9px;
-
-  cursor: pointer;
-
+.service-status-table tbody tr:last-child td {
+    border-bottom: none;
 }
 
-
-.loan-sub-button:hover {
-
-  border-color: #2388ff;
-
-  background: #101b27;
-
+.service-status-table td:nth-child(2) {
+    color: #20a964;
 }
 
-
-.loan-number {
-
-  color: #2388ff;
-
-  font-weight: 900;
-
+.service-status-table td:nth-child(3) {
+    color: #e64c4c;
 }
 
-
-.loan-whatsapp {
-  display: inline-flex;
-
-  align-items: center;
-  justify-content: center;
-
-  margin-top: 10px;
-
-  min-height: 38px;
-
-  padding: 0 15px;
-
-  border-radius: 9px;
-
-  background: linear-gradient(
-    145deg,
-    #25d366,
-    #128c7e
-  );
-
-  border: 1px solid #34e47a;
-
-  color: #fff;
-
-  font-size: 10px;
-
-  font-weight: 800;
-
-  text-decoration: none;
-
-  cursor: pointer;
-
-  position: relative;
-
-  overflow: hidden;
-
-  box-shadow:
-    0 5px 0 #075e54,
-    0 9px 16px rgba(0, 0, 0, 0.35);
-
-  transform: translateY(0);
-
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease,
-    filter 0.2s ease;
-
-  animation: whatsappPulse 2.5s infinite;
+.service-status-table td:nth-child(4) {
+    color: #d58b00;
 }
 
-
-/* 3D HOVER */
-
-.loan-whatsapp:hover {
-
-  filter: brightness(1.12);
-
-  transform: translateY(-3px);
-
-  box-shadow:
-    0 8px 0 #075e54,
-    0 14px 22px rgba(0, 0, 0, 0.4);
-
+.service-status-table td:nth-child(5) {
+    color: #202832;
+    font-weight: 900;
 }
 
-
-/* 3D PRESS */
-
-.loan-whatsapp:active {
-
-  transform: translateY(4px);
-
-  box-shadow:
-    0 1px 0 #075e54,
-    0 4px 8px rgba(0, 0, 0, 0.25);
-
-}
-
-
-/* SHINE */
-
-.loan-whatsapp::before {
-
-  content: "";
-
-  position: absolute;
-
-  top: 0;
-
-  left: -120%;
-
-  width: 55%;
-
-  height: 100%;
-
-  background: linear-gradient(
-    120deg,
-    transparent,
-    rgba(255, 255, 255, 0.5),
-    transparent
-  );
-
-  transform: skewX(-20deg);
-
-  animation: whatsappButtonShine 3s infinite;
-
-}
-
-
-/* PULSE */
-
-@keyframes whatsappPulse {
-
-  0%,
-  100% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.025);
-  }
-
-}
-
-
-/* SHINE ANIMATION */
-
-@keyframes whatsappButtonShine {
-
-  0% {
-    left: -120%;
-  }
-
-  45%,
-  100% {
-    left: 150%;
-  }
-
-}
-
-
-/* ==========================================================
-   DOCUMENTS
-========================================================== */
-
-.documents {
-
-  display: grid;
-
-  grid-template-columns:
-    1fr 1.2fr;
-
-  gap: 16px;
-
-}
-
-
-.info-panel,
-.doc-box {
-
-  padding: 28px;
-
-  border-radius: 12px;
-
-  background: #10151c;
-
-  border: 1px solid #202b38;
-
-}
-
-
-.info-panel h2 {
-
-  margin: 0 0 14px;
-
-  font-size: 28px;
-
-}
-
-
-.info-panel p {
-
-  color: #8c97a6;
-
-  font-size: 12px;
-
-  line-height: 1.7;
-
-}
-
-
-.doc-box h3 {
-
-  margin-top: 0;
-
-}
-
-
-.doc-box > p {
-
-  color: #8995a5;
-
-  font-size: 12px;
-
-}
-
-
-.requirements-list {
-
-  padding: 0;
-
-  margin: 20px 0;
-
-  list-style: none;
-
-  max-height: 400px;
-
-  overflow-y: auto;
-
-}
-
-
-.requirement-item {
-
-  display: flex;
-
-  gap: 9px;
-
-  padding: 7px 0;
-
-  color: #d8dee7;
-
-  font-size: 11px;
-
-  border-bottom: 1px solid #18212b;
-
-}
-
-
-.bullet {
-
-  color: #2388ff;
-
-  font-weight: 900;
-
+.status-loading {
+    padding: 35px !important;
+    text-align: center !important;
+    color: #71809a !important;
+    font-weight: 500 !important;
 }
 
 
@@ -1552,52 +1202,31 @@ button {
 ========================================================== */
 
 .contact {
-
-  max-width: 1200px;
-
-  margin: 0 auto;
-
-  padding: 55px 5%;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-
-  gap: 25px;
-
-  border-top: 1px solid #151d26;
-
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 55px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    border-top: 1px solid #e4eaf1;
 }
-
 
 .contact h2 {
-
-  margin: 0 0 8px;
-
+    margin: 0 0 8px;
+    color: #202832;
 }
-
 
 .contact p:not(.eyebrow) {
-
-  margin: 0;
-
-  color: #8995a5;
-
-  font-size: 12px;
-
+    margin: 0;
+    color: #71809a;
+    font-size: 12px;
 }
 
-
 .contact-actions {
-
-  display: flex;
-
-  flex-wrap: wrap;
-
-  gap: 8px;
-
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 
@@ -1606,1219 +1235,344 @@ button {
 ========================================================== */
 
 footer {
-
-  padding: 25px;
-
-  text-align: center;
-
-  color: #4e5865;
-
-  font-size: 9px;
-
-  border-top: 1px solid #151b22;
-
-}
-
-
-/* ==========================================================
-   MOBILE
-========================================================== */
-
-@media (max-width: 760px) {
-
-  .header {
-
-    padding: 12px 20px;
-
-  }
-
-
-  .hero {
-
-    grid-template-columns: 1fr;
-
-    padding:
-      45px 20px;
-
-    gap: 35px;
-
-  }
-
-
-  .hero-card {
-
-    max-width: 520px;
-
-    margin: 0 auto;
-
-  }
-
-
-  .section {
-
-    padding:
-      50px 20px;
-
-  }
-
-
-  #departmentsContainer {
-
-    grid-template-columns: 1fr;
-
-  }
-
-
-  .documents {
-
-    grid-template-columns: 1fr;
-
-  }
-
-
-  .contact {
-
-    padding:
-      45px 20px;
-
-    flex-direction: column;
-
-    align-items: flex-start;
-
-  }
-
-
-  .hero h1 {
-
-    font-size: 48px;
-
-  }
-
-}
-
-
-@media (max-width: 420px) {
-
-  .brand-text span {
-
-    display: none;
-
-  }
-
-
-  .wa {
-
-    padding:
-      8px 12px;
-
-    font-size: 10px;
-
-  }
-
-
-  .hero-video-text b {
-
-    font-size: 19px;
-
-  }
-
-}
-/* ==========================================================
-   SERVICE CARD IMAGE
-   ========================================================== */
-
-.service-card-image-wrapper {
-  width: 100%;
-  height: 180px;
-  overflow: hidden;
-  border-radius: 14px 14px 0 0;
-  background: #111820;
-}
-
-.service-card-image {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-}
-
-.service-card-no-image {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #888;
-  font-size: 14px;
-}
-
-/* Keep content below image clean */
-
-.service-card-content {
-  padding: 18px;
-}
-/* ==========================================================
-   DEPARTMENT SERVICE IMAGE
-   ========================================================== */
-
-.department-image-wrapper {
-    width: 100%;
-    margin-bottom: 18px;
-    border-radius: 18px;
-    overflow: hidden;
-}
-
-.department-image {
-    width: 100%;
-    height: 220px;
-    display: block;
-    object-fit: cover;
-    border-radius: 18px;
-}
-/* =====================================================
-   SERVICE STATUS
-===================================================== */
-
-.service-status-section {
-  padding-top: 80px;
-  padding-bottom: 80px;
-}
-
-.visiting-customers-card {
-  width: 100%;
-  max-width: 420px;
-  margin: 30px auto 35px;
-  padding: 25px 30px;
-
-  display: flex;
-  align-items: center;
-  gap: 18px;
-
-  background: #111318;
-  border: 1px solid #2a2d35;
-  border-radius: 18px;
-
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
-}
-
-.visiting-icon {
-  width: 55px;
-  height: 55px;
-
-  display: grid;
-  place-items: center;
-
-  background: #1d2028;
-  border-radius: 14px;
-
-  font-size: 28px;
-}
-
-.visiting-customers-card span {
-  display: block;
-
-  margin-bottom: 5px;
-
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-
-  color: #999;
-}
-
-.visiting-customers-card strong {
-  display: block;
-
-  font-size: 32px;
-  font-weight: 800;
-
-  color: #fff;
-}
-
-
-/* =====================================================
-   SERVICE TABLE
-===================================================== */
-
-.service-table-wrapper {
-  width: 100%;
-  overflow-x: auto;
-
-  margin-top: 25px;
-
-  border-radius: 18px;
-
-  background: #111318;
-  border: 1px solid #2a2d35;
-
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
-}
-
-.service-status-table {
-  width: 100%;
-  min-width: 700px;
-
-  border-collapse: collapse;
-
-  color: #fff;
-}
-
-.service-status-table th {
-  padding: 18px 20px;
-
-  text-align: center;
-
-  font-size: 13px;
-  font-weight: 800;
-  letter-spacing: 1px;
-
-  background: #181b22;
-
-  color: #aaa;
-
-  border-bottom: 1px solid #2a2d35;
-}
-
-.service-status-table th:first-child {
-  text-align: left;
-}
-
-.service-status-table td {
-  padding: 20px;
-
-  text-align: center;
-
-  font-size: 15px;
-  font-weight: 600;
-
-  border-bottom: 1px solid #242730;
-}
-
-.service-status-table td:first-child {
-  text-align: left;
-
-  font-weight: 700;
-  color: #fff;
-}
-
-.service-status-table tbody tr {
-  transition: background 0.2s ease;
-}
-
-.service-status-table tbody tr:hover {
-  background: #181b22;
-}
-
-.service-status-table tbody tr:last-child td {
-  border-bottom: none;
-}
-
-
-/* SUCCESS */
-
-.service-status-table td:nth-child(2) {
-  color: #35d07f;
-}
-
-
-/* FAILED */
-
-.service-status-table td:nth-child(3) {
-  color: #ff5c5c;
-}
-
-
-/* PROCESSING */
-
-.service-status-table td:nth-child(4) {
-  color: #ffbf45;
-}
-
-
-/* TOTAL */
-
-.service-status-table td:nth-child(5) {
-  color: #ffffff;
-  font-weight: 900;
-}
-
-
-/* LOADING */
-
-.status-loading {
-  padding: 35px !important;
-
-  text-align: center !important;
-
-  color: #999 !important;
-  font-weight: 500 !important;
-}
-
-
-/* MOBILE */
-
-@media (max-width: 700px) {
-
-  .visiting-customers-card {
-    margin-left: 0;
-    margin-right: 0;
-  }
-
-  .service-status-table th,
-  .service-status-table td {
-    padding: 15px 12px;
-  }
-
-}
-
-/* ==========================================================
-   FULL WEBSITE BACKGROUND VIDEO
-   File: background.mp4
-========================================================== */
-
-.site-background-video {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  border: 0 !important;
-  display: block !important;
-  object-fit: cover !important;
-  object-position: center center !important;
-  z-index: 0 !important;
-  pointer-events: none !important;
-}
-
-.site-background-overlay {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  background: rgba(0, 0, 0, 0.58);
-  z-index: 0 !important;
-  pointer-events: none !important;
-}
-
-/* Keep every website element above the background video */
-body > *:not(.site-background-video):not(.site-background-overlay) {
-  position: relative;
-  z-index: 1;
-}
-
-/* Header stays above everything */
-.header {
-  z-index: 20 !important;
-}
-
-/* Keep the existing hero video above its own card */
-.hero-card,
-.hero-video,
-.hero-video-overlay,
-.hero-video-text {
-  z-index: 1;
-}
-
-/* Mobile background video */
-@media (max-width: 760px) {
-  .site-background-video {
-    object-position: center center !important;
-  }
-}
-/* CLICK SOLUTIONS LOGO */
-
-.logo {
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.logo img {
-  width: 38px;
-  height: 38px;
-  object-fit: contain;
-  display: block;
-}
-/* ======================================================
-   SERVICE ACTION BUTTONS
-   ====================================================== */
-
-.service-action-buttons {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 12px;
-}
-
-/* ======================================================
-   VIEW BUTTON
-   ====================================================== */
-
-.service-view-button,
-.service-whatsapp-button {
-  border: none;
-  text-decoration: none;
-  cursor: pointer;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-
-  padding: 9px 14px;
-  min-width: 105px;
-
-  border-radius: 10px;
-
-  font-size: 12px;
-  font-weight: 700;
-
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
-}
-
-/* VIEW */
-
-.service-view-button {
-  background: linear-gradient(
-    145deg,
-    #20252b,
-    #080a0d
-  );
-
-  color: #ffffff;
-
-  box-shadow:
-    0 5px 0 #000,
-    0 8px 15px rgba(0, 0, 0, 0.35);
-}
-
-/* Eye */
-
-.eye-icon {
-  display: inline-block;
-  font-size: 17px;
-
-  transform-origin: center;
-  animation: eyeBlink 4s infinite;
-}
-
-/* Eye blink */
-
-@keyframes eyeBlink {
-
-  0%,
-  42%,
-  46%,
-  100% {
-    transform: scaleY(1);
-  }
-
-  44% {
-    transform: scaleY(0.08);
-  }
-}
-
-/* View hover */
-
-.service-view-button:hover {
-  transform:
-    translateY(-3px)
-    scale(1.04);
-
-  box-shadow:
-    0 7px 0 #000,
-    0 12px 22px rgba(0, 0, 0, 0.45);
-}
-
-/* ======================================================
-   WHATSAPP BUTTON
-   ====================================================== */
-
-.service-whatsapp-button {
-  background:
-    linear-gradient(
-        145deg,
-        #20d86a,
-        #087d4a
-    );
-
-  color: white;
-
-  box-shadow:
-    0 5px 0 #075e54,
-    0 8px 18px rgba(37, 211, 102, 0.35);
-
-  animation:
-    whatsappFloat 2.5s ease-in-out infinite;
-}
-
-/* WhatsApp icon */
-
-.whatsapp-icon {
-  display: inline-block;
-
-  font-size: 17px;
-
-  animation:
-    whatsappIconPulse 1.8s ease-in-out infinite;
-}
-
-/* Floating 3D effect */
-
-@keyframes whatsappFloat {
-
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-2px);
-  }
-}
-
-/* Icon pulse */
-
-@keyframes whatsappIconPulse {
-
-  0%,
-  100% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.18);
-  }
-}
-
-/* WhatsApp hover */
-
-.service-whatsapp-button:hover {
-  transform:
-    translateY(-4px)
-    scale(1.05);
-
-  box-shadow:
-    0 7px 0 #075e54,
-    0 14px 25px rgba(37, 211, 102, 0.5);
-}
-
-/* Click */
-
-.service-view-button:active,
-.service-whatsapp-button:active {
-  transform:
-    translateY(3px)
-    scale(0.98);
-
-  box-shadow:
-    0 2px 0 #000;
-}
-
-/* ======================================================
-   MOBILE
-   ====================================================== */
-
-@media (max-width: 480px) {
-
-  .service-action-buttons {
-    gap: 7px;
-  }
-
-  .service-view-button,
-  .service-whatsapp-button {
-    min-width: 95px;
-    padding: 8px 11px;
-    font-size: 11px;
-  }
-
-  .eye-icon,
-  .whatsapp-icon {
-    font-size: 15px;
-  }
-}
-/* =====================================================
-   MAIN NAVIGATION
-===================================================== */
-
-.main-nav {
-  display: flex;
-  align-items: center;
-  gap: 28px;
-}
-
-.main-nav a {
-  color: #303840;
-  text-decoration: none;
-
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.4px;
-
-  padding: 8px 2px;
-
-  transition: all 0.25s ease;
-}
-
-.main-nav a:hover {
-  color: #2388ff;
-}
-/* ==========================================================
-   CLICK SOLUTIONS - WAVENET STYLE HERO
-   ========================================================== */
-
-/* ---------- MAIN PAGE ---------- */
-
-body {
-  background: #ffffff;
-  color: #202832;
-}
-
-/* Hide full-screen background video */
-.site-background-video,
-.site-background-overlay {
-  display: none !important;
-}
-
-
-/* ==========================================================
-   HEADER
-========================================================== */
-
-.header {
-  width: 100%;
-  min-height: 82px;
-
-  padding: 0 6%;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  background: #ffffff;
-
-  border-bottom: 1px solid #eeeeee;
-
- position: sticky;
-top: 0;
-  z-index: 20;
-
-  box-shadow: 0 2px 15px rgba(0,0,0,.04);
-}
-
-
-/* CLICK SOLUTIONS LEFT */
-
-.brand {
-  display: flex;
-  align-items: center;
-
-  gap: 12px;
-
-  color: #202832;
-}
-
-
-/* LOGO */
-
-.logo {
-  width: 45px;
-  height: 45px;
-
-  background: transparent;
-
-  border: none;
-  border-radius: 0;
-
-  overflow: hidden;
-}
-
-.logo img {
-  width: 100%;
-  height: 100%;
-
-  object-fit: contain;
-}
-
-
-/* BRAND TEXT */
-
-.brand-text {
-  display: flex;
-  flex-direction: column;
-
-  gap: 2px;
-}
-
-.brand-text strong {
-  color: #202832;
-
-  font-size: 17px;
-  font-weight: 900;
-
-  letter-spacing: -0.3px;
-}
-
-.brand-text span {
-  color: #7b8490;
-
-  font-size: 9px;
-
-  letter-spacing: .5px;
-}
-
-
-/* ==========================================================
-   RIGHT NAVIGATION
-========================================================== */
-
-.main-nav {
-  display: flex;
-  align-items: center;
-
-  gap: 32px;
-}
-
-.main-nav a {
-  position: relative;
-
-  color: #ffffff;
-
-  font-size: 12px;
-  font-weight: 600;
-
-  letter-spacing: .2px;
-
-  padding: 10px 0;
-
-  transition:
-    color .25s ease;
-}
-
-
-/* BLUE UNDERLINE */
-
-.main-nav a::after {
-  content: "";
-
-  position: absolute;
-
-  left: 0;
-  bottom: 2px;
-
-  width: 0;
-  height: 2px;
-
-  background: #1685d8;
-
-  transition: width .25s ease;
-}
-
-.main-nav a:hover {
-  color: #1685d8;
-}
-
-.main-nav a:hover::after {
-  width: 100%;
-}
-
-
-/* Hide old header WhatsApp button */
-
-.header > .wa {
-  display: none;
-}
-
-
-/* ==========================================================
-   HERO OUTER AREA
-========================================================== */
-
-.hero {
-  width: 100%;
-  max-width: 1320px;
-
-  min-height: 570px;
-
-  margin: 0 auto;
-
-  padding: 55px 30px 70px;
-
-  display: grid;
-
-  grid-template-columns:
-    0.95fr
-    1.25fr;
-
-  gap: 0;
-
-  align-items: stretch;
-
-  background: #ffffff;
-
-  position: relative;
-
-  overflow: hidden;
-}
-
-
-/* ==========================================================
-   HERO LEFT
-========================================================== */
-
-.hero-content {
-  max-width: 560px;
-
-  padding:
-    90px 30px
-    70px 70px;
-
-  position: relative;
-
-  z-index: 5;
-}
-
-
-/* WELCOME */
-
-.hero .eyebrow {
-  color: #1685d8;
-
-  font-size: 11px;
-
-  font-weight: 800;
-
-  letter-spacing: 2px;
-
-  margin-bottom: 20px;
-}
-
-
-/* MAIN HEADING */
-
-.hero h1 {
-  margin: 0;
-
-  color: #202832;
-
-  font-size: clamp(46px, 5vw, 72px);
-
-  line-height: .98;
-
-  letter-spacing: -3px;
-
-  font-weight: 800;
-}
-
-
-/* DESCRIPTION */
-
-.hero-description {
-  max-width: 500px;
-
-  margin:
-    24px 0 30px;
-
-  color: #56616d;
-
-  font-size: 14px;
-
-  line-height: 1.7;
-}
-
-
-/* ==========================================================
-   HERO BUTTONS
-========================================================== */
-
-.actions {
-  display: flex;
-
-  gap: 12px;
-
-  flex-wrap: wrap;
-}
-
-
-/* WhatsApp */
-
-.hero .primary {
-  min-height: 42px;
-
-  padding: 0 22px;
-
-  border-radius: 2px;
-
-  background: #f4d600;
-
-  color: #202832;
-
-  border: none;
-
-  box-shadow: none;
-
-  font-size: 12px;
-
-  font-weight: 800;
-}
-
-.hero .primary:hover {
-  background: #e4c800;
-
-  transform: translateY(-2px);
-
-  box-shadow:
-    0 7px 18px rgba(0,0,0,.12);
-}
-
-
-/* View Services */
-
-.hero .secondary {
-  min-height: 42px;
-
-  padding: 0 22px;
-
-  border-radius: 2px;
-
-  background: #1685d8;
-
-  color: #ffffff;
-
-  border: none;
-
-  box-shadow: none;
-
-  font-size: 12px;
-
-  font-weight: 800;
-}
-
-.hero .secondary:hover {
-  background: #096fb9;
-
-  transform: translateY(-2px);
-}
-
-
-/* ==========================================================
-   HERO VIDEO
-========================================================== */
-
-.hero-card {
-  position: relative;
-
-  width: 100%;
-  height: 100%;
-
-  min-height: 500px;
-
-  aspect-ratio: auto;
-
-  overflow: hidden;
-
-  border: none;
-
-  border-radius: 0;
-
-  background: #e9eef2;
-
-  box-shadow: none;
-
-  clip-path: polygon(
-    17% 0%,
-    100% 0%,
-    100% 82%,
-    84% 100%,
-    42% 100%,
-    0% 42%,
-    0% 25%
-  );
-}
-
-
-/* VIDEO */
-
-.hero-video {
-  position: absolute;
-
-  inset: 0;
-
-  width: 100%;
-  height: 100%;
-
-  object-fit: cover;
-
-  object-position: center;
-
-  display: block;
-}
-
-
-/* VIDEO DARK OVERLAY */
-
-.hero-video-overlay {
-  background:
-    linear-gradient(
-      to top,
-      rgba(0,0,0,.55),
-      rgba(0,0,0,.03) 65%
-    );
-}
-
-
-/* VIDEO TEXT */
-
-.hero-video-text {
-  left: 25%;
-
-  bottom: 55px;
-
-  z-index: 5;
-}
-
-.hero-video-text span {
-  color: #f4d600;
-
-  font-size: 11px;
-
-  letter-spacing: 2px;
-}
-
-.hero-video-text b {
-  color: #ffffff;
-
-  font-size: 25px;
-
-  line-height: 1.1;
-}
-
-
-/* ==========================================================
-   BLUE DECORATIVE LINE
-========================================================== */
-
-.hero::before {
-  content: "";
-
-  position: absolute;
-
-  width: 210px;
-  height: 210px;
-
-  left: 47%;
-
-  top: -80px;
-
-  border: 1.5px solid #1685d8;
-
-  transform: rotate(45deg);
-
-  opacity: .8;
-
-  pointer-events: none;
-
-  z-index: 2;
-}
-
-
-/* ==========================================================
-   SERVICES - LIGHT CORPORATE STYLE
-========================================================== */
-
-.section {
-  max-width: 1320px;
-
-  margin: 0 auto;
-
-  padding: 75px 6%;
-
-  color: #202832;
-}
-
-.section-head h2 {
-  color: #202832;
-}
-
-.section-head .eyebrow {
-  color: #1685d8;
-}
-
-
-/* ==========================================================
-   MOBILE
-========================================================== */
-
-@media (max-width: 760px) {
-
-  .header {
-    min-height: 70px;
-
-    padding: 10px 20px;
-  }
-
-  .brand-text strong {
-    font-size: 14px;
-  }
-
-  .main-nav {
-    gap: 13px;
-  }
-
-  .main-nav a {
+    padding: 25px;
+    text-align: center;
+    color: #7b8490;
     font-size: 9px;
-  }
+    border-top: 1px solid #e4eaf1;
+    background: #ffffff;
+}
 
-  .hero {
-    grid-template-columns: 1fr;
 
-    padding:
-      25px 18px
-      45px;
-  }
+/* ==========================================================
+   OLD EYE / VIDEO ICON
+========================================================== */
 
-  .hero-content {
-    padding:
-      45px 15px
-      35px;
-  }
+.eye-icon,
+.real-eye,
+.service-video-icon {
+    display: none !important;
+}
 
-  .hero h1 {
-    font-size: 48px;
 
-    letter-spacing: -2px;
-  }
+/* ==========================================================
+   WHATSAPP
+========================================================== */
 
-  .hero-card {
-    min-height: 390px;
-
-    clip-path: polygon(
-      10% 0%,
-      100% 0%,
-      100% 88%,
-      88% 100%,
-      30% 100%,
-      0% 72%,
-      0% 12%
+.wa {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 18px;
+    min-width: 84px;
+    border-radius: 8px;
+    background: linear-gradient(
+        145deg,
+        #25d366,
+        #128c7e
     );
-  }
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 800;
+    box-shadow:
+        0 5px 0 #075e54,
+        0 10px 20px rgba(0, 0, 0, 0.2);
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
 
-  .hero-video-text {
-    left: 18%;
-    bottom: 45px;
-  }
+.wa:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        0 8px 0 #075e54,
+        0 15px 25px rgba(0, 0, 0, 0.25);
+}
 
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@media (max-width: 1100px) {
+
+    #departmentsContainer > .service-card {
+        grid-column: span 6;
+    }
+
+    .hero-content {
+        padding-left: 40px;
+    }
+
+    .hero-description {
+        font-size: 16px;
+    }
+
+
+    /* DEPARTMENT */
+
+    .loan-department .department-image-wrapper {
+        width: 180px;
+        height: 160px;
+        right: 15px;
+    }
+
+    .loan-department .department-header {
+        width: calc(100% - 210px);
+        padding-right: 10px;
+    }
+
+    .loan-department .loan-sub-services {
+        width: calc(100% - 210px);
+        column-gap: 15px;
+    }
+
+    .loan-department .loan-sub-button {
+        font-size: 10px !important;
+    }
+}
+
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media (max-width: 760px) {
+
+    .header {
+        min-height: 70px;
+        padding: 10px 18px;
+    }
+
+    .logo {
+        width: 40px;
+        height: 40px;
+    }
+
+    .brand-text strong {
+        font-size: 14px;
+    }
+
+    .main-nav {
+        gap: 10px;
+    }
+
+    .main-nav a {
+        font-size: 9px;
+        letter-spacing: 0;
+    }
+
+
+    /* ======================================================
+       HERO
+    ====================================================== */
+
+    .hero {
+        grid-template-columns: 1fr;
+        margin-top: 70px;
+        padding: 25px 18px 45px;
+        gap: 20px;
+    }
+
+    .hero-content {
+        padding: 45px 15px 30px;
+    }
+
+    .hero h1 {
+        font-size: 48px;
+        letter-spacing: -2px;
+    }
+
+    .hero-description {
+        font-size: 15px;
+    }
+
+    .hero-card {
+        min-height: 390px;
+        clip-path: polygon(
+            10% 0%,
+            100% 0%,
+            100% 88%,
+            88% 100%,
+            30% 100%,
+            0% 72%,
+            0% 12%
+        );
+    }
+
+    .hero-video-text {
+        left: 18%;
+        bottom: 45px;
+    }
+
+    .hero-video-text b {
+        font-size: 20px;
+    }
+
+
+    /* ======================================================
+       SERVICES
+    ====================================================== */
+
+    .section {
+        padding: 50px 15px;
+    }
+
+    #departmentsContainer {
+        grid-template-columns: 1fr;
+        padding: 0 0 40px;
+        gap: 12px;
+    }
+
+    #departmentsContainer > .service-card {
+        grid-column: span 1;
+    }
+
+
+    /* ======================================================
+       NORMAL SERVICE CARD
+    ====================================================== */
+
+    #departmentsContainer > .service-card {
+        min-height: 210px;
+    }
+
+    .service-card-image-wrapper {
+        top: 8px !important;
+        right: 5px !important;
+        width: 125px !important;
+        height: 120px !important;
+    }
+
+    .service-card-content {
+        max-width: 66% !important;
+        min-height: 155px;
+        padding: 15px 8px 10px 15px !important;
+    }
+
+    .service-card-content h3 {
+        font-size: 15px !important;
+    }
+
+    .service-card-content p {
+        font-size: 11px !important;
+    }
+
+
+    /* ======================================================
+       RECHARGE DEPARTMENT MOBILE
+    ====================================================== */
+
+    #departmentsContainer > .loan-department {
+        min-height: 0;
+        padding-bottom: 65px;
+    }
+
+    .loan-department .department-header {
+        width: 100%;
+        min-height: 105px;
+        padding: 15px 135px 8px 15px;
+    }
+
+    .loan-department .department-header h3 {
+        font-size: 16px;
+    }
+
+    .loan-department .department-header p {
+        font-size: 10px;
+    }
+
+    .loan-department .department-image-wrapper {
+        top: 8px;
+        right: 8px;
+        width: 120px;
+        height: 105px;
+    }
+
+    .loan-department .loan-sub-services {
+        width: 100%;
+        min-height: 0;
+        padding: 5px 15px 10px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 12px;
+        row-gap: 2px;
+    }
+
+    .loan-department .loan-sub-services.show {
+        display: grid;
+    }
+
+    .loan-department .loan-sub-button {
+        font-size: 10px !important;
+        gap: 5px !important;
+        padding: 3px 0 !important;
+    }
+
+    .loan-department .loan-number {
+        width: 19px !important;
+        min-width: 19px !important;
+        height: 19px;
+        font-size: 9px !important;
+    }
+
+    .loan-department .sub-service-name {
+        font-size: 10px !important;
+    }
+
+    .loan-department .service-action-buttons {
+        left: 15px;
+        bottom: 12px;
+    }
+
+
+    /* ======================================================
+       BUTTONS
+    ====================================================== */
+
+    .service-action-buttons {
+        gap: 7px !important;
+        padding: 8px 14px 14px !important;
+    }
+
+    .service-action-buttons .service-view-button,
+    .service-action-buttons .service-whatsapp-button {
+        min-width: 0 !important;
+        flex: 1;
+        min-height: 38px !important;
+        padding: 7px 8px !important;
+        font-size: 10px !important;
+    }
+
+
+    /* ======================================================
+       DOCUMENTS
+    ====================================================== */
+
+    .documents {
+        margin-bottom: 40px;
+        padding: 0 15px;
+    }
+
+
+    /* ======================================================
+       CONTACT
+    ====================================================== */
+
+    .contact {
+        padding: 45px 20px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+
+    /* ======================================================
+       STATUS
+    ====================================================== */
+
+    .visiting-customers-card {
+        margin-left: 0;
+        margin-right: 0;
+    }
 }
 
 
@@ -2828,68 +1582,161 @@ top: 0;
 
 @media (max-width: 480px) {
 
-  .brand-text span {
-    display: none;
-  }
+    .brand-text span {
+        display: none;
+    }
 
-  .main-nav {
-    gap: 8px;
-  }
+    .main-nav {
+        gap: 7px;
+    }
 
-  .main-nav a {
-    font-size: 8px;
+    .main-nav a {
+        font-size: 8px;
+    }
 
-    letter-spacing: 0;
-  }
+    .hero h1 {
+        font-size: 43px;
+    }
 
-  .hero h1 {
-    font-size: 43px;
-  }
+    .hero-description {
+        font-size: 14px;
+    }
 
+    .hero-card {
+        min-height: 340px;
+    }
+
+
+    /* ======================================================
+       SERVICE IMAGE
+    ====================================================== */
+
+    .service-card-image-wrapper {
+        top: 7px !important;
+        right: 4px !important;
+        width: 110px !important;
+        height: 105px !important;
+    }
+
+    .service-card-content {
+        max-width: 68% !important;
+        padding: 14px 6px 9px 13px !important;
+    }
+
+    .service-card-content h3 {
+        font-size: 14px !important;
+    }
+
+    .service-card-content p {
+        font-size: 10px !important;
+    }
+
+
+    /* ======================================================
+       RECHARGE DEPARTMENT
+    ====================================================== */
+
+    .loan-department .department-header {
+        padding-right: 115px;
+    }
+
+    .loan-department .department-image-wrapper {
+        width: 105px;
+        height: 90px;
+        right: 5px;
+    }
+
+    .loan-department .department-header h3 {
+        font-size: 14px;
+    }
+
+    .loan-department .loan-sub-services {
+        grid-template-columns: 1fr;
+        row-gap: 0;
+    }
+
+
+    /* ======================================================
+       BUTTONS
+    ====================================================== */
+
+    .service-action-buttons {
+        gap: 6px !important;
+    }
+
+    .service-action-buttons .service-view-button,
+    .service-action-buttons .service-whatsapp-button {
+        padding: 7px 6px !important;
+        font-size: 9px !important;
+    }
+
+    .service-number {
+        width: 20px;
+        height: 20px;
+        font-size: 10px;
+    }
+
+    .whatsapp-icon {
+        width: 19px;
+        height: 19px;
+    }
 }
-/* =====================================================
-   HEADER NAVIGATION
-===================================================== */
+```
+/* ==========================================================
+   REMOVE OLD ONE STOP SOLUTION BANNER
+========================================================== */
 
-.main-nav {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  margin-left: auto;
+.services-banner {
+    display: none !important;
 }
 
-.main-nav a {
-  color: #3A78C2;
-  text-decoration: none;
 
-  font-size: 11px;
-  font-weight: 700;
+/* ==========================================================
+   SERVICE PERFORMANCE - FIX MOBILE OVERFLOW
+========================================================== */
 
-  letter-spacing: 0.5px;
-
-  padding: 6px 2px;
-
-  white-space: nowrap;
-
-  transition: 0.2s ease;
+.service-status-section {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
 }
 
-.main-nav a:hover {
-  color: #2388ff;
+.service-table-wrapper {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
-#services,
-#contact,
-#performance {
-  scroll-margin-top: 90px;
-}
-/* =====================================================
-   FIXED HEADER
-===================================================== */
 
-.header {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  width: 100% !important;
-  z-index: 99999 !important;
+.service-status-table {
+    width: 100%;
+    min-width: 0;
+}
+
+
+/* ==========================================================
+   PERFORMANCE MOBILE FIX
+========================================================== */
+
+@media (max-width: 760px) {
+
+    .service-status-section {
+        width: 100%;
+        padding-left: 15px;
+        padding-right: 15px;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    .service-table-wrapper {
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        overflow-x: auto;
+    }
+
+    .service-status-table {
+        min-width: 650px;
+    }
+
 }
