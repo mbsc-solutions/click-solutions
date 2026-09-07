@@ -985,7 +985,7 @@ function showSelectedService(
     // ======================================================
 
     let whatsappMessage =
-        "Hello MBSC SOLUTIONS,\n\n" +
+        "Hello CLICK SOLUTIONS,\n\n" +
         "I need details about " +
         serviceName +
         " - " +
