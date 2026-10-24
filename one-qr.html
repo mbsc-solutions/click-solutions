@@ -2,121 +2,226 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CLICK SOLUTIONS | One QR</title>
-<style>
-*{box-sizing:border-box}
-body{
-  margin:0;padding:18px;
-  background:linear-gradient(145deg,#020b18,#09284a,#080808);
-  color:#fff;font-family:Arial,sans-serif
-}
-.container{max-width:760px;margin:auto;text-align:center}
-header{padding:22px 12px}
-h1{margin:0;font-size:clamp(25px,6vw,36px);letter-spacing:1px}
-.tagline{color:#ffc629;font-weight:bold;margin:12px 0}
-.intro{color:#d0d6df;line-height:1.6}
-.poster{
-  display:block;width:100%;height:auto;margin:16px auto 24px;
-  border:2px solid #d99b28;border-radius:12px
-}
-h2{color:#ffc629;font-size:22px;margin:26px 0 16px}
-.services{display:grid;grid-template-columns:1fr;gap:12px}
-.service{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:12px;text-align:left;padding:16px;
-  background:#101820;border:1px solid #b98225;border-radius:12px
-}
-.service-name{font-weight:bold;line-height:1.4}
-.btn{
-  display:inline-block;flex-shrink:0;padding:12px 14px;
-  border-radius:9px;background:#20bd63;color:#fff;
-  text-decoration:none;font-weight:bold;font-size:13px
-}
-.social{display:grid;grid-template-columns:1fr;gap:10px;margin:28px 0}
-.social a{
-  display:block;padding:15px;border-radius:10px;
-  text-decoration:none;font-weight:bold
-}
-.website{background:#fff;color:#10213a}
-.instagram{background:linear-gradient(110deg,#833ab4,#e1306c,#f77737);color:#fff}
-.facebook{background:#1877f2;color:#fff}
-.youtube{background:#ff0033;color:#fff}
-footer{padding:20px 8px;color:#d0d6df;line-height:1.8}
-.phone{font-size:22px;color:#ffc629;font-weight:bold}
-@media(min-width:560px){
- .services{grid-template-columns:1fr 1fr}
- .social{grid-template-columns:1fr 1fr}
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLICK SOLUTIONS | One QR Multiple Services</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #031b35;
+      font-family: Arial, sans-serif;
+    }
+
+    .poster-container {
+      position: relative;
+      width: 100%;
+      max-width: 1024px;
+      margin: 0 auto;
+      line-height: 0;
+    }
+
+    .poster {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .service-link {
+      position: absolute;
+      display: block;
+      z-index: 2;
+      border-radius: 30px;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .service-link:focus-visible {
+      outline: 3px solid #ffffff;
+      outline-offset: 2px;
+    }
+
+    /* Row 1: EPFO, ITR/GST, DTP/Printing */
+    .service-1 {
+      left: 4.7%;
+      top: 32.55%;
+      width: 25.5%;
+      height: 3.5%;
+    }
+
+    .service-2 {
+      left: 37.6%;
+      top: 32.55%;
+      width: 25.5%;
+      height: 3.5%;
+    }
+
+    .service-3 {
+      left: 70.4%;
+      top: 32.55%;
+      width: 25.5%;
+      height: 3.5%;
+    }
+
+    /* Row 2: PDF, Digital Banking, Loans */
+    .service-4 {
+      left: 4.7%;
+      top: 52.2%;
+      width: 25.5%;
+      height: 3.5%;
+    }
+
+    .service-5 {
+      left: 37.6%;
+      top: 52.2%;
+      width: 25.5%;
+      height: 3.5%;
+    }
+
+    .service-6 {
+      left: 70.4%;
+      top: 52.2%;
+      width: 25.5%;
+      height: 3.5%;
+    }
+
+    /* Row 3: MSME, Pickup, Data Entry */
+    .service-7 {
+      left: 4.7%;
+      top: 73.45%;
+      width: 25.5%;
+      height: 3.5%;
+    }
+
+    .service-8 {
+      left: 37.6%;
+      top: 73.45%;
+      width: 25.5%;
+      height: 3.5%;
+    }
+
+    .service-9 {
+      left: 70.4%;
+      top: 73.45%;
+      width: 25.5%;
+      height: 3.5%;
+    }
+
+    .social-link {
+      position: absolute;
+      display: block;
+      z-index: 2;
+    }
+
+    /* Poster footer social links */
+    .website-link {
+      left: 42%;
+      top: 81.7%;
+      width: 10%;
+      height: 7.5%;
+    }
+
+    .instagram-link {
+      left: 59%;
+      top: 81.7%;
+      width: 10%;
+      height: 7.5%;
+    }
+
+    .facebook-link {
+      left: 75%;
+      top: 81.7%;
+      width: 10%;
+      height: 7.5%;
+    }
+
+    .youtube-link {
+      left: 90%;
+      top: 81.7%;
+      width: 9%;
+      height: 7.5%;
+    }
+  </style>
 </head>
+
 <body>
-<main class="container">
-<header>
-  <h1>CLICK SOLUTIONS</h1>
-  <div class="tagline">ONE QR • ONE CLICK • MULTIPLE SOLUTIONS</div>
-  <p class="intro">Your Digital &amp; Financial Service Partner.<br>
-  Select your required service and contact us on WhatsApp.</p>
-</header>
 
-<img class="poster"
- src="https://mbsc-solutions.github.io/click-solutions/services-poster.png"
- alt="CLICK SOLUTIONS services poster">
+  <main class="poster-container">
 
-<h2>OUR SERVICES</h2>
-<section class="services">
-  <div class="service">
-    <span class="service-name">EPFO / PF Services</span>
-    <a class="btn" target="_blank" rel="noopener noreferrer" href="https://wa.me/917093334820?text=Hello%20CLICK%20SOLUTIONS%2C%20I%20need%20EPFO%20%2F%20PF%20service.%20Please%20tell%20me%20the%20required%20documents%2C%20charges%20and%20process.">CLICK HERE</a>
-  </div>
-  <div class="service">
-    <span class="service-name">ITR / GST Services</span>
-    <a class="btn" target="_blank" rel="noopener noreferrer" href="https://wa.me/917093334820?text=Hello%20CLICK%20SOLUTIONS%2C%20I%20need%20ITR%20%2F%20GST%20service.%20Please%20tell%20me%20the%20required%20documents%2C%20charges%20and%20process.">CLICK HERE</a>
-  </div>
-  <div class="service">
-    <span class="service-name">DTP / Printing Works</span>
-    <a class="btn" target="_blank" rel="noopener noreferrer" href="https://wa.me/917093334820?text=Hello%20CLICK%20SOLUTIONS%2C%20I%20need%20DTP%20%2F%20Printing%20service.%20Please%20tell%20me%20the%20charges.">CLICK HERE</a>
-  </div>
-  <div class="service">
-    <span class="service-name">PDF Editing / Document Services</span>
-    <a class="btn" target="_blank" rel="noopener noreferrer" href="https://wa.me/917093334820?text=Hello%20CLICK%20SOLUTIONS%2C%20I%20need%20PDF%20editing%20%2F%20document%20service.%20Please%20tell%20me%20the%20required%20files%20and%20charges.">CLICK HERE</a>
-  </div>
-  <div class="service">
-    <span class="service-name">Digital Banking / Payment Services</span>
-    <a class="btn" target="_blank" rel="noopener noreferrer" href="https://wa.me/917093334820?text=Hello%20CLICK%20SOLUTIONS%2C%20I%20need%20Digital%20Banking%20%2F%20Payment%20service.%20Please%20tell%20me%20the%20available%20services%20and%20charges.">CLICK HERE</a>
-  </div>
-  <div class="service">
-    <span class="service-name">Loans / Financial Services</span>
-    <a class="btn" target="_blank" rel="noopener noreferrer" href="https://wa.me/917093334820?text=Hello%20CLICK%20SOLUTIONS%2C%20I%20need%20information%20about%20Loans%20%2F%20Financial%20Services.%20Please%20tell%20me%20the%20available%20options%20and%20eligibility.">CLICK HERE</a>
-  </div>
-  <div class="service">
-    <span class="service-name">MSME Udyam / Online Registration</span>
-    <a class="btn" target="_blank" rel="noopener noreferrer" href="https://wa.me/917093334820?text=Hello%20CLICK%20SOLUTIONS%2C%20I%20need%20MSME%20%2F%20Udyam%20or%20Online%20Registration%20service.%20Please%20tell%20me%20the%20required%20documents%20and%20charges.">CLICK HERE</a>
-  </div>
-  <div class="service">
-    <span class="service-name">Item Pickup / Vehicle Handover</span>
-    <a class="btn" target="_blank" rel="noopener noreferrer" href="https://wa.me/917093334820?text=Hello%20CLICK%20SOLUTIONS%2C%20I%20need%20Item%20Pickup%20%2F%20Vehicle%20Handover%20service.%20My%20pickup%20location%20is%20____%20and%20destination%20is%20____.%20Please%20tell%20me%20the%20charges.">CLICK HERE</a>
-  </div>
-  <div class="service">
-    <span class="service-name">Data Entry / Bulk Data Entry</span>
-    <a class="btn" target="_blank" rel="noopener noreferrer" href="https://wa.me/917093334820?text=Hello%20CLICK%20SOLUTIONS%2C%20I%20need%20Data%20Entry%20%2F%20Bulk%20Data%20Entry%20service.%20Please%20tell%20me%20the%20file%20formats%2C%20charges%20and%20delivery%20time.">CLICK HERE</a>
-  </div>
-</section>
+    <img
+      class="poster"
+      src="services-poster.png"
+      alt="CLICK SOLUTIONS - Digital and Financial Services Poster"
+    >
 
-<h2>CONNECT WITH US</h2>
-<nav class="social">
-  <a class="website" href="https://mbsc-solutions.github.io/click-solutions/" target="_blank" rel="noopener noreferrer">🌐 VISIT OUR WEBSITE</a>
-  <a class="instagram" href="https://www.instagram.com/clicksolutions2026/" target="_blank" rel="noopener noreferrer">📸 FOLLOW ON INSTAGRAM</a>
-  <a class="facebook" href="https://www.facebook.com/share/1C2JE1PNw2/" target="_blank" rel="noopener noreferrer">👍 FOLLOW ON FACEBOOK</a>
-  <a class="youtube" href="https://youtube.com/@clicksolutions-e4g?si=tYpcUSDZqAnNFYwb" target="_blank" rel="noopener noreferrer">▶ SUBSCRIBE ON YOUTUBE</a>
-</nav>
+    <!-- 1. EPFO / PF -->
+    <a class="service-link service-1"
+       href="https://wa.me/917093334820?text=Hello%20CLICK%20SOLUTIONS%2C%20I%20need%20EPFO%20%2F%20PF%20service.%20Please%20tell%20me%20the%20required%20documents%2C%20charges%20and%20process."
+       aria-label="Enquire about EPFO and PF services"></a>
 
-<footer>
-  <div class="tagline">Your Work... Our Priority...</div>
-  CONTACT &amp; WHATSAPP<br>
-  <div class="phone">709-333-4820</div>
-</footer>
-</main>
+    <!-- 2. ITR / GST -->
+    <a class="service-link service-2"
+       href="https://wa.me/917093334820?text=Hello%20CLICK%20SOLUTIONS%2C%20I%20need%20ITR%20%2F%20GST%20service.%20Please%20tell%20me%20the%20required%20documents%2C%20charges%20and%20process."
+       aria-label="Enquire about ITR and GST services"></a>
+
+    <!-- 3. DTP / Printing -->
+    <a class="service-link service-3"
+       href="https://wa.me/917093334820?text=Hello%20CLICK%20SOLUTIONS%2C%20I%20need%20DTP%20%2F%20Printing%20service.%20I%20will%20share%20my%20files%20and%20requirements.%20Please%20tell%20me%20the%20charges."
+       aria-label="Enquire about DTP and printing services"></a>
+
+    <!-- 4. PDF / Document -->
+    <a class="service-link service-4"
+       href="https://wa.me/917093334820?text=Hello%20CLICK%20SOLUTIONS%2C%20I%20need%20PDF%20editing%20%2F%20document%20service.%20Please%20tell%20me%20what%20files%20are%20required%20and%20the%20charges."
+       aria-label="Enquire about PDF editing and document services"></a>
+
+    <!-- 5. Digital Banking -->
+    <a class="service-link service-5"
+       href="https://wa.me/917093334820?text=Hello%20CLICK%20SOLUTIONS%2C%20I%20need%20Digital%20Banking%20%2F%20Payment%20service.%20Please%20tell%20me%20the%20available%20services%20and%20charges."
+       aria-label="Enquire about digital banking and payment services"></a>
+
+    <!-- 6. Loans / Financial -->
+    <a class="service-link service-6"
+       href="https://wa.me/917093334820?text=Hello%20CLICK%20SOLUTIONS%2C%20I%20need%20information%20about%20Loans%20%2F%20Financial%20Services.%20Please%20tell%20me%20the%20available%20options%20and%20eligibility%20details."
+       aria-label="Enquire about loans and financial services"></a>
+
+    <!-- 7. MSME / Udyam -->
+    <a class="service-link service-7"
+       href="https://wa.me/917093334820?text=Hello%20CLICK%20SOLUTIONS%2C%20I%20need%20MSME%20%2F%20Udyam%20or%20Online%20Registration%20service.%20Please%20tell%20me%20the%20required%20documents%20and%20charges."
+       aria-label="Enquire about MSME, Udyam and online registration"></a>
+
+    <!-- 8. Item Pickup / Vehicle Handover -->
+    <a class="service-link service-8"
+       href="https://wa.me/917093334820?text=Hello%20CLICK%20SOLUTIONS%2C%20I%20need%20Item%20Pickup%20%2F%20Vehicle%20Handover%20service.%20My%20pickup%20location%20is%20____%20and%20destination%20is%20____.%20Please%20tell%20me%20the%20pickup%20and%20handover%20charges."
+       aria-label="Enquire about item pickup and vehicle handover"></a>
+
+    <!-- 9. Data Entry -->
+    <a class="service-link service-9"
+       href="https://wa.me/917093334820?text=Hello%20CLICK%20SOLUTIONS%2C%20I%20need%20Data%20Entry%20%2F%20Bulk%20Data%20Entry%20service.%20Please%20tell%20me%20the%20accepted%20file%20formats%2C%20charges%20and%20delivery%20time."
+       aria-label="Enquire about data entry services"></a>
+
+    <!-- Footer website and social links -->
+    <a class="social-link website-link"
+       href="https://mbsc-solutions.github.io/click-solutions/"
+       aria-label="Visit CLICK SOLUTIONS website"></a>
+
+    <a class="social-link instagram-link"
+       href="https://www.instagram.com/clicksolutions2026/"
+       aria-label="Visit CLICK SOLUTIONS Instagram"></a>
+
+    <a class="social-link facebook-link"
+       href="https://www.facebook.com/share/1C2JE1PNw2/"
+       aria-label="Visit CLICK SOLUTIONS Facebook page"></a>
+
+    <a class="social-link youtube-link"
+       href="https://youtube.com/@clicksolutions-e4g?si=tYpcUSDZqAnNFYwb"
+       aria-label="Visit CLICK SOLUTIONS YouTube channel"></a>
+
+  </main>
+
 </body>
 </html>
