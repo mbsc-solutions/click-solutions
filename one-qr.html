@@ -8,15 +8,14 @@
   <title>CLICK SOLUTIONS | One QR Multiple Services</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     html, body {
       margin: 0;
       padding: 0;
       background: #031b35;
       font-family: Arial, sans-serif;
+      color: #fff;
     }
 
     .poster-container {
@@ -43,125 +42,56 @@
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
       text-decoration: none;
-
       background: linear-gradient(
         to bottom,
-        rgba(255,255,255,0.30) 0%,
-        rgba(255,255,255,0.10) 45%,
-        rgba(0,0,0,0.13) 100%
+        rgba(255,255,255,.30),
+        rgba(255,255,255,.10) 45%,
+        rgba(0,0,0,.13)
       );
-
-      border: 1px solid rgba(255,255,255,0.45);
-
+      border: 1px solid rgba(255,255,255,.45);
       box-shadow:
-        inset 0 2px 3px rgba(255,255,255,0.45),
-        inset 0 -3px 4px rgba(0,0,0,0.15),
-        0 4px 0 rgba(0,0,0,0.28),
-        0 6px 10px rgba(0,0,0,0.20);
-
-      transition:
-        transform 0.12s ease,
-        box-shadow 0.12s ease,
-        background 0.12s ease;
+        inset 0 2px 3px rgba(255,255,255,.45),
+        inset 0 -3px 4px rgba(0,0,0,.15),
+        0 4px 0 rgba(0,0,0,.28),
+        0 6px 10px rgba(0,0,0,.20);
+      transition: transform .12s ease, box-shadow .12s ease;
     }
 
     .service-link:hover {
       transform: translateY(-2px);
-
-      background: linear-gradient(
-        to bottom,
-        rgba(255,255,255,0.42),
-        rgba(255,255,255,0.12),
-        rgba(0,0,0,0.10)
-      );
-
       box-shadow:
-        inset 0 2px 3px rgba(255,255,255,0.45),
-        0 6px 0 rgba(0,0,0,0.22),
-        0 9px 14px rgba(0,0,0,0.22);
+        inset 0 2px 3px rgba(255,255,255,.45),
+        0 6px 0 rgba(0,0,0,.22),
+        0 9px 14px rgba(0,0,0,.22);
     }
 
     .service-link:active {
       transform: translateY(3px);
-
-      box-shadow:
-        inset 0 3px 5px rgba(0,0,0,0.20),
-        0 1px 0 rgba(0,0,0,0.20);
+      box-shadow: inset 0 3px 5px rgba(0,0,0,.20);
     }
 
     .service-link:focus-visible,
     .social-link:focus-visible {
-      outline: 3px solid #ffffff;
+      outline: 3px solid #fff;
       outline-offset: 2px;
     }
 
     /* ROW 1 */
-    .service-1 {
-      left: 4.7%;
-      top: 32.55%;
-      width: 25.5%;
-      height: 3.5%;
-    }
-
-    .service-2 {
-      left: 37.6%;
-      top: 32.55%;
-      width: 25.5%;
-      height: 3.5%;
-    }
-
-    .service-3 {
-      left: 70.4%;
-      top: 32.55%;
-      width: 25.5%;
-      height: 3.5%;
-    }
+    .service-1 { left:4.7%; top:32.55%; width:25.5%; height:3.5%; }
+    .service-2 { left:37.6%; top:32.55%; width:25.5%; height:3.5%; }
+    .service-3 { left:70.4%; top:32.55%; width:25.5%; height:3.5%; }
 
     /* ROW 2 */
-    .service-4 {
-      left: 4.7%;
-      top: 52.2%;
-      width: 25.5%;
-      height: 3.5%;
-    }
-
-    .service-5 {
-      left: 37.6%;
-      top: 52.2%;
-      width: 25.5%;
-      height: 3.5%;
-    }
-
-    .service-6 {
-      left: 70.4%;
-      top: 52.2%;
-      width: 25.5%;
-      height: 3.5%;
-    }
+    .service-4 { left:4.7%; top:52.2%; width:25.5%; height:3.5%; }
+    .service-5 { left:37.6%; top:52.2%; width:25.5%; height:3.5%; }
+    .service-6 { left:70.4%; top:52.2%; width:25.5%; height:3.5%; }
 
     /* ROW 3 */
-    .service-7 {
-      left: 4.7%;
-      top: 73.45%;
-      width: 25.5%;
-      height: 3.5%;
-    }
+    .service-7 { left:4.7%; top:73.45%; width:25.5%; height:3.5%; }
+    .service-8 { left:37.6%; top:73.45%; width:25.5%; height:3.5%; }
+    .service-9 { left:70.4%; top:73.45%; width:25.5%; height:3.5%; }
 
-    .service-8 {
-      left: 37.6%;
-      top: 73.45%;
-      width: 25.5%;
-      height: 3.5%;
-    }
-
-    .service-9 {
-      left: 70.4%;
-      top: 73.45%;
-      width: 25.5%;
-      height: 3.5%;
-    }
-
-    /* FOOTER SOCIAL LINKS */
+    /* SOCIAL LINKS */
     .social-link {
       position: absolute;
       display: block;
@@ -170,32 +100,100 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    .website-link {
-      left: 42%;
-      top: 81.7%;
-      width: 10%;
-      height: 7.5%;
+    .website-link  { left:42%; top:81.7%; width:10%; height:7.5%; }
+    .instagram-link { left:59%; top:81.7%; width:10%; height:7.5%; }
+    .facebook-link { left:75%; top:81.7%; width:10%; height:7.5%; }
+    .youtube-link { left:90%; top:81.7%; width:9%; height:7.5%; }
+
+    /* TOTAL PERFORMANCE */
+    .performance {
+      width: 100%;
+      max-width: 1024px;
+      margin: 0 auto;
+      padding: 28px 16px 34px;
+      background: linear-gradient(180deg, #062748, #03152a);
+      text-align: center;
+      border-top: 2px solid #d5ad54;
     }
 
-    .instagram-link {
-      left: 59%;
-      top: 81.7%;
-      width: 10%;
-      height: 7.5%;
+    .performance h2 {
+      margin: 0 0 8px;
+      font-size: clamp(22px, 4vw, 32px);
+      color: #f5d785;
+      letter-spacing: 1px;
     }
 
-    .facebook-link {
-      left: 75%;
-      top: 81.7%;
-      width: 10%;
-      height: 7.5%;
+    .performance-subtitle {
+      margin: 0 0 22px;
+      color: #c8d8e8;
+      font-size: 14px;
+      line-height: 1.5;
     }
 
-    .youtube-link {
-      left: 90%;
-      top: 81.7%;
-      width: 9%;
-      height: 7.5%;
+    .performance-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .performance-card {
+      padding: 20px 8px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.13);
+      box-shadow: 0 5px 15px rgba(0,0,0,.18);
+    }
+
+    .performance-card .number {
+      display: block;
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 8px;
+      overflow-wrap: anywhere;
+    }
+
+    .performance-card .label {
+      font-size: clamp(11px, 2.5vw, 14px);
+      font-weight: bold;
+      line-height: 1.4;
+    }
+
+    .success .number { color: #4ade80; }
+    .failed .number { color: #ff7777; }
+    .pending .number { color: #ffd166; }
+
+    .performance-updated {
+      margin: 18px 0 0;
+      font-size: 12px;
+      color: #a9bfd3;
+      line-height: 1.5;
+    }
+
+    .performance-error {
+      display: none;
+      margin: 14px auto 0;
+      max-width: 600px;
+      color: #ffc4c4;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 480px) {
+      .performance {
+        padding: 24px 10px 28px;
+      }
+
+      .performance-grid {
+        gap: 7px;
+      }
+
+      .performance-card {
+        padding: 16px 4px;
+        border-radius: 10px;
+      }
     }
   </style>
 </head>
@@ -211,118 +209,210 @@
     >
 
     <!-- 1. EPFO / PF -->
-    <a
-      class="service-link service-1"
+    <a class="service-link service-1"
       href="https://wa.me/917093334820?text=Hello%20CLICK%20SOLUTIONS%2C%20I%20need%20EPFO%20%2F%20PF%20service.%20Please%20tell%20me%20the%20required%20documents%2C%20charges%20and%20process."
       aria-label="Enquire about EPFO and PF services"
-      title="EPFO / PF - Click to enquire"
-    ></a>
+      title="EPFO / PF - Click to enquire"></a>
 
     <!-- 2. ITR / GST -->
-    <a
-      class="service-link service-2"
+    <a class="service-link service-2"
       href="https://wa.me/917093334820?text=Hello%20CLICK%20SOLUTIONS%2C%20I%20need%20ITR%20%2F%20GST%20service.%20Please%20tell%20me%20the%20required%20documents%2C%20charges%20and%20process."
       aria-label="Enquire about ITR and GST services"
-      title="ITR / GST - Click to enquire"
-    ></a>
+      title="ITR / GST - Click to enquire"></a>
 
     <!-- 3. DTP / Printing -->
-    <a
-      class="service-link service-3"
+    <a class="service-link service-3"
       href="https://wa.me/917093334820?text=Hello%20CLICK%20SOLUTIONS%2C%20I%20need%20DTP%20%2F%20Printing%20service.%20I%20will%20share%20my%20files%20and%20requirements.%20Please%20tell%20me%20the%20charges."
       aria-label="Enquire about DTP and printing services"
-      title="DTP / Printing - Click to enquire"
-    ></a>
+      title="DTP / Printing - Click to enquire"></a>
 
     <!-- 4. PDF / Documents -->
-    <a
-      class="service-link service-4"
+    <a class="service-link service-4"
       href="https://wa.me/917093334820?text=Hello%20CLICK%20SOLUTIONS%2C%20I%20need%20PDF%20editing%20%2F%20document%20service.%20Please%20tell%20me%20what%20files%20are%20required%20and%20the%20charges."
       aria-label="Enquire about PDF editing and document services"
-      title="PDF / Documents - Click to enquire"
-    ></a>
+      title="PDF / Documents - Click to enquire"></a>
 
     <!-- 5. Digital Banking -->
-    <a
-      class="service-link service-5"
+    <a class="service-link service-5"
       href="https://wa.me/917093334820?text=Hello%20CLICK%20SOLUTIONS%2C%20I%20need%20Digital%20Banking%20%2F%20Payment%20service.%20Please%20tell%20me%20the%20available%20services%20and%20charges."
       aria-label="Enquire about digital banking and payment services"
-      title="Digital Banking - Click to enquire"
-    ></a>
+      title="Digital Banking - Click to enquire"></a>
 
     <!-- 6. Loans / Financial -->
-    <a
-      class="service-link service-6"
+    <a class="service-link service-6"
       href="https://wa.me/917093334820?text=Hello%20CLICK%20SOLUTIONS%2C%20I%20need%20information%20about%20Loans%20%2F%20Financial%20Services.%20Please%20tell%20me%20the%20available%20options%20and%20eligibility%20details."
       aria-label="Enquire about loans and financial services"
-      title="Loans / Financial - Click to enquire"
-    ></a>
+      title="Loans / Financial - Click to enquire"></a>
 
     <!-- 7. MSME / Udyam -->
-    <a
-      class="service-link service-7"
+    <a class="service-link service-7"
       href="https://wa.me/917093334820?text=Hello%20CLICK%20SOLUTIONS%2C%20I%20need%20MSME%20%2F%20Udyam%20or%20Online%20Registration%20service.%20Please%20tell%20me%20the%20required%20documents%20and%20charges."
       aria-label="Enquire about MSME, Udyam and online registration"
-      title="MSME / Udyam - Click to enquire"
-    ></a>
+      title="MSME / Udyam - Click to enquire"></a>
 
     <!-- 8. Item Pickup / Vehicle Handover -->
-    <a
-      class="service-link service-8"
+    <a class="service-link service-8"
       href="https://wa.me/917093334820?text=Hello%20CLICK%20SOLUTIONS%2C%20I%20need%20Item%20Pickup%20%2F%20Vehicle%20Handover%20service.%20My%20pickup%20location%20is%20____%20and%20destination%20is%20____.%20Please%20tell%20me%20the%20pickup%20and%20handover%20charges."
       aria-label="Enquire about item pickup and vehicle handover"
-      title="Pickup / Vehicle Handover - Click to enquire"
-    ></a>
+      title="Pickup / Vehicle Handover - Click to enquire"></a>
 
     <!-- 9. Data Entry -->
-    <a
-      class="service-link service-9"
+    <a class="service-link service-9"
       href="https://wa.me/917093334820?text=Hello%20CLICK%20SOLUTIONS%2C%20I%20need%20Data%20Entry%20%2F%20Bulk%20Data%20Entry%20service.%20Please%20tell%20me%20the%20accepted%20file%20formats%2C%20charges%20and%20delivery%20time."
       aria-label="Enquire about data entry services"
-      title="Data Entry - Click to enquire"
-    ></a>
+      title="Data Entry - Click to enquire"></a>
 
     <!-- WEBSITE -->
-    <a
-      class="social-link website-link"
+    <a class="social-link website-link"
       href="https://mbsc-solutions.github.io/click-solutions/"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Visit CLICK SOLUTIONS website"
-      title="Website"
-    ></a>
+      target="_blank" rel="noopener noreferrer"
+      aria-label="Visit CLICK SOLUTIONS website" title="Website"></a>
 
     <!-- INSTAGRAM -->
-    <a
-      class="social-link instagram-link"
+    <a class="social-link instagram-link"
       href="https://www.instagram.com/clicksolutions2026/"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Visit CLICK SOLUTIONS Instagram"
-      title="Instagram"
-    ></a>
+      target="_blank" rel="noopener noreferrer"
+      aria-label="Visit CLICK SOLUTIONS Instagram" title="Instagram"></a>
 
     <!-- FACEBOOK -->
-    <a
-      class="social-link facebook-link"
+    <a class="social-link facebook-link"
       href="https://www.facebook.com/share/1C2JE1PNw2/"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Visit CLICK SOLUTIONS Facebook page"
-      title="Facebook"
-    ></a>
+      target="_blank" rel="noopener noreferrer"
+      aria-label="Visit CLICK SOLUTIONS Facebook page" title="Facebook"></a>
 
     <!-- YOUTUBE -->
-    <a
-      class="social-link youtube-link"
+    <a class="social-link youtube-link"
       href="https://youtube.com/@clicksolutions-e4g?si=tYpcUSDZqAnNFYwb"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Visit CLICK SOLUTIONS YouTube channel"
-      title="YouTube"
-    ></a>
+      target="_blank" rel="noopener noreferrer"
+      aria-label="Visit CLICK SOLUTIONS YouTube channel" title="YouTube"></a>
 
   </main>
+
+  <!-- TOTAL PERFORMANCE: ALL SERVICES COMBINED -->
+  <section class="performance" aria-live="polite">
+    <h2>TOTAL PERFORMANCE</h2>
+    <p class="performance-subtitle">
+      CLICK SOLUTIONS · All Services Combined
+    </p>
+
+    <div class="performance-grid">
+      <div class="performance-card success">
+        <span class="number" id="totalSuccess">—</span>
+        <span class="label">TOTAL SUCCESS</span>
+      </div>
+
+      <div class="performance-card failed">
+        <span class="number" id="totalFailed">—</span>
+        <span class="label">TOTAL FAILED</span>
+      </div>
+
+      <div class="performance-card pending">
+        <span class="number" id="totalPending">—</span>
+        <span class="label">TOTAL PENDING</span>
+      </div>
+    </div>
+
+    <p class="performance-updated" id="performanceUpdated">
+      Loading latest performance...
+    </p>
+
+    <p class="performance-error" id="performanceError">
+      Performance could not be loaded. Please refresh the page later.
+    </p>
+  </section>
+
+  <!-- Supabase JavaScript library -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    // Use the same Supabase project as the main website.
+    const SUPABASE_URL =
+      "https://whxlatxnqjpccwrmtmph.supabase.co";
+
+    const SUPABASE_ANON_KEY =
+      "sb_publishable_wlqTaOkM3fML9cuUES54fw_8TlbSi-H";
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+      );
+
+    async function loadTotalPerformance() {
+      const successElement =
+        document.getElementById("totalSuccess");
+
+      const failedElement =
+        document.getElementById("totalFailed");
+
+      const pendingElement =
+        document.getElementById("totalPending");
+
+      const updatedElement =
+        document.getElementById("performanceUpdated");
+
+      const errorElement =
+        document.getElementById("performanceError");
+
+      try {
+        const result = await supabaseClient
+          .from("service_status")
+          .select(
+            "success_count, failed_count, processing_count"
+          );
+
+        if (result.error) {
+          throw result.error;
+        }
+
+        const rows = result.data || [];
+
+        const totals = rows.reduce(
+          function (sum, service) {
+            sum.success += Number(service.success_count || 0);
+            sum.failed += Number(service.failed_count || 0);
+            sum.pending += Number(service.processing_count || 0);
+            return sum;
+          },
+          { success: 0, failed: 0, pending: 0 }
+        );
+
+        successElement.textContent =
+          totals.success.toLocaleString("en-IN");
+
+        failedElement.textContent =
+          totals.failed.toLocaleString("en-IN");
+
+        pendingElement.textContent =
+          totals.pending.toLocaleString("en-IN");
+
+        updatedElement.textContent =
+          "Last updated: " +
+          new Date().toLocaleTimeString("en-IN");
+
+        errorElement.style.display = "none";
+      } catch (error) {
+        console.error("Total performance error:", error);
+
+        errorElement.style.display = "block";
+        updatedElement.textContent =
+          "Unable to retrieve the latest totals.";
+      }
+    }
+
+    // Load immediately when the page opens.
+    loadTotalPerformance();
+
+    // Refresh totals every 30 seconds.
+    setInterval(loadTotalPerformance, 30000);
+
+    // Refresh when the visitor returns to this tab.
+    document.addEventListener("visibilitychange", function () {
+      if (document.visibilityState === "visible") {
+        loadTotalPerformance();
+      }
+    });
+  </script>
 
 </body>
 </html>
