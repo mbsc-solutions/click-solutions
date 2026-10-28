@@ -1,4 +1,4 @@
-
+  
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -100,65 +100,65 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    .website-link  { left:42%; top:81.7%; width:10%; height:7.5%; }
+    .website-link   { left:42%; top:81.7%; width:10%; height:7.5%; }
     .instagram-link { left:59%; top:81.7%; width:10%; height:7.5%; }
-    .facebook-link { left:75%; top:81.7%; width:10%; height:7.5%; }
-    .youtube-link { left:90%; top:81.7%; width:9%; height:7.5%; }
+    .facebook-link  { left:75%; top:81.7%; width:10%; height:7.5%; }
+    .youtube-link   { left:90%; top:81.7%; width:9%; height:7.5%; }
 
-    /* TOTAL PERFORMANCE */
+    /* COMPACT TOTAL PERFORMANCE */
     .performance {
       width: 100%;
       max-width: 1024px;
       margin: 0 auto;
-      padding: 28px 16px 34px;
+      padding: 16px 12px 20px;
       background: linear-gradient(180deg, #062748, #03152a);
       text-align: center;
       border-top: 2px solid #d5ad54;
     }
 
     .performance h2 {
-      margin: 0 0 8px;
-      font-size: clamp(22px, 4vw, 32px);
+      margin: 0 0 5px;
+      font-size: clamp(18px, 3vw, 24px);
       color: #f5d785;
-      letter-spacing: 1px;
+      letter-spacing: .7px;
     }
 
     .performance-subtitle {
-      margin: 0 0 22px;
+      margin: 0 0 12px;
       color: #c8d8e8;
-      font-size: 14px;
-      line-height: 1.5;
+      font-size: 12px;
+      line-height: 1.4;
     }
 
     .performance-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      max-width: 760px;
+      gap: 8px;
+      max-width: 600px;
       margin: 0 auto;
     }
 
     .performance-card {
-      padding: 20px 8px;
-      border-radius: 14px;
+      padding: 12px 5px;
+      border-radius: 10px;
       background: rgba(255,255,255,.06);
       border: 1px solid rgba(255,255,255,.13);
-      box-shadow: 0 5px 15px rgba(0,0,0,.18);
+      box-shadow: 0 3px 9px rgba(0,0,0,.15);
     }
 
     .performance-card .number {
       display: block;
-      font-size: clamp(28px, 5vw, 42px);
+      font-size: clamp(23px, 4vw, 32px);
       font-weight: 800;
       line-height: 1.2;
-      margin-bottom: 8px;
+      margin-bottom: 5px;
       overflow-wrap: anywhere;
     }
 
     .performance-card .label {
-      font-size: clamp(11px, 2.5vw, 14px);
+      font-size: 11px;
       font-weight: bold;
-      line-height: 1.4;
+      line-height: 1.3;
     }
 
     .success .number { color: #4ade80; }
@@ -166,33 +166,37 @@
     .pending .number { color: #ffd166; }
 
     .performance-updated {
-      margin: 18px 0 0;
-      font-size: 12px;
+      margin: 10px 0 0;
+      font-size: 11px;
       color: #a9bfd3;
-      line-height: 1.5;
+      line-height: 1.4;
     }
 
     .performance-error {
       display: none;
-      margin: 14px auto 0;
+      margin: 10px auto 0;
       max-width: 600px;
       color: #ffc4c4;
-      font-size: 13px;
-      line-height: 1.5;
+      font-size: 12px;
+      line-height: 1.4;
     }
 
     @media (max-width: 480px) {
       .performance {
-        padding: 24px 10px 28px;
+        padding: 14px 8px 16px;
       }
 
       .performance-grid {
-        gap: 7px;
+        gap: 6px;
       }
 
       .performance-card {
-        padding: 16px 4px;
-        border-radius: 10px;
+        padding: 10px 3px;
+        border-radius: 9px;
+      }
+
+      .performance-card .label {
+        font-size: 10px;
       }
     }
   </style>
@@ -288,7 +292,7 @@
 
   </main>
 
-  <!-- TOTAL PERFORMANCE: ALL SERVICES COMBINED -->
+  <!-- COMPACT TOTAL PERFORMANCE -->
   <section class="performance" aria-live="polite">
     <h2>TOTAL PERFORMANCE</h2>
     <p class="performance-subtitle">
@@ -321,11 +325,9 @@
     </p>
   </section>
 
-  <!-- Supabase JavaScript library -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
-    // Use the same Supabase project as the main website.
     const SUPABASE_URL =
       "https://whxlatxnqjpccwrmtmph.supabase.co";
 
@@ -341,16 +343,12 @@
     async function loadTotalPerformance() {
       const successElement =
         document.getElementById("totalSuccess");
-
       const failedElement =
         document.getElementById("totalFailed");
-
       const pendingElement =
         document.getElementById("totalPending");
-
       const updatedElement =
         document.getElementById("performanceUpdated");
-
       const errorElement =
         document.getElementById("performanceError");
 
@@ -365,9 +363,7 @@
           throw result.error;
         }
 
-        const rows = result.data || [];
-
-        const totals = rows.reduce(
+        const totals = (result.data || []).reduce(
           function (sum, service) {
             sum.success += Number(service.success_count || 0);
             sum.failed += Number(service.failed_count || 0);
@@ -379,10 +375,8 @@
 
         successElement.textContent =
           totals.success.toLocaleString("en-IN");
-
         failedElement.textContent =
           totals.failed.toLocaleString("en-IN");
-
         pendingElement.textContent =
           totals.pending.toLocaleString("en-IN");
 
@@ -393,20 +387,15 @@
         errorElement.style.display = "none";
       } catch (error) {
         console.error("Total performance error:", error);
-
         errorElement.style.display = "block";
         updatedElement.textContent =
           "Unable to retrieve the latest totals.";
       }
     }
 
-    // Load immediately when the page opens.
     loadTotalPerformance();
-
-    // Refresh totals every 30 seconds.
     setInterval(loadTotalPerformance, 30000);
 
-    // Refresh when the visitor returns to this tab.
     document.addEventListener("visibilitychange", function () {
       if (document.visibilityState === "visible") {
         loadTotalPerformance();
