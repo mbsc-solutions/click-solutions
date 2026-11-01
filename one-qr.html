@@ -1,4 +1,4 @@
-  
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -114,6 +114,16 @@
       background: linear-gradient(180deg, #062748, #03152a);
       text-align: center;
       border-top: 2px solid #d5ad54;
+    }
+
+    /* SINCE 2026 */
+    .performance-since {
+      margin: 0 0 4px;
+      color: #d5ad54;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      line-height: 1.3;
     }
 
     .performance h2 {
@@ -292,14 +302,19 @@
 
   </main>
 
-  <!-- COMPACT TOTAL PERFORMANCE -->
+  <!-- TOTAL PERFORMANCE -->
   <section class="performance" aria-live="polite">
+
+    <p class="performance-since">SINCE 2026</p>
+
     <h2>TOTAL PERFORMANCE</h2>
+
     <p class="performance-subtitle">
       CLICK SOLUTIONS · All Services Combined
     </p>
 
     <div class="performance-grid">
+
       <div class="performance-card success">
         <span class="number" id="totalSuccess">—</span>
         <span class="label">TOTAL SUCCESS</span>
@@ -314,6 +329,7 @@
         <span class="number" id="totalPending">—</span>
         <span class="label">TOTAL PENDING</span>
       </div>
+
     </div>
 
     <p class="performance-updated" id="performanceUpdated">
@@ -323,6 +339,7 @@
     <p class="performance-error" id="performanceError">
       Performance could not be loaded. Please refresh the page later.
     </p>
+
   </section>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -341,18 +358,24 @@
       );
 
     async function loadTotalPerformance() {
+
       const successElement =
         document.getElementById("totalSuccess");
+
       const failedElement =
         document.getElementById("totalFailed");
+
       const pendingElement =
         document.getElementById("totalPending");
+
       const updatedElement =
         document.getElementById("performanceUpdated");
+
       const errorElement =
         document.getElementById("performanceError");
 
       try {
+
         const result = await supabaseClient
           .from("service_status")
           .select(
@@ -365,18 +388,26 @@
 
         const totals = (result.data || []).reduce(
           function (sum, service) {
+
             sum.success += Number(service.success_count || 0);
             sum.failed += Number(service.failed_count || 0);
             sum.pending += Number(service.processing_count || 0);
+
             return sum;
           },
-          { success: 0, failed: 0, pending: 0 }
+          {
+            success: 0,
+            failed: 0,
+            pending: 0
+          }
         );
 
         successElement.textContent =
           totals.success.toLocaleString("en-IN");
+
         failedElement.textContent =
           totals.failed.toLocaleString("en-IN");
+
         pendingElement.textContent =
           totals.pending.toLocaleString("en-IN");
 
@@ -385,21 +416,32 @@
           new Date().toLocaleTimeString("en-IN");
 
         errorElement.style.display = "none";
+
       } catch (error) {
+
         console.error("Total performance error:", error);
+
         errorElement.style.display = "block";
+
         updatedElement.textContent =
           "Unable to retrieve the latest totals.";
+
       }
     }
 
+    // Load performance when page opens
     loadTotalPerformance();
+
+    // Refresh every 30 seconds
     setInterval(loadTotalPerformance, 30000);
 
+    // Refresh when visitor returns to the page
     document.addEventListener("visibilitychange", function () {
+
       if (document.visibilityState === "visible") {
         loadTotalPerformance();
       }
+
     });
   </script>
 
